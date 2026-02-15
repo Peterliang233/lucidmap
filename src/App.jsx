@@ -21,6 +21,20 @@ import AlgoStructures from "./pages/AlgoStructures.jsx";
 import AlgoGraphSearch from "./pages/AlgoGraphSearch.jsx";
 import AlgoTwoPointers from "./pages/AlgoTwoPointers.jsx";
 import AlgoDynamicProgramming from "./pages/AlgoDynamicProgramming.jsx";
+import RedisDataTypes from "./pages/RedisDataTypes.jsx";
+import RedisPersistence from "./pages/RedisPersistence.jsx";
+import RedisReplication from "./pages/RedisReplication.jsx";
+import RedisCluster from "./pages/RedisCluster.jsx";
+import RedisEviction from "./pages/RedisEviction.jsx";
+import MqKafkaCore from "./pages/MqKafkaCore.jsx";
+import MqKafkaConsumer from "./pages/MqKafkaConsumer.jsx";
+import MqRocketCore from "./pages/MqRocketCore.jsx";
+import MqRocketFeatures from "./pages/MqRocketFeatures.jsx";
+import AiAgent from "./pages/AiAgent.jsx";
+import AiMcp from "./pages/AiMcp.jsx";
+import AiFunctionCall from "./pages/AiFunctionCall.jsx";
+import AiA2A from "./pages/AiA2A.jsx";
+import AiAgentSkill from "./pages/AiAgentSkill.jsx";
 
 export default function App() {
   return (
@@ -48,6 +62,20 @@ export default function App() {
         <Route path="/topics/algorithms/graph-search" element={<AlgoGraphSearch />} />
         <Route path="/topics/algorithms/two-pointers" element={<AlgoTwoPointers />} />
         <Route path="/topics/algorithms/dp" element={<AlgoDynamicProgramming />} />
+        <Route path="/topics/redis/data-types" element={<RedisDataTypes />} />
+        <Route path="/topics/redis/persistence" element={<RedisPersistence />} />
+        <Route path="/topics/redis/replication" element={<RedisReplication />} />
+        <Route path="/topics/redis/cluster" element={<RedisCluster />} />
+        <Route path="/topics/redis/eviction" element={<RedisEviction />} />
+        <Route path="/topics/mq/kafka-core" element={<MqKafkaCore />} />
+        <Route path="/topics/mq/kafka-consumer" element={<MqKafkaConsumer />} />
+        <Route path="/topics/mq/rocketmq-core" element={<MqRocketCore />} />
+        <Route path="/topics/mq/rocketmq-features" element={<MqRocketFeatures />} />
+        <Route path="/topics/ai/agent" element={<AiAgent />} />
+        <Route path="/topics/ai/mcp" element={<AiMcp />} />
+        <Route path="/topics/ai/function-call" element={<AiFunctionCall />} />
+        <Route path="/topics/ai/a2a" element={<AiA2A />} />
+        <Route path="/topics/ai/agent-skill" element={<AiAgentSkill />} />
       </Routes>
     </HashRouter>
   );

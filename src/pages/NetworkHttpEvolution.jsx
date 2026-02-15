@@ -24,24 +24,6 @@ const steps = [
   },
 ];
 
-const cards = [
-  {
-    id: "http1",
-    title: "HTTP/1.1",
-    detail: "文本协议、队头阻塞",
-  },
-  {
-    id: "http2",
-    title: "HTTP/2",
-    detail: "多路复用、头部压缩",
-  },
-  {
-    id: "http3",
-    title: "HTTP/3",
-    detail: "QUIC、低延迟",
-  },
-];
-
 export default function NetworkHttpEvolution() {
   return (
     <TopicShell
@@ -56,18 +38,70 @@ export default function NetworkHttpEvolution() {
       flow={["1.1 解决持久连接", "2 引入二进制多路复用", "3 迁移到 QUIC"]}
       diagramClass="http-diagram"
       renderDiagram={(step) => (
-        <div className="http-cards">
-          {cards.map((card) => (
-            <div key={card.id} className={`http-card ${step.active === card.id ? "is-active" : ""}`}>
-              <h3>{card.title}</h3>
-              <p>{card.detail}</p>
-              <div className="http-streams">
-                <span />
-                <span />
-                <span />
+        <div className={`http-evo mode--${step.active}`}>
+          <div className="http-evo__rails">
+            <div className="http-evo__lane">Client</div>
+            <div className="http-evo__lane">Server</div>
+          </div>
+
+          <div className="http-evo__panel http1">
+            <div className="http1-conn">
+              <div className="http1-tag">单连接</div>
+              <div className="http1-queue">
+                <span className="http1-req">Req A</span>
+                <span className="http1-req">Req B</span>
+                <span className="http1-req http1-req--blocked">HOL</span>
               </div>
+              <p className="http1-note">队头阻塞导致后续请求被阻塞</p>
             </div>
-          ))}
+          </div>
+
+          <div className="http-evo__panel http2">
+            <div className="http2-conn">
+              <div className="http2-tag">多路复用</div>
+              <div className="http2-lanes">
+                <div className="http2-lane lane--a">
+                  <span className="frame" />
+                  <span className="frame" />
+                  <span className="frame" />
+                </div>
+                <div className="http2-lane lane--b">
+                  <span className="frame" />
+                  <span className="frame" />
+                  <span className="frame" />
+                </div>
+                <div className="http2-lane lane--c">
+                  <span className="frame" />
+                  <span className="frame" />
+                  <span className="frame" />
+                </div>
+              </div>
+              <p className="http2-note">多个 Stream 交错传输，提升并发</p>
+            </div>
+          </div>
+
+          <div className="http-evo__panel http3">
+            <div className="http3-conn">
+              <div className="http3-tag">QUIC + 0-RTT</div>
+              <div className="http3-handshake">
+                <span>0-RTT</span>
+                <span className="http3-handshake__dot" />
+                <span>Secure</span>
+              </div>
+              <div className="http3-streams">
+                <div className="http3-stream stream--fast">
+                  <span />
+                  <span />
+                </div>
+                <div className="http3-stream stream--stable">
+                  <span />
+                  <span />
+                </div>
+              </div>
+              <div className="http3-loss">丢包</div>
+              <p className="http3-note">基于 UDP，丢包不阻塞其他流</p>
+            </div>
+          </div>
         </div>
       )}
     />

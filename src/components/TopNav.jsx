@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import data from "../data.json";
+import logo from "../assets/logo-lucidmap.svg";
 
 const isInternalLink = (link) => typeof link === "string" && link.startsWith("/");
 
@@ -58,7 +59,8 @@ export default function TopNav() {
     <header className="top-nav">
       <div className="top-nav__bar">
         <Link className="top-nav__logo" to="/">
-          LucidMap
+          <img src={logo} alt="LucidMap" />
+          <span>LucidMap</span>
         </Link>
 
         <nav className={`top-nav__menu ${menuOpen ? "is-open" : ""}`}>

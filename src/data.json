@@ -121,7 +121,7 @@
       "desc": "事务、索引、SQL 调优与分布式存储",
       "groups": [
         {
-          "title": "事务与隔离",
+          "title": "MySQL · 事务与隔离",
           "items": [
             {
               "title": "事务四大特性 ACID",
@@ -142,7 +142,7 @@
           ]
         },
         {
-          "title": "索引与优化",
+          "title": "MySQL · 索引与优化",
           "items": [
             {
               "title": "B+ 树索引原理",
@@ -159,6 +159,65 @@
               "link": "/topics/database/sql-tuning",
               "tags": [
                 "系统设计"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Redis · 核心机制",
+          "items": [
+            {
+              "title": "数据类型与使用场景",
+              "desc": "String/Hash/List/Set/ZSet 的选型",
+              "link": "/topics/redis/data-types",
+              "tags": [
+                "基础"
+              ]
+            },
+            {
+              "title": "持久化机制 RDB/AOF",
+              "desc": "快照与追加日志的权衡",
+              "link": "/topics/redis/persistence",
+              "tags": [
+                "高频",
+                "系统设计"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Redis · 高可用与扩展",
+          "items": [
+            {
+              "title": "主从复制与哨兵",
+              "desc": "自动故障转移与一致性",
+              "link": "/topics/redis/replication",
+              "tags": [
+                "高频",
+                "系统设计"
+              ]
+            },
+            {
+              "title": "Redis Cluster 分片",
+              "desc": "槽位、迁移与扩容",
+              "link": "/topics/redis/cluster",
+              "tags": [
+                "系统设计",
+                "性能优化"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Redis · 性能与运维",
+          "items": [
+            {
+              "title": "缓存淘汰策略",
+              "desc": "LRU/LFU/TTL 组合",
+              "link": "/topics/redis/eviction",
+              "tags": [
+                "高频",
+                "性能优化"
               ]
             }
           ]
@@ -259,6 +318,114 @@
               "link": "/topics/algorithms/dp",
               "tags": [
                 "面试题"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mq",
+      "title": "消息队列",
+      "desc": "异步削峰与事件驱动系统",
+      "groups": [
+        {
+          "title": "Kafka",
+          "items": [
+            {
+              "title": "Kafka 核心机制",
+              "desc": "分区、副本与可靠写入",
+              "link": "/topics/mq/kafka-core",
+              "tags": [
+                "高频",
+                "系统设计"
+              ]
+            },
+            {
+              "title": "Kafka 消费模型",
+              "desc": "消费组、Rebalance 与 Offset",
+              "link": "/topics/mq/kafka-consumer",
+              "tags": [
+                "高频"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "RocketMQ",
+          "items": [
+            {
+              "title": "RocketMQ 核心组件",
+              "desc": "NameServer、Broker 与路由",
+              "link": "/topics/mq/rocketmq-core",
+              "tags": [
+                "高频",
+                "系统设计"
+              ]
+            },
+            {
+              "title": "RocketMQ 关键特性",
+              "desc": "顺序、延迟与事务消息",
+              "link": "/topics/mq/rocketmq-features",
+              "tags": [
+                "高频"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "title": "AI",
+      "desc": "智能体与协作协议的核心机制",
+      "groups": [
+        {
+          "title": "Agent",
+          "items": [
+            {
+              "title": "Agent 核心循环",
+              "desc": "Plan / Act / Reflect",
+              "link": "/topics/ai/agent",
+              "tags": [
+                "高频"
+              ]
+            },
+            {
+              "title": "Agent Skill 体系",
+              "desc": "技能封装与治理",
+              "link": "/topics/ai/agent-skill",
+              "tags": [
+                "系统设计"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "协议与协作",
+          "items": [
+            {
+              "title": "MCP",
+              "desc": "工具接入标准协议",
+              "link": "/topics/ai/mcp",
+              "tags": [
+                "系统设计"
+              ]
+            },
+            {
+              "title": "Function Call",
+              "desc": "结构化调用机制",
+              "link": "/topics/ai/function-call",
+              "tags": [
+                "高频"
+              ]
+            },
+            {
+              "title": "A2A",
+              "desc": "多 Agent 协作模式",
+              "link": "/topics/ai/a2a",
+              "tags": [
+                "系统设计"
               ]
             }
           ]
