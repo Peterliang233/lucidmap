@@ -1,0 +1,269 @@
+{
+  "site": {
+    "title": "计算机八股文导航",
+    "tagline": "系统化整理面试八股文",
+    "subtitle": "通过配置化目录，把散落的知识点组织成可扩展的地图。",
+    "footer": "持续维护中 · 使用 JSON 配置动态扩展"
+  },
+  "legend": [
+    "高频",
+    "基础",
+    "系统设计",
+    "性能优化",
+    "面试题"
+  ],
+  "sections": [
+    {
+      "id": "os",
+      "title": "操作系统",
+      "desc": "进程、线程、内存、调度与 I/O 关键点",
+      "groups": [
+        {
+          "title": "进程与线程",
+          "items": [
+            {
+              "title": "进程模型与状态转换",
+              "desc": "创建、就绪、阻塞、终止的状态流转与触发条件",
+              "link": "/topics/os/process-states",
+              "tags": [
+                "高频",
+                "基础"
+              ]
+            },
+            {
+              "title": "线程同步与并发控制",
+              "desc": "互斥锁、自旋锁、条件变量的对比与适用场景",
+              "link": "/topics/os/thread-sync",
+              "tags": [
+                "高频",
+                "性能优化"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "内存管理",
+          "items": [
+            {
+              "title": "虚拟内存与分页",
+              "desc": "页表、TLB、缺页中断与换页策略",
+              "link": "/topics/os/virtual-memory",
+              "tags": [
+                "基础"
+              ]
+            },
+            {
+              "title": "内存回收与段页式",
+              "desc": "伙伴系统、slab、内存碎片问题",
+              "link": "/topics/os/memory-alloc",
+              "tags": [
+                "系统设计"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "title": "计算机网络",
+      "desc": "协议栈、可靠传输与网络排错",
+      "groups": [
+        {
+          "title": "TCP / UDP",
+          "items": [
+            {
+              "title": "TCP 三次握手与四次挥手",
+              "desc": "状态机 + 关键报文字段梳理",
+              "link": "/topics/network/tcp-handshake",
+              "tags": [
+                "高频",
+                "基础"
+              ]
+            },
+            {
+              "title": "拥塞控制与流量控制",
+              "desc": "慢启动、拥塞避免、快速恢复",
+              "link": "/topics/network/congestion-control",
+              "tags": [
+                "高频",
+                "性能优化"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "HTTP / HTTPS",
+          "items": [
+            {
+              "title": "HTTP 版本演进",
+              "desc": "1.1、2、3 的关键变化与应用场景",
+              "link": "/topics/network/http-evolution",
+              "tags": [
+                "基础"
+              ]
+            },
+            {
+              "title": "TLS 握手与证书",
+              "desc": "对称、非对称、证书链信任机制",
+              "link": "/topics/network/tls-handshake",
+              "tags": [
+                "高频"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "database",
+      "title": "数据库",
+      "desc": "事务、索引、SQL 调优与分布式存储",
+      "groups": [
+        {
+          "title": "事务与隔离",
+          "items": [
+            {
+              "title": "事务四大特性 ACID",
+              "desc": "原子性、一致性、隔离性、持久性",
+              "link": "/topics/database/acid",
+              "tags": [
+                "基础"
+              ]
+            },
+            {
+              "title": "隔离级别与并发异常",
+              "desc": "脏读、不可重复读、幻读",
+              "link": "/topics/database/isolation",
+              "tags": [
+                "高频"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "索引与优化",
+          "items": [
+            {
+              "title": "B+ 树索引原理",
+              "desc": "聚簇索引、覆盖索引、回表",
+              "link": "/topics/bplus-tree",
+              "tags": [
+                "高频",
+                "性能优化"
+              ]
+            },
+            {
+              "title": "SQL 调优清单",
+              "desc": "慢查询、执行计划、索引失效点",
+              "link": "/topics/database/sql-tuning",
+              "tags": [
+                "系统设计"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "backend",
+      "title": "后端基础",
+      "desc": "Java / Go / 系统设计常见问题",
+      "groups": [
+        {
+          "title": "Java 高频点",
+          "items": [
+            {
+              "title": "JVM 内存结构",
+              "desc": "堆、栈、方法区、GC 关键点",
+              "link": "/topics/backend/jvm-memory",
+              "tags": [
+                "高频",
+                "性能优化"
+              ]
+            },
+            {
+              "title": "集合体系与并发容器",
+              "desc": "HashMap、ConcurrentHashMap 对比",
+              "link": "/topics/backend/collections",
+              "tags": [
+                "基础"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "系统设计",
+          "items": [
+            {
+              "title": "限流与熔断策略",
+              "desc": "令牌桶、漏桶、熔断器",
+              "link": "/topics/backend/rate-limit",
+              "tags": [
+                "系统设计",
+                "高频"
+              ]
+            },
+            {
+              "title": "缓存一致性方案",
+              "desc": "双写一致、失效策略、消息驱动",
+              "link": "/topics/backend/cache-consistency",
+              "tags": [
+                "系统设计"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "algorithms",
+      "title": "算法与数据结构",
+      "desc": "必考模型与刷题框架",
+      "groups": [
+        {
+          "title": "必备结构",
+          "items": [
+            {
+              "title": "堆、栈、队列",
+              "desc": "典型应用与复杂度分析",
+              "link": "/topics/algorithms/basic-structures",
+              "tags": [
+                "基础"
+              ]
+            },
+            {
+              "title": "图论与搜索",
+              "desc": "BFS、DFS、最短路",
+              "link": "/topics/algorithms/graph-search",
+              "tags": [
+                "高频"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "题型模板",
+          "items": [
+            {
+              "title": "双指针与滑动窗口",
+              "desc": "常见边界与窗口收缩策略",
+              "link": "/topics/algorithms/two-pointers",
+              "tags": [
+                "面试题"
+              ]
+            },
+            {
+              "title": "动态规划",
+              "desc": "状态定义、转移方程与优化",
+              "link": "/topics/algorithms/dp",
+              "tags": [
+                "面试题"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
