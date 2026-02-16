@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout.jsx";
 import data from "../data.json";
@@ -30,11 +30,14 @@ const matchesTag = (item, tag) => {
 
 const isInternalLink = (link) => typeof link === "string" && link.startsWith("/");
 
+const PAGE_SIZE = 2;
+
 export default function HomePage() {
   const { site, legend, sections } = data;
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState(null);
   const [collapsed, setCollapsed] = useState({});
+  const [pageIndex, setPageIndex] = useState(0);
 
   const tagOptions = useMemo(() => {
     const fromConfig = legend && legend.length ? legend : [];
@@ -74,6 +77,9 @@ export default function HomePage() {
     setActiveTag((prev) => (prev === tag ? null : tag));
   };
 
+  useEffect(() => {
+    setPageIndex(0);
+  }, [query, activeTag]);
 
   const scrollToSection = (id) => {
     const target = document.getElementById(id);
@@ -88,6 +94,20 @@ export default function HomePage() {
       [key]: !prev[key],
     }));
   };
+
+  const totalPages = filteredSections.length ? Math.ceil(filteredSections.length / PAGE_SIZE) : 0;
+  const safePageIndex = totalPages ? Math.min(pageIndex, totalPages - 1) : 0;
+  const pageSections = filteredSections.slice(
+    safePageIndex * PAGE_SIZE,
+    safePageIndex * PAGE_SIZE + PAGE_SIZE
+  );
+
+  useEffect(() => {
+    if (!totalPages) return;
+    if (pageIndex > totalPages - 1) {
+      setPageIndex(totalPages - 1);
+    }
+  }, [pageIndex, totalPages]);
 
   return (
     <Layout>
@@ -127,21 +147,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        <aside className="hero__panel">
-          <div className="panel">
-            <h2>配置指南</h2>
-            <ol>
-              <li>在 <code>src/data.json</code> 的 <code>sections</code> 中新增分类。</li>
-              <li>为分类提供 <code>id</code>、<code>title</code> 与 <code>groups</code>。</li>
-              <li>每个 <code>item</code> 可配置标题、简介、链接与标签。</li>
-            </ol>
-            <p className="panel__tip">目录、卡片与标签都会自动生成。</p>
-          </div>
-        </aside>
       </header>
 
       <nav className="toc">
-        {(sections || []).map((section) => (
+        {pageSections.map((section) => (
           <button
             key={section.id || section.title}
             type="button"
@@ -161,7 +170,7 @@ export default function HomePage() {
           </div>
         )}
 
-        {filteredSections.map((section) => (
+        {pageSections.map((section) => (
           <section key={section.id || section.title} id={section.id} className="section">
             <div className="section__header">
               <h2 className="section__title">{section.title}</h2>
@@ -222,6 +231,18 @@ export default function HomePage() {
           </section>
         ))}
       </main>
+
+      {totalPages > 1 && (
+        <div className="map-pagination">
+          <button
+            type="button"
+            className="map-pagination__button"
+            onClick={() => setPageIndex((prev) => (prev + 1) % totalPages)}
+          >
+            下一页
+          </button>
+        </div>
+      )}
 
       </div>
     </Layout>

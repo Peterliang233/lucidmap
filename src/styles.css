@@ -57,7 +57,7 @@ a {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 32px;
   padding: 64px 8vw 32px;
 }
@@ -194,6 +194,29 @@ a {
 }
 
 .toc__link:hover {
+  transform: translateY(-2px);
+  background: #fff;
+}
+
+.map-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 8vw 48px;
+}
+
+.map-pagination__button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.map-pagination__button:hover:not(:disabled) {
   transform: translateY(-2px);
   background: #fff;
 }
