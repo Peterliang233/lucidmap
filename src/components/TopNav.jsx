@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import data from "../data.json";
 import logo from "../assets/logo-lucidmap.svg";
@@ -30,6 +30,7 @@ export default function TopNav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
   const [dropdownAlign, setDropdownAlign] = useState({});
+  const [isScrolled, setIsScrolled] = useState(false);
   const moduleRefs = useRef({});
 
   const handleToggle = () => setMenuOpen((prev) => !prev);
@@ -55,8 +56,24 @@ export default function TopNav() {
     setDropdownAlign((prev) => (prev[activeSection] === align ? prev : { ...prev, [activeSection]: align }));
   }, [activeSection, menuOpen]);
 
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 12);
+        ticking = false;
+      });
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="top-nav">
+    <header className={`top-nav ${isScrolled ? "is-scrolled" : ""}`}>
       <div className="top-nav__bar">
         <Link className="top-nav__logo" to="/">
           <img src={logo} alt="LucidMap" />

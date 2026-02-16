@@ -154,8 +154,8 @@
               ]
             },
             {
-              "title": "SQL 调优清单",
-              "desc": "慢查询、执行计划、索引失效点",
+              "title": "MVCC 实现原理",
+              "desc": "Read View、版本链与可见性判断",
               "link": "/topics/database/sql-tuning",
               "tags": [
                 "系统设计"

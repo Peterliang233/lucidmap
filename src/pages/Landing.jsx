@@ -3,16 +3,16 @@ import Layout from "../components/Layout.jsx";
 
 const pillars = [
   {
-    title: "配置化",
-    detail: "所有目录、知识点与链接均由 JSON 驱动，随时扩展。",
-  },
-  {
-    title: "结构化",
-    detail: "从模块 → 分组 → 知识点，形成清晰的面试地图。",
-  },
-  {
     title: "可视化",
-    detail: "通过动画专题页，将抽象原理讲清楚。",
+    detail: "把复杂机制拆解成动画流程，直观看到关键步骤。",
+  },
+  {
+    title: "低门槛",
+    detail: "用更易理解的叙述与图示降低学习成本。",
+  },
+  {
+    title: "可掌握",
+    detail: "突出核心原理与细节，让学习更聚焦、更高效。",
   },
 ];
 
@@ -32,9 +32,9 @@ export default function LandingPage() {
         <div className="landing__hero">
           <div>
             <p className="landing__eyebrow">LucidMap Project</p>
-            <h1>把八股文变成一张能扩展的知识地图</h1>
+            <h1>用简单的动画解析计算机相关知识点</h1>
             <p className="landing__subtitle">
-              这个项目的宗旨是：让面试知识点拥有清晰的结构、可持续扩展的配置体系，并用动画解释复杂原理。
+              这个项目希望将晦涩难懂的技术用可视化方式呈现，降低学习门槛，帮助大家更好掌握相关知识。
             </p>
             <div className="landing__actions">
               <Link className="landing__primary" to="/map">

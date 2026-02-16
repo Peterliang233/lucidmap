@@ -60,15 +60,15 @@ const steps = [
 ];
 
 const messages = [
-  { id: "syn", from: "client", label: "SYN x" },
-  { id: "syn-ack", from: "server", label: "SYN y / ACK x+1" },
-  { id: "ack", from: "client", label: "ACK y+1" },
-  { id: "data", from: "client", label: "DATA" },
-  { id: "data-reply", from: "server", label: "ACK" },
-  { id: "fin-1", from: "client", label: "FIN" },
-  { id: "fin-ack", from: "server", label: "ACK fin+1" },
-  { id: "fin-2", from: "server", label: "FIN" },
-  { id: "fin-close", from: "client", label: "ACK fin+1" },
+  { id: "syn", from: "client", label: "SYN x", phase: "handshake" },
+  { id: "syn-ack", from: "server", label: "SYN y / ACK x+1", phase: "handshake" },
+  { id: "ack", from: "client", label: "ACK y+1", phase: "handshake" },
+  { id: "data", from: "client", label: "DATA", phase: "transfer" },
+  { id: "data-reply", from: "server", label: "ACK", phase: "transfer" },
+  { id: "fin-1", from: "client", label: "FIN", phase: "teardown" },
+  { id: "fin-ack", from: "server", label: "ACK fin+1", phase: "teardown" },
+  { id: "fin-2", from: "server", label: "FIN", phase: "teardown" },
+  { id: "fin-close", from: "client", label: "ACK fin+1", phase: "teardown" },
 ];
 
 export default function NetworkTcpHandshake() {
@@ -101,9 +101,15 @@ export default function NetworkTcpHandshake() {
                 step.active === message.id ||
                 (step.active === "data" && message.id.startsWith("data"));
               const isClient = message.from === "client";
+              const dir = isClient ? "to-server" : "to-client";
 
               return (
-                <div key={message.id} className={`tcp-row ${isActive ? "is-active" : ""}`}>
+                <div
+                  key={message.id}
+                  className={`tcp-row ${isActive ? "is-active" : ""}`}
+                  data-phase={message.phase}
+                  data-dir={dir}
+                >
                   {isClient ? (
                     <div className={`tcp-bubble tcp-bubble--client ${isActive ? "is-active" : ""}`}>
                       <span>{message.label}</span>
@@ -111,7 +117,9 @@ export default function NetworkTcpHandshake() {
                   ) : (
                     <span className="tcp-spacer" aria-hidden="true" />
                   )}
-                  <div className="tcp-line" aria-hidden="true" />
+                  <div className="tcp-connector" aria-hidden="true">
+                    <span className="tcp-arrow" />
+                  </div>
                   {!isClient ? (
                     <div className={`tcp-bubble tcp-bubble--server ${isActive ? "is-active" : ""}`}>
                       <span>{message.label}</span>
