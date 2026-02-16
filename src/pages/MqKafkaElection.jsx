@@ -53,30 +53,64 @@ const controllers = [
 ];
 
 function ElectionDiagram({ step }) {
-  const wrapRef = useRef(null);
-  const nodeRefs = useRef({});
-  const [anchors, setAnchors] = useState({});
+  const stageRef = useRef(null);
+  const trackRef = useRef(null);
+  const laneRefs = useRef({});
+  const [anchors, setAnchors] = useState({ track: null, lanes: {}, columns: [] });
 
   const updateAnchors = () => {
-    if (!wrapRef.current) {
+    if (!stageRef.current || !trackRef.current) {
       return;
     }
-    const wrapRect = wrapRef.current.getBoundingClientRect();
-    const next = {};
+    const stageRect = stageRef.current.getBoundingClientRect();
+    const trackRect = trackRef.current.getBoundingClientRect();
+    const lanes = {};
     controllers.forEach((node) => {
-      const el = nodeRefs.current[node.id];
+      const el = laneRefs.current[node.id];
       if (!el) {
         return;
       }
       const rect = el.getBoundingClientRect();
-      next[node.id] = {
-        x: rect.left - wrapRect.left + rect.width / 2,
-        y: rect.top - wrapRect.top + rect.height / 2,
-        width: rect.width,
-        height: rect.height,
+      const top = rect.top - stageRect.top;
+      lanes[node.id] = {
+        top,
+        bottom: top + rect.height,
+        center: top + rect.height / 2,
       };
     });
-    setAnchors(next);
+    const columns = [];
+    const trackCells = laneRefs.current.c1?.querySelectorAll(".lane-cell");
+    if (trackCells) {
+      trackCells.forEach((cell) => {
+        const rect = cell.getBoundingClientRect();
+        const left = rect.left - stageRect.left;
+        columns.push({
+          left,
+          right: left + rect.width,
+          center: left + rect.width / 2,
+          gapLeft: 0,
+          gapRight: 0,
+        });
+      });
+      columns.forEach((col, index) => {
+        const prev = columns[index - 1];
+        const next = columns[index + 1];
+        if (prev) {
+          col.gapLeft = Math.max(0, col.left - prev.right);
+        }
+        if (next) {
+          col.gapRight = Math.max(0, next.left - col.right);
+        }
+      });
+    }
+    setAnchors({
+      track: {
+        left: trackRect.left - stageRect.left,
+        width: trackRect.width,
+      },
+      lanes,
+      columns,
+    });
   };
 
   useLayoutEffect(() => {
@@ -84,15 +118,12 @@ function ElectionDiagram({ step }) {
   }, [step.active]);
 
   useEffect(() => {
-    if (!wrapRef.current) {
-      return;
-    }
-    const handle = () => {
-      requestAnimationFrame(updateAnchors);
-    };
+    const handle = () => requestAnimationFrame(updateAnchors);
     window.addEventListener("resize", handle);
     const observer = new ResizeObserver(handle);
-    observer.observe(wrapRef.current);
+    if (stageRef.current) {
+      observer.observe(stageRef.current);
+    }
     return () => {
       window.removeEventListener("resize", handle);
       observer.disconnect();
@@ -107,7 +138,6 @@ function ElectionDiagram({ step }) {
         c2: { role: "follower", term: 12, votedFor: "-", heartbeat: "ok" },
         c3: { role: "follower", term: 12, votedFor: "-", heartbeat: "ok" },
       },
-      votes: [],
     },
     down: {
       term: 12,
@@ -116,19 +146,14 @@ function ElectionDiagram({ step }) {
         c2: { role: "down", term: 12, votedFor: "-", heartbeat: "lost" },
         c3: { role: "follower", term: 12, votedFor: "-", heartbeat: "ok" },
       },
-      down: "c2",
-      votes: [],
     },
     timeout: {
-      term: 12,
+      term: 13,
       status: {
         c1: { role: "candidate", term: 13, votedFor: "C1", heartbeat: "timeout" },
         c2: { role: "down", term: 12, votedFor: "-", heartbeat: "lost" },
         c3: { role: "follower", term: 12, votedFor: "-", heartbeat: "ok" },
       },
-      candidate: "c1",
-      showTimeout: true,
-      votes: ["c1"],
     },
     request: {
       term: 13,
@@ -137,9 +162,6 @@ function ElectionDiagram({ step }) {
         c2: { role: "down", term: 12, votedFor: "-", heartbeat: "lost" },
         c3: { role: "follower", term: 13, votedFor: "-", heartbeat: "ok" },
       },
-      candidate: "c1",
-      showRequest: true,
-      votes: ["c1"],
     },
     vote: {
       term: 13,
@@ -148,9 +170,6 @@ function ElectionDiagram({ step }) {
         c2: { role: "down", term: 12, votedFor: "-", heartbeat: "lost" },
         c3: { role: "follower", term: 13, votedFor: "C1", heartbeat: "ok" },
       },
-      candidate: "c1",
-      showRequest: true,
-      votes: ["c1", "c3"],
     },
     heartbeat: {
       term: 13,
@@ -159,58 +178,96 @@ function ElectionDiagram({ step }) {
         c2: { role: "down", term: 12, votedFor: "-", heartbeat: "lost" },
         c3: { role: "follower", term: 13, votedFor: "C1", heartbeat: "recv" },
       },
-      leader: "c1",
-      showHeartbeat: true,
-      votes: ["c1", "c3"],
     },
+  };
+
+  const timeline = {
+    c1: [
+      { step: "followers", role: "follower", label: "Follower", note: "等待心跳" },
+      { step: "down", role: "follower", label: "Follower", note: "检测失联" },
+      { step: "timeout", role: "candidate", label: "Candidate", note: "Term+1" },
+      { step: "request", role: "candidate", label: "Candidate", note: "广播投票" },
+      { step: "vote", role: "candidate", label: "Candidate", note: "收集选票" },
+      { step: "heartbeat", role: "leader", label: "Leader", note: "心跳维护" },
+    ],
+    c2: [
+      { step: "followers", role: "follower", label: "Follower", note: "稳定运行" },
+      { step: "down", role: "down", label: "Down", note: "Leader 掉线" },
+      { step: "timeout", role: "down", label: "Down", note: "无响应" },
+      { step: "request", role: "down", label: "Down", note: "无响应" },
+      { step: "vote", role: "down", label: "Down", note: "无响应" },
+      { step: "heartbeat", role: "down", label: "Down", note: "无响应" },
+    ],
+    c3: [
+      { step: "followers", role: "follower", label: "Follower", note: "等待心跳" },
+      { step: "down", role: "follower", label: "Follower", note: "检测失联" },
+      { step: "timeout", role: "follower", label: "Follower", note: "保持状态" },
+      { step: "request", role: "follower", label: "Follower", note: "准备投票" },
+      { step: "vote", role: "follower", label: "Follower", note: "投票 C1" },
+      { step: "heartbeat", role: "follower", label: "Follower", note: "接收心跳" },
+    ],
   };
 
   const state = stateMap[step.active] || stateMap.followers;
   const emphasizeElection = ["timeout", "request", "vote", "heartbeat"].includes(step.active);
+  const hideC2 = step.active !== "followers";
   const terms = [12, 13, 14];
   const termIndex = Math.max(0, terms.indexOf(state.term));
   const termLeft = terms.length > 1 ? (termIndex / (terms.length - 1)) * 100 : 0;
-  const voteCount = state.votes.length;
-  const votePercent = (voteCount / controllers.length) * 100;
 
-  const renderLine = (from, to, label, active, offsetY, variant = "") => {
-    const fromAnchor = anchors[from];
-    const toAnchor = anchors[to];
-    if (!fromAnchor || !toAnchor) {
+  const stepIndexMap = steps.reduce((acc, item, index) => {
+    acc[item.id] = index;
+    return acc;
+  }, {});
+
+  const renderMessage = ({
+    from,
+    to,
+    label,
+    active,
+    variant = "",
+    stepId,
+    offsetX = 0,
+    labelSide = "right",
+  }) => {
+    if (!anchors.track) {
       return null;
     }
-    let startX = fromAnchor.x;
-    let endX = toAnchor.x;
-    if (fromAnchor.x < toAnchor.x) {
-      startX += fromAnchor.width / 2;
-      endX -= toAnchor.width / 2;
-    } else {
-      startX -= fromAnchor.width / 2;
-      endX += toAnchor.width / 2;
+    const fromLane = anchors.lanes[from];
+    const toLane = anchors.lanes[to];
+    if (!fromLane || !toLane) {
+      return null;
     }
-    const left = Math.min(startX, endX);
-    const width = Math.max(0, Math.abs(endX - startX));
-    const mid = (startX + endX) / 2;
-    const y = (fromAnchor.y + toAnchor.y) / 2 + offsetY;
-    const isReverse = startX > endX;
+    const index = stepIndexMap[stepId];
+    const column = anchors.columns[index];
+    const fallback =
+      anchors.track.left + (index + 0.5) * (anchors.track.width / steps.length);
+    const x = (column ? column.center : fallback) + offsetX;
+    const fromAbove = fromLane.center < toLane.center;
+    const start = fromAbove ? fromLane.bottom : fromLane.top;
+    const end = fromAbove ? toLane.top : toLane.bottom;
+    const top = Math.min(start, end);
+    const height = Math.abs(end - start);
+    const isReverse = start > end;
     return (
       <div
-        className={`kraft-line ${variant} ${active ? "is-on" : ""}`}
+        className={`timing-message label-${labelSide} ${variant} ${active ? "is-on" : ""} ${
+          isReverse ? "is-reverse" : ""
+        }`}
         style={{
-          "--line-left": `${left}px`,
-          "--line-width": `${width}px`,
-          "--line-mid": `${mid}px`,
-          "--line-y": `${y}px`,
+          "--msg-x": `${x}px`,
+          "--msg-top": `${top}px`,
+          "--msg-height": `${height}px`,
         }}
       >
-        <div className={`kraft-line__bar ${isReverse ? "is-reverse" : ""}`} />
-        <span className="kraft-line__label">{label}</span>
+        <span className="timing-message__label">{label}</span>
+        <span className="timing-message__pulse" />
       </div>
     );
   };
 
   return (
-    <div className={`kraft-election mode--${step.active}`}>
+    <div className={`kraft-timing mode--${step.active}`}>
       <div className="kraft-election__header">
         <div className="kraft-election__title">KRaft Controller Election</div>
         <div className="kraft-term" style={{ "--term-left": `${termLeft}%` }}>
@@ -226,64 +283,100 @@ function ElectionDiagram({ step }) {
         </div>
       </div>
 
-      <div className="kraft-election__stage">
-        <div className="kraft-nodes-wrap" ref={wrapRef}>
-          <div className="kraft-lines" aria-hidden="true">
-            {renderLine("c1", "c2", "RequestVote", state.showRequest, -18, "line--vote")}
-            {renderLine("c1", "c3", "RequestVote", state.showRequest, 0, "line--vote")}
-            {renderLine("c1", "c3", "Heartbeat", state.showHeartbeat, 18, "line--heartbeat")}
-          </div>
+      <div className="timing-axis">
+        <div className="axis-label">时间轴</div>
+        <div className="axis-steps">
+          {steps.map((item) => (
+            <div
+              key={item.id}
+              className={`axis-step ${item.id === step.active ? "is-active" : ""}`}
+            >
+              {item.title}
+            </div>
+          ))}
+        </div>
+      </div>
 
-          <div className="kraft-nodes">
-            {controllers.map((node) => {
-              const info = state.status[node.id];
-              const hasVote = state.votes.includes(node.id);
-              const isCandidate = info.role === "candidate";
-              const isLeader = info.role === "leader";
-              const isDown = info.role === "down";
-              return (
-                <div
-                  key={node.id}
-                  ref={(el) => {
-                    nodeRefs.current[node.id] = el;
-                  }}
-                  className={`kraft-node ${info.role}`}
-                >
-                  <div className="node-title">{node.label}</div>
-                  <div className="node-status">
-                    {isLeader && "Leader"}
-                    {isCandidate && "Candidate"}
-                    {info.role === "follower" && "Follower"}
-                    {isDown && "Down"}
-                  </div>
-                  <div className={`node-info ${emphasizeElection ? "is-election" : ""}`}>
+      <div className="timing-stage" ref={stageRef}>
+        <div className="timing-rows">
+          {controllers.map((node) => {
+            const info = state.status[node.id];
+            const lane = timeline[node.id];
+            const isHidden = node.id === "c2" && hideC2;
+            return (
+              <div
+                key={node.id}
+                className={`timing-row ${info.role} ${isHidden ? "is-hidden" : ""}`}
+              >
+                <div className="lane-meta">
+                  <div className="lane-title">{node.label}</div>
+                  <div className="lane-role">{info.role}</div>
+                  <div className={`lane-chips ${emphasizeElection ? "is-election" : ""}`}>
                     <span className="chip-term">Term {info.term}</span>
-                    <span className={`chip-vote ${hasVote ? "is-active" : ""}`}>
+                    <span className={`chip-vote ${info.votedFor !== "-" ? "is-active" : ""}`}>
                       Vote {info.votedFor}
                     </span>
                     <span className={`chip-heart ${info.heartbeat !== "ok" ? "is-warn" : ""}`}>
                       Heartbeat {info.heartbeat}
                     </span>
                   </div>
-                  {state.showTimeout && node.id === state.candidate && (
-                    <div className="timeout-ring" />
-                  )}
-                  {hasVote && <div className="vote-badge">Vote</div>}
                 </div>
-              );
-            })}
-          </div>
+                <div
+                  className="lane-track"
+                  ref={(el) => {
+                    laneRefs.current[node.id] = el;
+                  }}
+                >
+                  {lane.map((cell) => (
+                    <div
+                      key={cell.step}
+                      className={`lane-cell ${cell.role} ${
+                        cell.step === step.active ? "is-active" : ""
+                      }`}
+                    >
+                      <div className="cell-title">{cell.label}</div>
+                      <div className="cell-note">{cell.note}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="kraft-votes">
-          <div className="votes-title">实时计票</div>
-          <div className="votes-count">
-            {voteCount}/{controllers.length}
-          </div>
-          <div className="votes-bar">
-            <span style={{ width: `${votePercent}%` }} />
-          </div>
-          <div className="votes-note">{voteCount >= 2 ? "多数派达成" : "等待更多投票"}</div>
+        <div className="timing-track-area" ref={trackRef} />
+
+        <div className="timing-messages" aria-hidden="true">
+          {renderMessage({
+            from: "c1",
+            to: "c3",
+            label: "RequestVote",
+            active: step.active === "request",
+            variant: "msg--vote",
+            stepId: "request",
+            offsetX: 0,
+            labelSide: "left",
+          })}
+          {renderMessage({
+            from: "c3",
+            to: "c1",
+            label: "VoteGranted",
+            active: step.active === "vote",
+            variant: "msg--vote",
+            stepId: "vote",
+            offsetX: 0,
+            labelSide: "left",
+          })}
+          {renderMessage({
+            from: "c1",
+            to: "c3",
+            label: "Heartbeat",
+            active: step.active === "heartbeat",
+            variant: "msg--heartbeat",
+            stepId: "heartbeat",
+            offsetX: 0,
+            labelSide: "left",
+          })}
         </div>
       </div>
 
@@ -302,7 +395,7 @@ export default function MqKafkaElection() {
     <TopicShell
       eyebrow="消息队列动画"
       title="Kafka KRaft 选举机制"
-      subtitle="展示 KRaft 控制器选举全过程：超时、投票、计票、心跳。"
+      subtitle="用时序图方式展示 KRaft 控制器选举全过程。"
       steps={steps}
       panel={[
         { title: "重点", detail: "Raft 选主 + 多数派投票。" },
