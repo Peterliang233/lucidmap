@@ -188,15 +188,6 @@
               ]
             },
             {
-              "title": "Redis Cluster 分片",
-              "desc": "槽位、迁移与扩容",
-              "link": "/topics/redis/cluster",
-              "tags": [
-                "系统设计",
-                "性能优化"
-              ]
-            },
-            {
               "title": "缓存淘汰策略",
               "desc": "LRU/LFU/TTL 组合",
               "link": "/topics/redis/eviction",
@@ -393,7 +384,12 @@
               "tags": [
                 "高频"
               ]
-            },
+            }
+          ]
+        },
+        {
+          "title": "协议与协作",
+          "items": [
             {
               "title": "Agent Skill 体系",
               "desc": "技能封装与治理",
@@ -401,12 +397,7 @@
               "tags": [
                 "系统设计"
               ]
-            }
-          ]
-        },
-        {
-          "title": "协议与协作",
-          "items": [
+            },
             {
               "title": "MCP",
               "desc": "工具接入标准协议",
