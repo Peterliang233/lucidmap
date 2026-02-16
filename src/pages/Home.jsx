@@ -223,9 +223,6 @@ export default function HomePage() {
         ))}
       </main>
 
-      <footer className="footer">
-        <p>{site?.footer || "持续维护中 · 使用 JSON 配置动态扩展"}</p>
-      </footer>
       </div>
     </Layout>
   );
