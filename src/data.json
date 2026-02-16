@@ -358,8 +358,8 @@
           "title": "RocketMQ",
           "items": [
             {
-              "title": "RocketMQ 核心组件",
-              "desc": "NameServer、Broker 与路由",
+              "title": "RocketMQ 核心机制",
+              "desc": "路由发现、存储链路与消费机制",
               "link": "/topics/mq/rocketmq-core",
               "tags": [
                 "高频",
@@ -387,8 +387,8 @@
           "title": "Agent",
           "items": [
             {
-              "title": "Agent 核心循环",
-              "desc": "Plan / Act / Reflect",
+              "title": "Agent 架构",
+              "desc": "核心模块组成",
               "link": "/topics/ai/agent",
               "tags": [
                 "高频"

@@ -84,12 +84,17 @@ export default function LandingPage() {
 
         <div className="landing__cta">
           <div>
-            <h2>继续探索</h2>
-            <p>每个模块都能深入到动画知识点，持续更新。</p>
+            <h2>加入共建</h2>
+            <p>欢迎一起参与建设，提交想法与改进建议，让内容更完整准确。</p>
           </div>
-          <Link className="landing__primary" to="/map">
-            打开知识地图
-          </Link>
+          <a
+            className="landing__primary"
+            href="https://github.com/Peterliang233/lucidmap/tree/main"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub 项目地址
+          </a>
         </div>
       </section>
     </Layout>
