@@ -2188,211 +2188,243 @@ a {
   color: var(--ink-soft);
 }
 
-.http-diagram .http-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-.http-card {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 16px;
-  background: #fff;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.http-card.is-active {
-  border-color: var(--accent);
-  transform: translateY(-4px);
-}
-
-.http-streams {
-  display: flex;
-  gap: 6px;
-  margin-top: 12px;
-}
-
-.http-streams span {
-  flex: 1;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(42, 111, 107, 0.2);
-  animation: flow 1.8s ease infinite;
-}
-
-.http-card.is-active .http-streams span {
-  background: rgba(210, 100, 42, 0.4);
-}
-
 .http-diagram .http-evo {
   display: grid;
-  gap: 18px;
-}
-
-.http-evo__rails {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 16px;
-  color: var(--ink-soft);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.75rem;
 }
 
-.http-evo__lane {
-  text-align: center;
+.http-evo__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.http-evo__panel {
-  display: none;
+.http-evo__title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
 }
 
-.http-evo.mode--http1 .http-evo__panel.http1,
-.http-evo.mode--http2 .http-evo__panel.http2,
-.http-evo.mode--http3 .http-evo__panel.http3 {
-  display: block;
+.http-evo__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.http1-conn,
-.http2-conn,
-.http3-conn {
-  border-radius: 18px;
+.http-chip {
   border: 1px solid var(--line);
-  background: #fff;
-  padding: 16px;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.http-chip.is-primary {
+  border-color: rgba(210, 100, 42, 0.45);
+  color: var(--ink);
+  background: rgba(210, 100, 42, 0.12);
+}
+
+.http-seq {
   display: grid;
   gap: 12px;
 }
 
-.http1-tag,
-.http2-tag,
-.http3-tag {
-  font-weight: 700;
-  color: var(--accent);
+.http-evo .mcp-lifeline {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 22px rgba(31, 28, 24, 0.05);
 }
 
-.http1-queue {
-  display: grid;
-  gap: 8px;
-}
-
-.http1-req {
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
+.http-evo .mcp-lifeline.is-transport {
   background: rgba(42, 111, 107, 0.12);
-  font-size: 0.85rem;
-  width: fit-content;
-  animation: httpPulse 1.8s ease infinite;
 }
 
-.http1-req:nth-child(2) {
-  animation-delay: 0.3s;
+.http-evo .mcp-lifeline__title {
+  font-size: 0.82rem;
 }
 
-.http1-req--blocked {
-  background: rgba(210, 100, 42, 0.18);
-  border-color: rgba(210, 100, 42, 0.35);
-  position: relative;
-  overflow: hidden;
+.http-evo .mcp-lifeline__meta {
+  font-size: 0.7rem;
 }
 
-.http1-req--blocked::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  animation: shimmer 2s ease infinite;
+.http-evo .mcp-seq__lines span {
+  background: rgba(31, 28, 24, 0.08);
 }
 
-.http1-note,
-.http2-note,
-.http3-note {
+.http-evo .mcp-line {
+  background: rgba(31, 28, 24, 0.18);
+}
+
+.http-evo .mcp-line::after {
+  border-left-color: rgba(31, 28, 24, 0.45);
+}
+
+.http-evo .mcp-line::before {
+  background: var(--accent);
+}
+
+.http-evo .mcp-label {
+  font-size: 0.74rem;
+  border-color: rgba(31, 28, 24, 0.15);
   color: var(--ink-soft);
-  font-size: 0.85rem;
 }
 
-.http2-lanes {
-  display: grid;
-  gap: 10px;
+.http-row.is-active .mcp-line {
+  background: rgba(42, 111, 107, 0.35);
 }
 
-.http2-lane {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+.http-row.is-active .mcp-line::before {
+  opacity: 1;
+  animation: httpTravel 2.6s linear infinite;
+  animation-delay: var(--delay, 0s);
 }
 
-.http2-lane .frame {
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(42, 111, 107, 0.2);
-  animation: frameFlow 1.6s ease infinite;
+.http-row.is-active .mcp-line.is-reverse::before {
+  animation: httpTravelReverse 2.6s linear infinite;
+  animation-delay: var(--delay, 0s);
 }
 
-.http2-lane.lane--a .frame {
+.http-row.stream--a .mcp-line {
   background: rgba(210, 100, 42, 0.35);
 }
 
-.http2-lane.lane--b .frame {
+.http-row.stream--b .mcp-line {
   background: rgba(42, 111, 107, 0.35);
-  animation-delay: 0.2s;
 }
 
-.http2-lane.lane--c .frame {
-  background: rgba(31, 28, 24, 0.25);
-  animation-delay: 0.4s;
+.http-row.stream--a .mcp-label {
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--ink);
 }
 
-.http3-handshake {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  color: var(--accent-2);
+.http-row.stream--b .mcp-label {
+  border-color: rgba(42, 111, 107, 0.4);
+  color: var(--ink);
 }
 
-.http3-handshake__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 6px rgba(210, 100, 42, 0.18);
-  animation: pulse 1.6s ease infinite;
+.http-row.is-active.stream--a .mcp-line {
+  background: rgba(210, 100, 42, 0.6);
 }
 
-.http3-streams {
-  display: grid;
-  gap: 8px;
+.http-row.is-active.stream--b .mcp-line {
+  background: rgba(42, 111, 107, 0.6);
 }
 
-.http3-stream {
-  display: flex;
-  gap: 8px;
+.http-row.is-control .mcp-line {
+  background: rgba(31, 28, 24, 0.22);
 }
 
-.http3-stream span {
-  flex: 1;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(42, 111, 107, 0.25);
-  animation: quicFlow 1.6s ease infinite;
+.http-row.is-control .mcp-label {
+  color: var(--ink-soft);
 }
 
-.http3-stream.stream--fast span {
-  background: rgba(210, 100, 42, 0.3);
+.http-row.is-blocked .mcp-line,
+.http-row.is-loss .mcp-line {
+  background: transparent;
+  border-top: 2px dashed rgba(210, 100, 42, 0.55);
+  height: 0;
 }
 
-.http3-loss {
-  justify-self: end;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px dashed rgba(210, 100, 42, 0.4);
+.http-row.is-blocked .mcp-line::after,
+.http-row.is-loss .mcp-line::after {
+  border-left-color: rgba(210, 100, 42, 0.55);
+}
+
+.http-row.is-blocked .mcp-label,
+.http-row.is-loss .mcp-label {
+  border-color: rgba(210, 100, 42, 0.5);
   color: var(--accent);
-  font-size: 0.75rem;
-  animation: httpPulse 1.6s ease infinite;
+  background: rgba(210, 100, 42, 0.08);
+}
+
+.http-row.is-loss .mcp-label::before {
+  content: "x";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(210, 100, 42, 0.45);
+  color: var(--accent);
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.http-evo__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.http-legend {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.http-legend.stream--a {
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--ink);
+}
+
+.http-legend.stream--b {
+  border-color: rgba(42, 111, 107, 0.4);
+  color: var(--ink);
+}
+
+.http-legend.control {
+  border-color: rgba(31, 28, 24, 0.25);
+  color: var(--ink-soft);
+}
+
+.http-legend.loss {
+  border-style: dashed;
+  border-color: rgba(210, 100, 42, 0.5);
+  color: var(--accent);
+}
+
+@keyframes httpTravel {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    left: calc(100% - 10px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes httpTravelReverse {
+  0% {
+    left: calc(100% - 10px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    left: 0%;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes httpPulse {
@@ -2444,22 +2476,27 @@ a {
 }
 
 @media (max-width: 900px) {
-  .http2-lane {
-    grid-template-columns: repeat(4, 1fr);
+  .http-evo__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .http-evo .mcp-lifeline__title {
+    font-size: 0.78rem;
+  }
+
+  .http-evo .mcp-lifeline__meta {
+    font-size: 0.66rem;
   }
 }
 
 @media (max-width: 640px) {
-  .http-evo__rails {
+  .http-chip,
+  .http-legend {
     font-size: 0.68rem;
-    letter-spacing: 0.08em;
   }
 
-  .http1-req {
-    font-size: 0.78rem;
-  }
-
-  .http3-loss {
+  .http-evo .mcp-label {
     font-size: 0.68rem;
   }
 }
@@ -5573,12 +5610,1495 @@ a {
   animation: shimmer 2s ease infinite;
 }
 
+.mq-kafka-storage .kafka-store {
+  display: grid;
+  gap: 16px;
+}
+
+.mq-kafka-storage .kafka-store__nodes {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.mq-kafka-storage .store-node {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  background: #fff;
+  display: grid;
+  gap: 6px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.mq-kafka-storage .store-node .node-meta {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.mq-kafka-storage .kafka-store__pipes {
+  position: relative;
+  height: 24px;
+}
+
+.mq-kafka-storage .store-line {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  background: rgba(31, 28, 24, 0.2);
+  border-radius: 999px;
+}
+
+.mq-kafka-storage .store-line::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 6px solid rgba(31, 28, 24, 0.45);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.mq-kafka-storage .store-line::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.mq-kafka-storage .store-line--write {
+  left: 8%;
+  right: 52%;
+}
+
+.mq-kafka-storage .store-line--read {
+  left: 52%;
+  right: 8%;
+}
+
+.mq-kafka-storage .kafka-store__stack {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mq-kafka-storage .kafka-store__example {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+  display: grid;
+  gap: 10px;
+}
+
+.mq-kafka-storage .example-title {
+  font-weight: 600;
+}
+
+.mq-kafka-storage .example-rows {
+  display: grid;
+  gap: 8px;
+}
+
+.mq-kafka-storage .example-row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(31, 28, 24, 0.08);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  background: rgba(31, 28, 24, 0.03);
+}
+
+.mq-kafka-storage .example-step {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(42, 111, 107, 0.35);
+  color: var(--accent-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.mq-kafka-storage .example-arrow {
+  color: var(--ink-soft);
+  justify-self: end;
+}
+
+.mq-kafka-storage .store-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+  display: grid;
+  gap: 10px;
+  position: relative;
+  min-height: 120px;
+}
+
+.mq-kafka-storage .card-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.mq-kafka-storage .card-tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(42, 111, 107, 0.35);
+  font-size: 0.7rem;
+  color: var(--accent-2);
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.mq-kafka-storage .log-segments {
+  display: grid;
+  gap: 6px;
+}
+
+.mq-kafka-storage .log-seg {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(42, 111, 107, 0.1);
+}
+
+.mq-kafka-storage .log-seg.is-active {
+  border-color: var(--accent);
+  background: rgba(210, 100, 42, 0.18);
+  color: var(--ink);
+}
+
+.mq-kafka-storage .log-append {
+  display: flex;
+  gap: 6px;
+}
+
+.mq-kafka-storage .append-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(42, 111, 107, 0.3);
+  opacity: 0.6;
+}
+
+.mq-kafka-storage .index-table {
+  display: grid;
+  gap: 6px;
+}
+
+.mq-kafka-storage .index-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 28, 24, 0.08);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(31, 28, 24, 0.03);
+}
+
+.mq-kafka-storage .cache-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mq-kafka-storage .cache-block {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink-soft);
+}
+
+.mq-kafka-storage .cache-line {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background: rgba(42, 111, 107, 0.3);
+  border-radius: 999px;
+}
+
+.mq-kafka-storage .cache-line::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 6px solid rgba(42, 111, 107, 0.5);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.mq-kafka-storage .cache-line::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.mq-kafka-storage .cache-note {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-storage .batch-box {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.mq-kafka-storage .batch-msg {
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(210, 100, 42, 0.35);
+  background: rgba(210, 100, 42, 0.12);
+  font-size: 0.7rem;
+  color: var(--ink);
+}
+
+.mq-kafka-storage .batch-chip {
+  justify-self: start;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+  font-size: 0.7rem;
+  background: rgba(210, 100, 42, 0.1);
+}
+
+.mq-kafka-storage .kafka-store.mode--append .log-card,
+.mq-kafka-storage .kafka-store.mode--segment .log-card,
+.mq-kafka-storage .kafka-store.mode--segment .index-card,
+.mq-kafka-storage .kafka-store.mode--cache .cache-card,
+.mq-kafka-storage .kafka-store.mode--batch .batch-card {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-storage .kafka-store.mode--append .append-dot {
+  background: rgba(210, 100, 42, 0.4);
+  animation: httpPulse 1.6s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--segment .index-row {
+  animation: flow 1.6s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--cache .cache-line::before {
+  opacity: 1;
+  animation: kafkaStream 2.4s linear infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--batch .batch-msg {
+  animation: frameFlow 1.6s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--read .example-row {
+  animation: kafkaExample 2.4s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--read .example-row:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.mq-kafka-storage .kafka-store.mode--read .example-row:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.mq-kafka-storage .kafka-store.mode--append .store-line--write,
+.mq-kafka-storage .kafka-store.mode--batch .store-line--write {
+  background: rgba(210, 100, 42, 0.5);
+}
+
+.mq-kafka-storage .kafka-store.mode--cache .store-line--read {
+  background: rgba(42, 111, 107, 0.5);
+}
+
+.mq-kafka-storage .kafka-store.mode--append .store-line--write::before,
+.mq-kafka-storage .kafka-store.mode--batch .store-line--write::before,
+.mq-kafka-storage .kafka-store.mode--cache .store-line--read::before {
+  opacity: 1;
+  animation: kafkaStream 2.4s linear infinite;
+}
+
+@keyframes kafkaStream {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    left: calc(100% - 8px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes kafkaExample {
+  0%,
+  100% {
+    border-color: rgba(31, 28, 24, 0.08);
+    color: var(--ink-soft);
+    box-shadow: none;
+  }
+  50% {
+    border-color: rgba(210, 100, 42, 0.45);
+    color: var(--ink);
+    box-shadow: 0 10px 18px rgba(210, 100, 42, 0.12);
+    background: rgba(210, 100, 42, 0.08);
+  }
+}
+
 @media (max-width: 960px) {
   .kafka-top {
     grid-template-columns: 1fr;
   }
 
   .kafka-arrows {
+    display: none;
+  }
+
+  .mq-kafka-storage .kafka-store__nodes {
+    grid-template-columns: 1fr;
+  }
+
+  .mq-kafka-storage .kafka-store__pipes {
+    display: none;
+  }
+
+  .mq-kafka-storage .kafka-store__stack {
+    grid-template-columns: 1fr;
+  }
+
+  .mq-kafka-storage .example-row {
+    grid-template-columns: 20px minmax(0, 1fr);
+  }
+
+  .mq-kafka-storage .example-arrow {
+    justify-self: start;
+  }
+}
+
+.mq-kafka-election .kafka-election {
+  display: grid;
+  gap: 16px;
+}
+
+.mq-kafka-election .kafka-election__scene {
+  position: relative;
+  min-height: 360px;
+  perspective: 1200px;
+}
+
+.mq-kafka-election .kafka-election__stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "controllers metadata client"
+    "brokers metadata client";
+  gap: 16px;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.mq-kafka-election .election-section.controllers {
+  grid-area: controllers;
+}
+
+.mq-kafka-election .election-section.brokers {
+  grid-area: brokers;
+}
+
+.mq-kafka-election .election-section {
+  position: relative;
+  padding: 10px;
+  border-radius: 18px;
+  overflow: visible;
+}
+
+.mq-kafka-election .election-section.is-focus {
+  border: 1px solid rgba(210, 100, 42, 0.4);
+  background: rgba(210, 100, 42, 0.08);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-election .election-metadata {
+  grid-area: metadata;
+  display: grid;
+  place-items: center;
+  transform: translateZ(20px);
+  position: relative;
+  overflow: visible;
+}
+
+.mq-kafka-election .election-metadata.is-focus .metadata-stack {
+  box-shadow: 0 14px 26px rgba(210, 100, 42, 0.16);
+}
+
+.mq-kafka-election .election-client {
+  grid-area: client;
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  transform: translateZ(16px);
+  position: relative;
+}
+
+.mq-kafka-election .election-label {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.mq-kafka-election .election-nodes {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mq-kafka-election .election-node {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fff;
+  display: grid;
+  gap: 6px;
+  text-align: center;
+  font-weight: 600;
+  min-width: 86px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(18px) rotateX(6deg) rotateY(-6deg);
+  box-shadow: 0 10px 22px rgba(31, 28, 24, 0.08);
+}
+
+.mq-kafka-election .election-node::before {
+  content: "";
+  position: absolute;
+  inset: 6px -6px -6px 6px;
+  border-radius: inherit;
+  background: rgba(31, 28, 24, 0.06);
+  transform: translateZ(-14px);
+}
+
+.mq-kafka-election .election-node .node-meta {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.mq-kafka-election .election-node.controller.is-leader {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.16);
+}
+
+.mq-kafka-election .election-node.controller.is-voting {
+  animation: kafkaFloat3d 3s ease-in-out infinite;
+}
+
+.mq-kafka-election .election-badge {
+  margin-top: 8px;
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(42, 111, 107, 0.35);
+  font-size: 0.72rem;
+  color: var(--accent-2);
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.mq-kafka-election .election-metadata.is-active .metadata-stack {
+  animation: kafkaPulse3d 2.4s ease-in-out infinite;
+}
+
+.mq-kafka-election .metadata-stack {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.mq-kafka-election .metadata-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 28, 24, 0.15);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.mq-kafka-election .metadata-layer.layer-1 {
+  transform: translateZ(0);
+}
+
+.mq-kafka-election .metadata-layer.layer-2 {
+  transform: translateZ(-8px);
+  background: rgba(42, 111, 107, 0.05);
+}
+
+.mq-kafka-election .metadata-layer.layer-3 {
+  transform: translateZ(-16px);
+  background: rgba(31, 28, 24, 0.04);
+}
+
+.mq-kafka-election .metadata-layer.layer-4 {
+  transform: translateZ(-24px);
+  background: rgba(31, 28, 24, 0.03);
+}
+
+.mq-kafka-election .metadata-title {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 10px 8px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.mq-kafka-election .metadata-rows {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  display: grid;
+  gap: 4px;
+  font-size: 0.62rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .metadata-rows span {
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+.mq-kafka-election .client-node {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fff;
+  font-weight: 600;
+  transform: translateZ(10px) rotateX(6deg);
+  box-shadow: 0 10px 22px rgba(31, 28, 24, 0.08);
+}
+
+.mq-kafka-election .client-hint {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .election-client.is-active .client-node {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.16);
+}
+
+.mq-kafka-election .broker.is-leader {
+  border-color: var(--accent);
+}
+
+.mq-kafka-election .broker.is-candidate {
+  border-color: rgba(42, 111, 107, 0.45);
+}
+
+.mq-kafka-election .broker.is-chosen {
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.2);
+}
+
+.mq-kafka-election .broker.is-down {
+  opacity: 0.45;
+  filter: grayscale(0.8);
+  transform: translateZ(6px) rotateX(6deg) rotateY(-6deg);
+}
+
+.mq-kafka-election .broker.is-follower {
+  border-style: dashed;
+  border-color: rgba(31, 28, 24, 0.25);
+}
+
+.mq-kafka-election .kafka-election.mode--detect .broker.is-down {
+  border-color: rgba(210, 100, 42, 0.4);
+  box-shadow: 0 12px 22px rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-election .kafka-election.mode--leader .broker.is-leader {
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.18);
+}
+
+.mq-kafka-election .node-tags {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.mq-kafka-election .node-tags span {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(42, 111, 107, 0.3);
+  font-size: 0.66rem;
+  color: var(--accent-2);
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.mq-kafka-election .node-tags .tag-chosen {
+  border-color: rgba(210, 100, 42, 0.5);
+  color: var(--accent);
+  background: rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-election .node-tags .tag-candidate {
+  border-color: rgba(42, 111, 107, 0.45);
+  color: var(--accent-2);
+  background: rgba(42, 111, 107, 0.12);
+}
+
+.mq-kafka-election .replica-log {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.mq-kafka-election .replica-log span {
+  width: 12px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.25);
+}
+
+.mq-kafka-election .broker.is-leader .replica-log span {
+  background: rgba(210, 100, 42, 0.4);
+}
+
+.mq-kafka-election .partition-chip {
+  margin-top: 8px;
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(210, 100, 42, 0.35);
+  color: var(--accent);
+  font-size: 0.72rem;
+  background: rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-election .election-note {
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(210, 100, 42, 0.4);
+  background: rgba(210, 100, 42, 0.08);
+  width: fit-content;
+}
+
+.mq-kafka-election .leader-logic {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  display: grid;
+  gap: 6px;
+}
+
+.mq-kafka-election .logic-title {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.mq-kafka-election .logic-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .logic-chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.15);
+  font-size: 0.66rem;
+  color: var(--ink-soft);
+  background: rgba(31, 28, 24, 0.04);
+}
+
+.mq-kafka-election .logic-chip.warn {
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+  background: rgba(210, 100, 42, 0.1);
+}
+
+.mq-kafka-election .section-flow {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(31, 28, 24, 0.2);
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.mq-kafka-election .section-flow::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+}
+
+.mq-kafka-election .section-flow::after {
+  content: "";
+  position: absolute;
+  border-left: 6px solid rgba(31, 28, 24, 0.4);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.mq-kafka-election .section-flow.is-on {
+  opacity: 1;
+}
+
+.mq-kafka-election .section-flow.is-on::before {
+  opacity: 1;
+}
+
+.mq-kafka-election .section-flow.flow-right {
+  right: -56px;
+  top: 50%;
+  width: 56px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-right--from-left {
+  left: -56px;
+  right: auto;
+}
+
+.mq-kafka-election .section-flow.flow-right::before {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-right::after {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-down {
+  bottom: -48px;
+  left: 50%;
+  width: 2px;
+  height: 48px;
+  transform: translateX(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-down::before {
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0);
+}
+
+.mq-kafka-election .section-flow.flow-down::after {
+  top: auto;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.mq-kafka-election .section-flow.flow-up {
+  top: -48px;
+  left: 50%;
+  width: 2px;
+  height: 48px;
+  transform: translateX(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-left {
+  left: -56px;
+  top: 50%;
+  width: 56px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-left--from-right {
+  right: -56px;
+  left: auto;
+  top: 58%;
+}
+
+.mq-kafka-election .section-flow.flow-left::before {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-left::after {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.mq-kafka-election .section-flow.flow-up::before {
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0);
+}
+
+.mq-kafka-election .section-flow.flow-up::after {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+}
+
+.mq-kafka-election .section-flow.is-dashed {
+  background: transparent;
+  border-left: 2px dashed rgba(210, 100, 42, 0.55);
+  border-radius: 0;
+}
+
+.mq-kafka-election .section-flow.is-dashed::after {
+  border-left-color: rgba(210, 100, 42, 0.55);
+}
+
+.mq-kafka-election .section-flow.is-on.flow-right::before {
+  animation: kafkaFlowX 2.2s linear infinite;
+}
+
+.mq-kafka-election .section-flow.is-on.flow-down::before,
+.mq-kafka-election .section-flow.is-on.flow-up::before {
+  animation: kafkaFlowY 2.2s linear infinite;
+}
+
+.mq-kafka-election .section-flow.is-on.flow-left::before {
+  animation: kafkaFlowXReverse 2.2s linear infinite;
+}
+
+.mq-kafka-election .flow-tag {
+  position: absolute;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.15);
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.95);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.mq-kafka-election .flow-tag.is-on {
+  opacity: 1;
+}
+
+.mq-kafka-election .tag-right {
+  left: calc(100% + 28px);
+  top: 50%;
+  transform: translate(-50%, -150%);
+}
+
+.mq-kafka-election .tag-right--meta {
+  left: -28px;
+  top: 50%;
+  transform: translate(-50%, -170%);
+}
+
+.mq-kafka-election .tag-right--client {
+  left: -28px;
+  top: 50%;
+  transform: translate(-50%, -170%);
+}
+
+.mq-kafka-election .tag-down {
+  left: 50%;
+  top: calc(100% + 16px);
+  transform: translate(-50%, 0);
+}
+
+.mq-kafka-election .tag-up {
+  left: 50%;
+  top: -16px;
+  transform: translate(-50%, -100%);
+}
+
+.mq-kafka-election .tag-left {
+  left: calc(0% - 28px);
+  top: 50%;
+  transform: translate(-50%, -100%);
+}
+
+.mq-kafka-election .tag-left--broker {
+  left: calc(100% + 28px);
+  top: 58%;
+  transform: translate(-50%, -160%);
+}
+
+.mq-kafka-election .kafka-election__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mq-kafka-election .legend-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.mq-kafka-election .legend-chip.dashed {
+  border-style: dashed;
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+}
+
+@keyframes kafkaFlowX {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    left: calc(100% - 8px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes kafkaFlowY {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    top: calc(100% - 8px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes kafkaFlowXReverse {
+  0% {
+    right: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    right: calc(100% - 8px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes kafkaFloat3d {
+  0%,
+  100% {
+    transform: translateZ(18px) rotateX(6deg) rotateY(-6deg);
+  }
+  50% {
+    transform: translateZ(26px) rotateX(8deg) rotateY(-10deg);
+  }
+}
+
+@keyframes kafkaPulse3d {
+  0%,
+  100% {
+    transform: translateZ(0);
+  }
+  50% {
+    transform: translateZ(10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mq-kafka-election .kafka-election__hint {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  display: grid;
+  gap: 4px;
+  width: fit-content;
+}
+
+.mq-kafka-election .hint-title {
+  font-weight: 600;
+}
+
+.mq-kafka-election .hint-desc {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .kraft-election {
+  display: grid;
+  gap: 16px;
+}
+
+.mq-kafka-election .kraft-election__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mq-kafka-election .kraft-election__title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.mq-kafka-election .kraft-term {
+  min-width: 220px;
+}
+
+.mq-kafka-election .term-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.mq-kafka-election .term-dot {
+  text-align: center;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .term-dot.is-active {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.mq-kafka-election .term-marker {
+  position: absolute;
+  left: var(--term-left);
+  top: -6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px rgba(210, 100, 42, 0.18);
+  transform: translateX(-50%);
+}
+
+.mq-kafka-election .term-caption {
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+.mq-kafka-election .kraft-election__stage {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  padding: 20px 16px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  display: grid;
+  gap: 16px;
+}
+
+.mq-kafka-election .kraft-nodes-wrap {
+  position: relative;
+  padding: 20px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(31, 28, 24, 0.08);
+  background: rgba(31, 28, 24, 0.02);
+}
+
+.mq-kafka-election .kraft-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mq-kafka-election .kraft-line {
+  position: absolute;
+  top: var(--line-y);
+  left: var(--line-left);
+  width: var(--line-width);
+  opacity: 0.25;
+  transform: translateY(-50%);
+  transition: opacity 0.2s ease;
+}
+
+.mq-kafka-election .kraft-line__bar {
+  position: relative;
+  height: 2px;
+  background: rgba(31, 28, 24, 0.2);
+  border-radius: 999px;
+}
+
+.mq-kafka-election .kraft-line__bar::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 6px solid rgba(31, 28, 24, 0.4);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.mq-kafka-election .kraft-line__bar::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.mq-kafka-election .kraft-line__bar.is-reverse::after {
+  right: auto;
+  left: -6px;
+  border-left: none;
+  border-right: 6px solid rgba(31, 28, 24, 0.4);
+}
+
+.mq-kafka-election .kraft-line__bar.is-reverse::before {
+  left: auto;
+  right: 0;
+}
+
+.mq-kafka-election .kraft-line.is-on .kraft-line__bar::before {
+  opacity: 1;
+  animation: kafkaSignal 2.2s linear infinite;
+}
+
+.mq-kafka-election .kraft-line.is-on {
+  opacity: 1;
+}
+
+.mq-kafka-election .kraft-line__label {
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  transform: translateX(-50%);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.15);
+  background: rgba(255, 255, 255, 0.95);
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  opacity: 0;
+}
+
+.mq-kafka-election .kraft-line.is-on .kraft-line__label {
+  opacity: 1;
+}
+
+.mq-kafka-election .line--vote .kraft-line__bar {
+  background: rgba(42, 111, 107, 0.35);
+}
+
+.mq-kafka-election .line--heartbeat .kraft-line__bar {
+  background: rgba(210, 100, 42, 0.4);
+}
+
+.mq-kafka-election .kraft-nodes {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: center;
+}
+
+.mq-kafka-election .kraft-node {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 12px;
+  background: #fff;
+  text-align: center;
+  display: grid;
+  gap: 6px;
+  position: relative;
+}
+
+.mq-kafka-election .kraft-node .node-title {
+  font-weight: 700;
+}
+
+.mq-kafka-election .kraft-node .node-status {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .node-info {
+  display: grid;
+  gap: 4px;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .node-info span {
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.mq-kafka-election .node-info.is-election span {
+  border-color: rgba(42, 111, 107, 0.2);
+  background: rgba(42, 111, 107, 0.06);
+  color: var(--ink);
+}
+
+.mq-kafka-election .chip-vote.is-active {
+  border-color: rgba(42, 111, 107, 0.4);
+  background: rgba(42, 111, 107, 0.14);
+  color: var(--accent-2);
+}
+
+.mq-kafka-election .chip-heart.is-warn {
+  border-color: rgba(210, 100, 42, 0.4);
+  background: rgba(210, 100, 42, 0.12);
+  color: var(--accent);
+}
+
+.mq-kafka-election .kraft-node.candidate .node-status {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.mq-kafka-election .kraft-node.leader .node-status {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.mq-kafka-election .kraft-node.down .node-status {
+  color: rgba(31, 28, 24, 0.5);
+}
+
+.mq-kafka-election .kraft-node.follower {
+  border-color: rgba(31, 28, 24, 0.2);
+}
+
+.mq-kafka-election .kraft-node.candidate {
+  border-color: rgba(42, 111, 107, 0.5);
+  box-shadow: 0 10px 22px rgba(42, 111, 107, 0.12);
+}
+
+.mq-kafka-election .kraft-node.leader {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.18);
+}
+
+.mq-kafka-election .kraft-node.down {
+  opacity: 0.5;
+  filter: grayscale(0.9);
+  border-style: dashed;
+}
+
+.mq-kafka-election .timeout-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 20px;
+  border: 2px dashed rgba(210, 100, 42, 0.5);
+  animation: rotate 2.4s linear infinite;
+}
+
+.mq-kafka-election .vote-badge {
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(42, 111, 107, 0.4);
+  background: rgba(42, 111, 107, 0.12);
+  font-size: 0.68rem;
+  color: var(--accent-2);
+}
+
+.mq-kafka-election .kraft-votes {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  display: grid;
+  gap: 6px;
+  width: min(320px, 100%);
+  justify-self: start;
+  z-index: 2;
+}
+
+.mq-kafka-election .votes-title {
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.mq-kafka-election .votes-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.mq-kafka-election .votes-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(31, 28, 24, 0.08);
+  overflow: hidden;
+}
+
+.mq-kafka-election .votes-bar span {
+  display: block;
+  height: 100%;
+  background: rgba(42, 111, 107, 0.5);
+  transition: width 0.4s ease;
+}
+
+.mq-kafka-election .votes-note {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .kraft-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mq-kafka-election .legend-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.mq-kafka-election .legend-chip.leader {
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+}
+
+.mq-kafka-election .legend-chip.candidate {
+  border-color: rgba(42, 111, 107, 0.4);
+  color: var(--accent-2);
+}
+
+.mq-kafka-election .legend-chip.down {
+  border-style: dashed;
+  border-color: rgba(31, 28, 24, 0.3);
+}
+
+@media (max-width: 960px) {
+  .mq-kafka-election .kraft-nodes {
+    grid-template-columns: 1fr;
+  }
+
+  .mq-kafka-election .kraft-election__stage {
+    padding-top: 60px;
+  }
+
+  .mq-kafka-election .kraft-lines {
+    display: none;
+  }
+
+  .mq-kafka-election .kraft-votes {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 960px) {
+  .mq-kafka-election .kafka-election__stage {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "controllers"
+      "metadata"
+      "brokers"
+      "client";
+  }
+
+  .mq-kafka-election .section-flow {
     display: none;
   }
 }

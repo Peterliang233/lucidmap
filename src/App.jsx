@@ -28,6 +28,8 @@ import RedisCluster from "./pages/RedisCluster.jsx";
 import RedisEviction from "./pages/RedisEviction.jsx";
 import MqKafkaCore from "./pages/MqKafkaCore.jsx";
 import MqKafkaConsumer from "./pages/MqKafkaConsumer.jsx";
+import MqKafkaStorage from "./pages/MqKafkaStorage.jsx";
+import MqKafkaElection from "./pages/MqKafkaElection.jsx";
 import MqRocketCore from "./pages/MqRocketCore.jsx";
 import MqRocketFeatures from "./pages/MqRocketFeatures.jsx";
 import AiAgent from "./pages/AiAgent.jsx";
@@ -69,6 +71,8 @@ export default function App() {
         <Route path="/topics/redis/eviction" element={<RedisEviction />} />
         <Route path="/topics/mq/kafka-core" element={<MqKafkaCore />} />
         <Route path="/topics/mq/kafka-consumer" element={<MqKafkaConsumer />} />
+        <Route path="/topics/mq/kafka-storage" element={<MqKafkaStorage />} />
+        <Route path="/topics/mq/kafka-election" element={<MqKafkaElection />} />
         <Route path="/topics/mq/rocketmq-core" element={<MqRocketCore />} />
         <Route path="/topics/mq/rocketmq-features" element={<MqRocketFeatures />} />
         <Route path="/topics/ai/agent" element={<AiAgent />} />

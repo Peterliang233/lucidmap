@@ -121,7 +121,7 @@
       "desc": "事务、索引、SQL 调优与分布式存储",
       "groups": [
         {
-          "title": "MySQL · 事务与隔离",
+          "title": "MySQL",
           "items": [
             {
               "title": "事务四大特性 ACID",
@@ -138,12 +138,7 @@
               "tags": [
                 "高频"
               ]
-            }
-          ]
-        },
-        {
-          "title": "MySQL · 索引与优化",
-          "items": [
+            },
             {
               "title": "B+ 树索引原理",
               "desc": "聚簇索引、覆盖索引、回表",
@@ -164,7 +159,7 @@
           ]
         },
         {
-          "title": "Redis · 核心机制",
+          "title": "Redis",
           "items": [
             {
               "title": "数据类型与使用场景",
@@ -182,12 +177,7 @@
                 "高频",
                 "系统设计"
               ]
-            }
-          ]
-        },
-        {
-          "title": "Redis · 高可用与扩展",
-          "items": [
+            },
             {
               "title": "主从复制与哨兵",
               "desc": "自动故障转移与一致性",
@@ -205,12 +195,7 @@
                 "系统设计",
                 "性能优化"
               ]
-            }
-          ]
-        },
-        {
-          "title": "Redis · 性能与运维",
-          "items": [
+            },
             {
               "title": "缓存淘汰策略",
               "desc": "LRU/LFU/TTL 组合",
@@ -347,6 +332,24 @@
               "link": "/topics/mq/kafka-consumer",
               "tags": [
                 "高频"
+              ]
+            },
+            {
+              "title": "Kafka 消息存储机制",
+              "desc": "分区日志、段索引与高吞吐读写",
+              "link": "/topics/mq/kafka-storage",
+              "tags": [
+                "高频",
+                "系统设计"
+              ]
+            },
+            {
+              "title": "Kafka 选举机制",
+              "desc": "控制器选举与分区 Leader 选举",
+              "link": "/topics/mq/kafka-election",
+              "tags": [
+                "高频",
+                "系统设计"
               ]
             }
           ]
