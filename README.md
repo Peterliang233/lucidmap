@@ -1,90 +1,89 @@
-# LucidMap 知识地图
+# LucidMap Knowledge Map
 
-一个基于 **React + Vite** 的配置化知识地图站点，用动画专题页梳理计算机基础与系统设计主题。目录、卡片和标签都由 JSON 数据驱动，便于持续扩展。
+LucidMap is a **React + Vite** configuration-driven knowledge map site. It uses animated topic pages to organize computer fundamentals and system design topics. Navigation, cards, and tags are all driven by JSON for easy, continuous expansion.
 
-## 功能特性
-- JSON 配置化目录与内容
-- 知识地图分页浏览（每页展示 2 个大类）
-- 关键词搜索（标题 / 描述 / 标签）
-- 标签筛选（支持一键切换 / 取消）
-- 分组折叠 / 展开
-- 专题页动画展示（步骤时间轴 + 播放控制）
-- 自适应布局 + 动效卡片
+## Features
+- JSON-configured catalog and content
+- Paged knowledge map browsing (2 categories per page)
+- Keyword search (title / description / tags)
+- Tag filtering (toggle on/off)
+- Collapsible groups
+- Animated topic pages (step timeline + play/pause)
+- Responsive layout + motion cards
 
-## 技术栈
+## Tech Stack
 - React 18
 - Vite 5
 
-## 快速开始
-访问路径：
-- 首页：`#/`
-- 知识地图：`#/map`
-- 专题页示例：`#/topics/bplus-tree`
+## Quick Start
+Routes:
+- Home: `#/`
+- Knowledge map: `#/map`
+- Example topic: `#/topics/bplus-tree`
 
-1. 安装依赖
-```
+1. Install dependencies
+```bash
 npm install
 ```
 
-2. 启动开发服务器
-```
+2. Start dev server
+```bash
 npm run dev
 ```
 
-3. 打包
-```
+3. Build
+```bash
 npm run build
 ```
 
-4. 预览
-```
+4. Preview
+```bash
 npm run preview
 ```
 
-## 配置说明
-所有内容均在 `src/data.json` 中配置。
+## Configuration
+All content is configured in `src/data.json`.
 
-### 顶层结构
-- `site`: 站点信息（标题、副标题、页脚）
-- `legend`: 标签列表（可选，缺省自动从内容中收集）
-- `sections`: 目录分区列表
+### Top-Level Schema
+- `site`: site metadata (title, subtitle, footer)
+- `legend`: tag list (optional, defaults to auto-collected from content)
+- `sections`: catalog sections
 
-### Section 结构
-- `id`: 用于锚点定位的唯一标识
-- `title`: 分区标题
-- `desc`: 分区描述
-- `groups`: 分组列表
+### Section Schema
+- `id`: unique anchor ID
+- `title`: section title
+- `desc`: section description
+- `groups`: list of groups
 
-### Group 结构
-- `title`: 分组标题
-- `items`: 卡片列表
+### Group Schema
+- `title`: group title
+- `items`: list of cards
 
-### Item 结构
-- `title`: 卡片标题
-- `desc`: 简介
-- `link`: 外部链接或内部路由（可选，`#` 表示无链接）
-- `tags`: 标签数组
+### Item Schema
+- `title`: card title
+- `desc`: summary
+- `link`: external link or internal route (optional, `#` means no link)
+- `tags`: tag array
 
+### Internal Routing Example
+- If `link` in `src/data.json` starts with `/`, it is treated as an internal route.
+- Example: `/topics/bplus-tree` (Hash route address is `#/topics/bplus-tree`).
 
-### 内部路由示例
-- `src/data.json` 中如果 `link` 以 `/` 开头，会被视为站内路由。
-- 示例：`/topics/bplus-tree`（Hash 路由下实际地址为 `#/topics/bplus-tree`）。
-
-### 示例
-```
+### Example
+```json
 {
   "id": "os",
-  "title": "操作系统",
-  "desc": "进程、线程、内存、调度与 I/O 关键点",
+  "title": "Operating Systems",
+  "desc": "Processes, threads, memory, scheduling, and I/O essentials",
   "groups": [
     {
-      "title": "进程与线程",
+      "title": "Processes and Threads",
       "items": [
         {
-          "title": "线程同步与并发控制",
-          "desc": "互斥锁、自旋锁、条件变量的对比与适用场景",
+          "title": "Thread Sync & Concurrency Control",
+          "desc": "Mutex, spinlock, and condition variables: comparison and usage",
           "link": "#",
-          "tags": ["高频", "性能优化"]
+          "tags": ["high-frequency", "performance"]
         }
       ]
     }
@@ -92,7 +91,7 @@ npm run preview
 }
 ```
 
-## 目录结构
+## Directory Structure
 ```
 .
 ├─ index.html
@@ -107,10 +106,10 @@ npm run preview
    └─ styles.css
 ```
 
-## 常见问题
-- **Q: 为什么直接打开 HTML 看不到内容？**
-  - A: 这是 Vite 项目，需要 `npm run dev` 启动本地服务器。
+## FAQ
+- **Q: Why does opening the HTML directly show nothing?**
+  - A: This is a Vite project. Use `npm run dev` to start a local server.
 
-## 扩展方式
-- 新增专题页：在 `src/pages/` 增加页面，并在 `src/App.jsx` 注册路由。
-- 新增知识卡片：在 `src/data.json` 中添加 `section/group/item` 配置即可。
+## How to Extend
+- Add a new topic page: create a page in `src/pages/` and register a route in `src/App.jsx`.
+- Add knowledge cards: add `section/group/item` entries in `src/data.json`.
