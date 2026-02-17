@@ -259,6 +259,106 @@
   gap: 16px;
 }
 
+@media (max-width: 720px) {
+  .landing {
+    padding: 48px 6vw 64px;
+    gap: 40px;
+  }
+
+  .landing__visual {
+    min-height: 260px;
+  }
+
+  .hero-map {
+    height: 280px;
+    border-radius: 22px;
+  }
+
+  .hero-map__arc {
+    width: 240px;
+    height: 240px;
+  }
+
+  .hero-map__arc--b {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-map__pulse {
+    width: 160px;
+    height: 160px;
+  }
+
+  .hero-map__core {
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+  }
+
+  .hero-map__badge {
+    font-size: 1rem;
+  }
+
+  .hero-map__metric {
+    font-size: 0.65rem;
+  }
+
+  .hero-map__satellite {
+    font-size: 0.62rem;
+    padding: 4px 10px;
+  }
+
+  .hero-map__legend {
+    gap: 12px;
+    padding: 6px 12px;
+    font-size: 0.6rem;
+  }
+
+  .landing__actions {
+    gap: 10px;
+  }
+
+  .landing__primary,
+  .landing__ghost {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+
+  .landing__mission {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-map {
+    height: 240px;
+  }
+
+  .hero-map__arc {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-map__arc--b {
+    width: 150px;
+    height: 150px;
+  }
+
+  .hero-map__pulse {
+    width: 140px;
+    height: 140px;
+  }
+
+  .hero-map__core {
+    width: 120px;
+    height: 120px;
+  }
+
+  .hero-map__satellite {
+    font-size: 0.58rem;
+  }
+}
+
 .mission__card {
   border-radius: 16px;
   padding: 16px;

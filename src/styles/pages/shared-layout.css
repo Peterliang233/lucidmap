@@ -266,3 +266,40 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 720px) {
+  .top-nav__bar {
+    padding: 12px 6vw;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .top-nav__logo {
+    font-size: 1rem;
+  }
+
+  .top-nav__logo img {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+
+  .top-nav__menu {
+    inset: 64px 12px auto 12px;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+  }
+
+  .top-nav__dropdown {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .top-nav__toggle {
+    padding: 6px 10px;
+  }
+
+  .footer {
+    padding: 16px 6vw 32px;
+  }
+}

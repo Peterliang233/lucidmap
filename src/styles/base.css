@@ -29,3 +29,12 @@ body {
 a {
   color: inherit;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+svg {
+  max-width: 100%;
+}
