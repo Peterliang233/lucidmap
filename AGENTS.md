@@ -23,6 +23,13 @@ This repo contains a React 18 + Vite 5 site for organizing interview-topic “kn
 - Keep new topic pages under `src/pages/` and wire routes in `src/App.jsx`.
 - Keep content updates in `src/data.json` and prefer data-driven changes over hardcoded UI.
 
+## CSS Organization
+- Each CSS file must be 1000 lines or fewer.
+- Split long styles into multiple files under `src/styles/pages/` and import them from `src/styles/pages.css`.
+- Name CSS files by the page/module they style (for example, `os-thread-sync.css`, `mq-kafka-election.css`).
+- Shared styles should live in clearly scoped shared files (for example, `shared-layout.css`, `shared-flow.css`, `shared-sequence.css`, `shared-utilities.css`).
+- Avoid generic chunk names like `pages-01.css`; keep names semantic and maintainable.
+
 ## Testing Guidelines
 - No automated test framework is configured in `package.json`.
 - Run `npm run dev` and do a quick smoke check: load `#/` and `#/map`, then verify new routes and cards render correctly.

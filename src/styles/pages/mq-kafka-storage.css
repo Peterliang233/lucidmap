@@ -1,0 +1,461 @@
+.append-line {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(210, 100, 42, 0.16);
+  overflow: hidden;
+}
+
+.append-line span {
+  position: absolute;
+  top: 50%;
+  left: -20%;
+  width: 10px;
+  height: 6px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: rgba(210, 100, 42, 0.6);
+  opacity: 0;
+}
+
+.append-line span:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.append-line span:nth-child(3) {
+  animation-delay: 1.2s;
+}
+
+.log-seg {
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  background: rgba(42, 111, 107, 0.12);
+  border: 1px solid transparent;
+}
+
+.log-seg.leader {
+  border-color: var(--accent);
+  background: rgba(210, 100, 42, 0.2);
+}
+
+.log-seg.follower {
+  border-style: dashed;
+  border-color: rgba(42, 111, 107, 0.4);
+}
+
+.mq-kafka-storage .kafka-store {
+  display: grid;
+  gap: 16px;
+}
+
+.mq-kafka-storage .kafka-store__nodes {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.mq-kafka-storage .store-node {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  background: #fff;
+  display: grid;
+  gap: 6px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.mq-kafka-storage .store-node .node-meta {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.mq-kafka-storage .kafka-store__pipes {
+  position: relative;
+  height: 24px;
+}
+
+.mq-kafka-storage .store-line {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  background: rgba(31, 28, 24, 0.2);
+  border-radius: 999px;
+}
+
+.mq-kafka-storage .store-line::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 6px solid rgba(31, 28, 24, 0.45);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.mq-kafka-storage .store-line::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.mq-kafka-storage .store-line--write {
+  left: 8%;
+  right: 52%;
+}
+
+.mq-kafka-storage .store-line--read {
+  left: 52%;
+  right: 8%;
+}
+
+.mq-kafka-storage .kafka-store__stack {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mq-kafka-storage .kafka-store__example {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+  display: grid;
+  gap: 10px;
+}
+
+.mq-kafka-storage .example-title {
+  font-weight: 600;
+}
+
+.mq-kafka-storage .example-rows {
+  display: grid;
+  gap: 8px;
+}
+
+.mq-kafka-storage .example-row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(31, 28, 24, 0.08);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  background: rgba(31, 28, 24, 0.03);
+}
+
+.mq-kafka-storage .example-step {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(42, 111, 107, 0.35);
+  color: var(--accent-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.mq-kafka-storage .example-arrow {
+  color: var(--ink-soft);
+  justify-self: end;
+}
+
+.mq-kafka-storage .store-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+  display: grid;
+  gap: 10px;
+  position: relative;
+  min-height: 120px;
+}
+
+.mq-kafka-storage .card-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.mq-kafka-storage .card-tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(42, 111, 107, 0.35);
+  font-size: 0.7rem;
+  color: var(--accent-2);
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.mq-kafka-storage .log-segments {
+  display: grid;
+  gap: 6px;
+}
+
+.mq-kafka-storage .log-seg {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(42, 111, 107, 0.1);
+}
+
+.mq-kafka-storage .log-seg.is-active {
+  border-color: var(--accent);
+  background: rgba(210, 100, 42, 0.18);
+  color: var(--ink);
+}
+
+.mq-kafka-storage .log-append {
+  display: flex;
+  gap: 6px;
+}
+
+.mq-kafka-storage .append-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(42, 111, 107, 0.3);
+  opacity: 0.6;
+}
+
+.mq-kafka-storage .index-table {
+  display: grid;
+  gap: 6px;
+}
+
+.mq-kafka-storage .index-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 28, 24, 0.08);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(31, 28, 24, 0.03);
+}
+
+.mq-kafka-storage .cache-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mq-kafka-storage .cache-block {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink-soft);
+}
+
+.mq-kafka-storage .cache-line {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background: rgba(42, 111, 107, 0.3);
+  border-radius: 999px;
+}
+
+.mq-kafka-storage .cache-line::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 6px solid rgba(42, 111, 107, 0.5);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.mq-kafka-storage .cache-line::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.mq-kafka-storage .cache-note {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-storage .batch-box {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.mq-kafka-storage .batch-msg {
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(210, 100, 42, 0.35);
+  background: rgba(210, 100, 42, 0.12);
+  font-size: 0.7rem;
+  color: var(--ink);
+}
+
+.mq-kafka-storage .batch-chip {
+  justify-self: start;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+  font-size: 0.7rem;
+  background: rgba(210, 100, 42, 0.1);
+}
+
+.mq-kafka-storage .kafka-store.mode--append .log-card,
+
+.mq-kafka-storage .kafka-store.mode--segment .log-card,
+
+.mq-kafka-storage .kafka-store.mode--segment .index-card,
+
+.mq-kafka-storage .kafka-store.mode--cache .cache-card,
+
+.mq-kafka-storage .kafka-store.mode--batch .batch-card {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-storage .kafka-store.mode--append .append-dot {
+  background: rgba(210, 100, 42, 0.4);
+  animation: httpPulse 1.6s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--segment .index-row {
+  animation: flow 1.6s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--cache .cache-line::before {
+  opacity: 1;
+  animation: kafkaStream 2.4s linear infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--batch .batch-msg {
+  animation: frameFlow 1.6s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--read .example-row {
+  animation: kafkaExample 2.4s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--read .example-row:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.mq-kafka-storage .kafka-store.mode--read .example-row:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.mq-kafka-storage .kafka-store.mode--append .store-line--write,
+
+.mq-kafka-storage .kafka-store.mode--batch .store-line--write {
+  background: rgba(210, 100, 42, 0.5);
+}
+
+.mq-kafka-storage .kafka-store.mode--cache .store-line--read {
+  background: rgba(42, 111, 107, 0.5);
+}
+
+.mq-kafka-storage .kafka-store.mode--append .store-line--write::before,
+
+.mq-kafka-storage .kafka-store.mode--batch .store-line--write::before,
+
+.mq-kafka-storage .kafka-store.mode--cache .store-line--read::before {
+  opacity: 1;
+  animation: kafkaStream 2.4s linear infinite;
+}
+
+@media (max-width: 960px) {
+  .kafka-top {
+    grid-template-columns: 1fr;
+  }
+
+  .kafka-arrows {
+    display: none;
+  }
+
+  .mq-kafka-storage .kafka-store__nodes {
+    grid-template-columns: 1fr;
+  }
+
+  .mq-kafka-storage .kafka-store__pipes {
+    display: none;
+  }
+
+  .mq-kafka-storage .kafka-store__stack {
+    grid-template-columns: 1fr;
+  }
+
+  .mq-kafka-storage .example-row {
+    grid-template-columns: 20px minmax(0, 1fr);
+  }
+
+  .mq-kafka-storage .example-arrow {
+    justify-self: start;
+  }
+}
+
+.mq-rocket .rocket-mechanism.mode--store .store-item.index .index-bars span {
+  animation: frameFlow 1.4s ease infinite;
+}
+
+@keyframes kafkaStream {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    left: calc(100% - 8px);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes kafkaExample {
+  0%,
+  100% {
+    border-color: rgba(31, 28, 24, 0.08);
+    color: var(--ink-soft);
+    box-shadow: none;
+  }
+  50% {
+    border-color: rgba(210, 100, 42, 0.45);
+    color: var(--ink);
+    box-shadow: 0 10px 18px rgba(210, 100, 42, 0.12);
+    background: rgba(210, 100, 42, 0.08);
+  }
+}

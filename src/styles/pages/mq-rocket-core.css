@@ -1,0 +1,459 @@
+.mq-rocket .rocket-mechanism {
+  position: relative;
+  min-height: 340px;
+  overflow: hidden;
+}
+
+.mq-rocket .rocket-beams {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mq-rocket .rocket-tracks {
+  position: absolute;
+  inset: 6% 8% 10% 8%;
+  width: 84%;
+  height: 84%;
+  opacity: 0.7;
+}
+
+.mq-rocket .rocket-track {
+  fill: none;
+  stroke: rgba(42, 111, 107, 0.28);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.mq-rocket .rocket-beam {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(210, 100, 42, 0.75);
+  box-shadow: 0 0 0 6px rgba(210, 100, 42, 0.12);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+
+.mq-rocket .rocket-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-template-rows: minmax(72px, 20%) minmax(180px, 50%) minmax(72px, 30%);
+  gap: 14px;
+  align-items: center;
+  height: 100%;
+  z-index: 2;
+}
+
+.mq-rocket .rocket-card {
+  position: relative;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 28, 24, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  display: grid;
+  gap: 6px;
+  box-shadow: 0 8px 18px rgba(31, 28, 24, 0.08);
+  width: 100%;
+  max-width: var(--rocket-card-size, 240px);
+  justify-self: center;
+}
+
+.mq-rocket .rocket-card .card-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.mq-rocket .rocket-card .card-meta {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+
+.mq-rocket .rocket-card .card-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.mq-rocket .rocket-card .card-row span {
+  font-size: 0.66rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.12);
+  color: var(--ink-soft);
+}
+
+.mq-rocket .rocket-card.nameserver {
+  grid-column: 2;
+  grid-row: 1;
+  border-color: rgba(42, 111, 107, 0.28);
+}
+
+.mq-rocket .rocket-card.broker {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+  --rocket-card-size: 360px;
+  border-color: rgba(210, 100, 42, 0.5);
+  background: rgba(255, 252, 246, 0.98);
+  box-shadow: 0 18px 40px rgba(210, 100, 42, 0.18);
+}
+
+.mq-rocket .rocket-card.producer {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: end;
+}
+
+.mq-rocket .rocket-card.retry {
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: end;
+}
+
+.mq-rocket .rocket-card.consumer {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: start;
+}
+
+.mq-rocket .role.master {
+  background: rgba(210, 100, 42, 0.15);
+  color: var(--accent);
+}
+
+.mq-rocket .role.slave {
+  background: rgba(42, 111, 107, 0.12);
+  color: var(--accent-2);
+}
+
+.mq-rocket .store-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.mq-rocket .store-item {
+  border-radius: 10px;
+  border: 1px dashed rgba(31, 28, 24, 0.12);
+  padding: 6px;
+  display: grid;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.mq-rocket .store-title {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+
+.mq-rocket .store-track {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.12);
+  overflow: hidden;
+}
+
+.mq-rocket .track-dot {
+  position: absolute;
+  top: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(210, 100, 42, 0.65);
+  left: -20%;
+}
+
+.mq-rocket .queue-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.mq-rocket .queue-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(42, 111, 107, 0.3);
+}
+
+.mq-rocket .index-bars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.mq-rocket .index-bars span {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.2);
+}
+
+.mq-rocket .rocket-offset {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: start;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  opacity: 0;
+}
+
+.mq-rocket .rocket-offset__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(210, 100, 42, 0.6);
+  animation: pulse 1.6s ease infinite;
+}
+
+.mq-rocket .rocket-lines {
+  position: absolute;
+  inset: 14% 18% 16% 18%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.mq-rocket .rocket-flow {
+  fill: none;
+  stroke: rgba(42, 111, 107, 0.2);
+  color: rgba(42, 111, 107, 0.3);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-dasharray: 5 8;
+  stroke-dashoffset: 0;
+  opacity: 0.18;
+}
+
+.mq-rocket .rocket-card {
+  z-index: 2;
+}
+
+.mq-rocket .rocket-mechanism.mode--route .rocket-card.nameserver,
+
+.mq-rocket .rocket-mechanism.mode--route .rocket-card.broker,
+
+.mq-rocket .rocket-mechanism.mode--store .rocket-card.producer,
+
+.mq-rocket .rocket-mechanism.mode--store .rocket-card.broker,
+
+.mq-rocket .rocket-mechanism.mode--consume .rocket-card.consumer,
+
+.mq-rocket .rocket-mechanism.mode--consume .rocket-card.broker,
+
+.mq-rocket .rocket-mechanism.mode--retry .rocket-card.retry {
+  border-color: rgba(210, 100, 42, 0.6);
+  box-shadow: 0 14px 26px rgba(210, 100, 42, 0.16);
+  background: rgba(255, 248, 240, 0.95);
+}
+
+.mq-rocket .rocket-mechanism.mode--route .track-route,
+
+.mq-rocket .rocket-mechanism.mode--route .track-query-left,
+
+.mq-rocket .rocket-mechanism.mode--route .track-query-right,
+
+.mq-rocket .rocket-mechanism.mode--store .track-produce,
+
+.mq-rocket .rocket-mechanism.mode--consume .track-consume,
+
+.mq-rocket .rocket-mechanism.mode--retry .track-retry {
+  stroke: rgba(210, 100, 42, 0.7);
+  stroke-dasharray: 5 7;
+  animation: rocketDash 1.6s linear infinite;
+}
+
+.mq-rocket .rocket-mechanism.mode--route .beam-route,
+
+.mq-rocket .rocket-mechanism.mode--route .beam-query-left,
+
+.mq-rocket .rocket-mechanism.mode--route .beam-query-right {
+  opacity: 1;
+}
+
+.mq-rocket .rocket-mechanism.mode--route .beam-route {
+  animation: rocketRoute 1.8s ease-in-out infinite;
+}
+
+.mq-rocket .rocket-mechanism.mode--route .beam-query-left {
+  animation: rocketQueryLeft 1.8s ease-in-out infinite;
+}
+
+.mq-rocket .rocket-mechanism.mode--route .beam-query-right {
+  animation: rocketQueryRight 1.8s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.mq-rocket .rocket-mechanism.mode--store .beam-produce {
+  animation: rocketProduce 1.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.mq-rocket .rocket-mechanism.mode--consume .beam-consume {
+  animation: rocketConsume 1.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.mq-rocket .rocket-mechanism.mode--retry .beam-retry {
+  animation: rocketRetry 1.8s ease-in-out infinite;
+  opacity: 1;
+}
+
+.mq-rocket .rocket-mechanism.mode--store .store-item.commitlog .track-dot {
+  animation: appendMove 1.4s ease infinite;
+}
+
+.mq-rocket .rocket-mechanism.mode--consume .store-item.queue .queue-dots span {
+  animation: queuePop 1.2s ease infinite;
+}
+
+.mq-rocket .rocket-mechanism.mode--consume .rocket-offset {
+  opacity: 1;
+}
+
+.mq-rocket .rocket-mechanism.mode--retry .rocket-card.retry {
+  border-style: dashed;
+}
+
+@media (max-width: 900px) {
+  .topic-shell__diagram.mq-rocket {
+    padding: 18px;
+    min-height: 420px;
+  }
+
+  .mq-rocket .rocket-mechanism {
+    min-height: 380px;
+  }
+
+  .mq-rocket .rocket-grid {
+    gap: 10px;
+  }
+
+  .mq-rocket .rocket-card {
+    max-width: 210px;
+  }
+
+  .mq-rocket .rocket-card.broker {
+    --rocket-card-size: 320px;
+  }
+}
+
+@keyframes rocketDash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+@keyframes rocketRoute {
+  0% {
+    left: 50%;
+    top: 20%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 50%;
+    top: 44%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes rocketProduce {
+  0% {
+    left: 26%;
+    top: 46%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 50%;
+    top: 58%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes rocketQueryLeft {
+  0% {
+    left: 26%;
+    top: 46%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 50%;
+    top: 20%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes rocketQueryRight {
+  0% {
+    left: 74%;
+    top: 46%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 50%;
+    top: 20%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes rocketConsume {
+  0% {
+    left: 50%;
+    top: 58%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 74%;
+    top: 46%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes rocketRetry {
+  0% {
+    left: 74%;
+    top: 46%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 26%;
+    top: 82%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

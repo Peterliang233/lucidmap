@@ -380,7 +380,7 @@ export default function OsMemoryAlloc() {
                       } ${step.tlbActive === row.page && step.tlbStatus === "miss" ? "is-miss" : ""}`}
                     >
                       <span>P{row.page}</span>
-                      <span>-> {row.frame}</span>
+                      <span>{"->"} {row.frame}</span>
                       <span>{step.tlbActive === row.page ? step.tlbStatus : ""}</span>
                     </div>
                   ))}

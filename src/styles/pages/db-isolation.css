@@ -1,0 +1,33 @@
+.isolation-diagram .isolation-table {
+  display: grid;
+  gap: 8px;
+}
+
+.isolation-row {
+  display: grid;
+  grid-template-columns: 1.2fr repeat(3, 1fr);
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.isolation-row.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(210, 100, 42, 0.12) inset;
+}
+
+.isolation-row.is-header {
+  background: rgba(42, 111, 107, 0.1);
+  font-weight: 600;
+}
+
+.isolation-row span.ok {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.isolation-row span.warn {
+  color: var(--accent);
+}

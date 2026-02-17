@@ -1,0 +1,32 @@
+.collections-diagram .collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.collections-card {
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  padding: 16px;
+  background: #fff;
+  display: grid;
+  gap: 10px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.collections-card.is-active {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.segments {
+  display: flex;
+  gap: 6px;
+}
+
+.segments span {
+  flex: 1;
+  height: 10px;
+  background: rgba(42, 111, 107, 0.2);
+  border-radius: 999px;
+}

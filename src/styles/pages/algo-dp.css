@@ -1,0 +1,36 @@
+.dp-diagram .dp-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  position: relative;
+}
+
+.dp-cell {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  height: 42px;
+  background: #fff;
+}
+
+.dp-grid.mode--transition .dp-cell:nth-child(7),
+
+.dp-grid.mode--transition .dp-cell:nth-child(13),
+
+.dp-grid.mode--transition .dp-cell:nth-child(19) {
+  background: rgba(210, 100, 42, 0.2);
+}
+
+.dp-grid.mode--fill .dp-cell:nth-child(-n + 15) {
+  background: rgba(42, 111, 107, 0.2);
+}
+
+.dp-path {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 80%;
+  height: 80%;
+  border: 2px dashed rgba(210, 100, 42, 0.4);
+  border-radius: 16px;
+  opacity: 0.3;
+}

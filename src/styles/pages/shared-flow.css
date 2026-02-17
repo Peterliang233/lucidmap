@@ -1,0 +1,35 @@
+.flow__step {
+  position: relative;
+  padding-left: 22px;
+}
+
+.flow__step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.timeline__step {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.timeline__step:hover {
+  transform: translateY(-2px);
+}
+
+.timeline__step.is-active {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}

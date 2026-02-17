@@ -1,0 +1,18 @@
+.acid-diagram .acid-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.acid-card {
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  padding: 16px;
+  background: #fff;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.acid-card.is-active {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}

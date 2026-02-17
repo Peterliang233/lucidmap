@@ -1,0 +1,146 @@
+.mq-partitions {
+  grid-column: span 3;
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.mq-partitions .partition {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.25);
+  animation: frameFlow 1.6s ease infinite;
+}
+
+.mq-consume__grid {
+  display: grid;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+}
+
+.mq-part-list {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mq-part-list span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 0.8rem;
+}
+
+.mq-consume__diagram {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+  position: relative;
+}
+
+.assignments {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.assign-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.assign-card.ghost {
+  opacity: 0.4;
+}
+
+.assign-card h4 {
+  font-size: 0.85rem;
+}
+
+.assign-list {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.assign-list span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 0.72rem;
+}
+
+.rebalance-indicator {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+  background: rgba(210, 100, 42, 0.12);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mq-consume__grid.mode--rebalance .rebalance-indicator {
+  opacity: 1;
+  animation: httpPulse 1.6s ease infinite;
+}
+
+.offset-timeline {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.offset-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.offset-label {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.offset-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.12);
+  position: relative;
+}
+
+.offset-dot {
+  position: absolute;
+  top: -4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(42, 111, 107, 0.35);
+  left: 20%;
+}
+
+.offset-dot.active {
+  left: 60%;
+  background: rgba(210, 100, 42, 0.6);
+  box-shadow: 0 0 0 6px rgba(210, 100, 42, 0.12);
+}
+
+.mq-consume__grid.mode--offset .offset-dot.active {
+  animation: httpPulse 1.6s ease infinite;
+}

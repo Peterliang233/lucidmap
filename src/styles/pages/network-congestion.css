@@ -1,0 +1,40 @@
+.cwnd-diagram .cwnd-chart {
+  display: grid;
+  gap: 12px;
+}
+
+.cwnd-chart {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  align-items: end;
+  gap: 6px;
+  min-height: 180px;
+  position: relative;
+}
+
+.cwnd-bar {
+  background: rgba(42, 111, 107, 0.2);
+  border-radius: 8px 8px 4px 4px;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.cwnd-chart.phase--slow-start .bar--slow-start,
+
+.cwnd-chart.phase--avoid .bar--avoid,
+
+.cwnd-chart.phase--fast .bar--fast,
+
+.cwnd-chart.phase--recovery .bar--recovery {
+  background: rgba(210, 100, 42, 0.35);
+}
+
+.cwnd-chart .cwnd-labels {
+  position: absolute;
+  bottom: -28px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}

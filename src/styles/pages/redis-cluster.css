@@ -1,0 +1,158 @@
+.failover-interaction {
+  display: grid;
+  gap: 12px;
+}
+
+.failover-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.failover-legend span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px dashed rgba(42, 111, 107, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.failover-canvas {
+  position: relative;
+  min-height: 300px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  padding: 16px;
+}
+
+.failover-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.failover-sentinel {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(200px, 40vw);
+  height: min(200px, 40vw);
+  display: grid;
+  place-items: center;
+}
+
+.failover-nodes {
+  position: absolute;
+  right: 6%;
+  top: 12%;
+  bottom: 12%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.failover-node {
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  min-width: 150px;
+  flex-wrap: wrap;
+}
+
+.failover-node.master.down {
+  opacity: 0.6;
+  border-color: rgba(210, 100, 42, 0.4);
+  animation: shake 1.2s ease infinite;
+}
+
+.failover-node.replica.picked {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(210, 100, 42, 0.12);
+  animation: pulse 2s ease infinite;
+}
+
+.failover-actions {
+  position: absolute;
+  left: 18%;
+  bottom: 10%;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+}
+
+.failover-actions span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px dashed rgba(42, 111, 107, 0.3);
+  background: #fff;
+  color: var(--ink-soft);
+}
+
+.failover-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.failover-reconfig {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.redis-cluster__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  position: relative;
+  align-items: end;
+}
+
+.cluster-node {
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cluster-slot {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.cluster-move {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px dashed rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+  opacity: 0;
+}
+
+.redis-cluster__grid.mode--migrate .cluster-move {
+  opacity: 1;
+  animation: shimmer 2s ease infinite;
+}

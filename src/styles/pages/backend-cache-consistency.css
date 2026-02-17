@@ -1,0 +1,47 @@
+.cache-diagram .cache-flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: center;
+}
+
+.cache-node {
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 18px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cache-arrow {
+  position: absolute;
+  height: 2px;
+  background: rgba(42, 111, 107, 0.4);
+  top: 50%;
+  left: 18%;
+  right: 18%;
+  opacity: 0.2;
+}
+
+.cache-flow.focus--read .arrow-read,
+
+.cache-flow.focus--write .arrow-write,
+
+.cache-flow.focus--double .arrow-double {
+  opacity: 1;
+  background: rgba(210, 100, 42, 0.6);
+}
+
+.cache-arrow.arrow-read {
+  transform: translateY(-16px);
+}
+
+.cache-arrow.arrow-write {
+  transform: translateY(16px);
+}
+
+.cache-arrow.arrow-double {
+  transform: translateY(0);
+}

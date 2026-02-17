@@ -1,0 +1,455 @@
+.ai-agent__arch {
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+.agent-arch__grid {
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    ". planner ."
+    "user core tools"
+    "memory observe .";
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-template-rows: minmax(70px, 1fr) minmax(110px, 1.2fr) minmax(70px, 1fr);
+  gap: 14px;
+  align-items: center;
+  justify-items: center;
+  height: 100%;
+  z-index: 2;
+}
+
+.agent-module {
+  width: 100%;
+  max-width: 180px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 28, 24, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 22px rgba(31, 28, 24, 0.08);
+  display: grid;
+  gap: 4px;
+  text-align: center;
+}
+
+.agent-module .module-title {
+  font-weight: 600;
+}
+
+.agent-module .module-meta {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+
+.agent-module.core {
+  max-width: 220px;
+  border-color: rgba(210, 100, 42, 0.5);
+  background: rgba(255, 252, 246, 0.98);
+  box-shadow: 0 18px 36px rgba(210, 100, 42, 0.2);
+}
+
+.agent-module.planner {
+  grid-area: planner;
+}
+
+.agent-module.user {
+  grid-area: user;
+}
+
+.agent-module.tools {
+  grid-area: tools;
+}
+
+.agent-module.memory {
+  grid-area: memory;
+}
+
+.agent-module.observe {
+  grid-area: observe;
+}
+
+.agent-module.core {
+  grid-area: core;
+}
+
+.agent-arch__lines,
+
+.agent-arch__signals {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.agent-example {
+  position: absolute;
+  left: 22%;
+  top: 50%;
+  max-width: 220px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px dashed rgba(31, 28, 24, 0.16);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 10px 20px rgba(31, 28, 24, 0.08);
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.agent-example__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.agent-example__lines {
+  display: grid;
+  gap: 4px;
+  margin-top: 6px;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+}
+
+.ai-agent__arch.mode--entry .agent-example {
+  animation: agentExampleEntry 2.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.ai-agent__arch.mode--plan .agent-example {
+  animation: agentExamplePlan 2.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.ai-agent__arch.mode--act .agent-example {
+  animation: agentExampleAct 2.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.ai-agent__arch.mode--memory .agent-example {
+  animation: agentExampleMemory 2.8s ease-in-out infinite;
+  opacity: 1;
+}
+
+.agent-line {
+  fill: none;
+  stroke: rgba(42, 111, 107, 0.22);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.agent-signal {
+  position: absolute;
+  width: 22px;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(210, 100, 42, 0.9), rgba(210, 100, 42, 0.55));
+  border: 1px solid rgba(210, 100, 42, 0.65);
+  box-shadow: 0 0 0 6px rgba(210, 100, 42, 0.08);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+
+.agent-signal::before,
+
+.agent-signal::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+}
+
+.agent-signal::after {
+  right: 4px;
+}
+
+.agent-signal::before {
+  left: 4px;
+}
+
+.ai-agent__arch.mode--entry .agent-module.user,
+
+.ai-agent__arch.mode--entry .agent-module.core,
+
+.ai-agent__arch.mode--plan .agent-module.planner,
+
+.ai-agent__arch.mode--plan .agent-module.core,
+
+.ai-agent__arch.mode--act .agent-module.tools,
+
+.ai-agent__arch.mode--act .agent-module.core,
+
+.ai-agent__arch.mode--memory .agent-module.memory,
+
+.ai-agent__arch.mode--memory .agent-module.observe,
+
+.ai-agent__arch.mode--memory .agent-module.core {
+  border-color: rgba(210, 100, 42, 0.6);
+  box-shadow: 0 16px 32px rgba(210, 100, 42, 0.16);
+}
+
+.ai-agent__arch.mode--entry .line-entry,
+
+.ai-agent__arch.mode--plan .line-plan,
+
+.ai-agent__arch.mode--act .line-core-tool,
+
+.ai-agent__arch.mode--memory .line-core-memory,
+
+.ai-agent__arch.mode--memory .line-tool-observe,
+
+.ai-agent__arch.mode--memory .line-observe-memory {
+  stroke: rgba(210, 100, 42, 0.7);
+  stroke-dasharray: 5 7;
+  animation: agentDash 1.6s linear infinite;
+}
+
+.ai-agent__arch.mode--entry .signal-entry {
+  animation: agentSignalEntry 1.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.ai-agent__arch.mode--plan .signal-plan {
+  animation: agentSignalPlan 1.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.ai-agent__arch.mode--act .signal-tool {
+  animation: agentSignalTool 1.6s ease-in-out infinite;
+  opacity: 1;
+}
+
+.ai-agent__arch.mode--memory .signal-feedback {
+  animation: agentSignalFeedback 1.8s ease-in-out infinite;
+  opacity: 1;
+}
+
+.ai-agent__arch.mode--memory .signal-memory {
+  animation: agentSignalMemory 1.8s ease-in-out infinite;
+  opacity: 1;
+  animation-delay: 0.3s;
+}
+
+@media (max-width: 900px) {
+  .ai-agent__arch {
+    min-height: 320px;
+  }
+
+  .agent-arch__grid {
+    grid-template-areas:
+      "user"
+      "planner"
+      "core"
+      "tools"
+      "observe"
+      "memory";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(6, minmax(60px, auto));
+  }
+
+  .agent-module {
+    max-width: 240px;
+  }
+
+  .agent-arch__lines,
+  .agent-arch__signals {
+    opacity: 0.4;
+    display: none;
+  }
+
+  .agent-example {
+    position: static;
+    margin-top: 12px;
+    max-width: 100%;
+    opacity: 1;
+    transform: none;
+  }
+
+  .ai-skill__grid {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+}
+
+@keyframes agentExampleEntry {
+  0% {
+    left: 26%;
+    top: 50%;
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  78% {
+    left: 44%;
+    top: 50%;
+    opacity: 1;
+  }
+  100% {
+    left: 44%;
+    top: 50%;
+    opacity: 0;
+  }
+}
+
+@keyframes agentExamplePlan {
+  0% {
+    left: 50%;
+    top: 28%;
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  78% {
+    left: 50%;
+    top: 46%;
+    opacity: 1;
+  }
+  100% {
+    left: 50%;
+    top: 46%;
+    opacity: 0;
+  }
+}
+
+@keyframes agentExampleAct {
+  0% {
+    left: 56%;
+    top: 50%;
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  78% {
+    left: 74%;
+    top: 50%;
+    opacity: 1;
+  }
+  100% {
+    left: 74%;
+    top: 50%;
+    opacity: 0;
+  }
+}
+
+@keyframes agentExampleMemory {
+  0% {
+    left: 74%;
+    top: 50%;
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  78% {
+    left: 28%;
+    top: 78%;
+    opacity: 1;
+  }
+  100% {
+    left: 28%;
+    top: 78%;
+    opacity: 0;
+  }
+}
+
+@keyframes agentDash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+@keyframes agentSignalEntry {
+  0% {
+    left: 26%;
+    top: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 44%;
+    top: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes agentSignalPlan {
+  0% {
+    left: 50%;
+    top: 28%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 50%;
+    top: 46%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes agentSignalTool {
+  0% {
+    left: 56%;
+    top: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 74%;
+    top: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes agentSignalFeedback {
+  0% {
+    left: 74%;
+    top: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 54%;
+    top: 76%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes agentSignalMemory {
+  0% {
+    left: 28%;
+    top: 78%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    left: 44%;
+    top: 60%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

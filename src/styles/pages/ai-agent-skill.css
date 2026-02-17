@@ -1,0 +1,14 @@
+.ai-skill__grid {
+  display: grid;
+  gap: 14px;
+  position: relative;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.55fr);
+}
+
+.ai-skill .mcp-lifeline__title {
+  font-size: 0.85rem;
+}
+
+.ai-skill .mcp-lifeline__meta {
+  font-size: 0.72rem;
+}

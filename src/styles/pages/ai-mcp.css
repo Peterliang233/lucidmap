@@ -1,0 +1,151 @@
+.ai-mcp__grid {
+  display: grid;
+  gap: 14px;
+  position: relative;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.5fr);
+}
+
+.ai-mcp__grid.mode--init .mcp-capabilities {
+  animation: mvccGlow 2.4s ease-in-out infinite;
+}
+
+.ai-mcp__grid.mode--discover .mcp-pill {
+  animation: mcpPulse 2s ease-in-out infinite;
+}
+
+.ai-mcp__grid.mode--invoke .mcp-pill.tools {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.16);
+}
+
+.ai-mcp__grid.mode--init .chip-init,
+
+.ai-mcp__grid.mode--init .chip-initialized {
+  opacity: 1;
+}
+
+.ai-mcp__grid.mode--discover .chip-list,
+
+.ai-mcp__grid.mode--discover .chip-list-changed {
+  opacity: 1;
+}
+
+.ai-mcp__grid.mode--invoke .chip-read,
+
+.ai-mcp__grid.mode--invoke .chip-call,
+
+.ai-mcp__grid.mode--invoke .chip-result {
+  opacity: 1;
+}
+
+.ai-mcp__grid.mode--sampling .chip-sampling,
+
+.ai-mcp__grid.mode--sampling .chip-elicitation,
+
+.ai-mcp__grid.mode--sampling .chip-approval {
+  opacity: 1;
+}
+
+.ai-mcp__grid.mode--notify .chip-notify {
+  opacity: 1;
+}
+
+.ai-mcp__grid.mode--init .chip-init,
+
+.ai-mcp__grid.mode--discover .chip-list,
+
+.ai-mcp__grid.mode--invoke .chip-call,
+
+.ai-mcp__grid.mode--invoke .chip-read,
+
+.ai-mcp__grid.mode--sampling .chip-sampling,
+
+.ai-mcp__grid.mode--sampling .chip-elicitation,
+
+.ai-mcp__grid.mode--notify .chip-notify {
+  animation: mcpSlide 2.8s linear infinite;
+}
+
+.ai-mcp__grid.mode--init .chip-initialized,
+
+.ai-mcp__grid.mode--discover .chip-list-changed,
+
+.ai-mcp__grid.mode--invoke .chip-result {
+  animation: mcpSlideBack 2.8s linear infinite;
+}
+
+.ai-mcp__grid.mode--sampling .chip-approval {
+  animation: mcpSlide 2.4s linear infinite;
+}
+
+.ai-mcp__grid.mode--init .chip-initialized {
+  animation-delay: 0.6s;
+}
+
+.ai-mcp__grid.mode--discover .chip-list-changed {
+  animation-delay: 0.8s;
+}
+
+.ai-mcp__grid.mode--invoke .chip-result {
+  animation-delay: 0.9s;
+}
+
+.ai-mcp__grid.mode--invoke .chip-read {
+  animation-delay: 0.3s;
+}
+
+.ai-mcp__grid.mode--sampling .chip-sampling {
+  animation-delay: 0.2s;
+}
+
+.ai-mcp__grid.mode--sampling .chip-elicitation {
+  animation-delay: 0.4s;
+}
+
+.ai-mcp__grid.mode--notify .chip-notify {
+  animation-delay: 0.5s;
+}
+
+@keyframes mcpSlide {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    transform: translateX(calc(100% - 120px));
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mcpSlideBack {
+  0% {
+    transform: translateX(calc(100% - 120px));
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mcpPulse {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}

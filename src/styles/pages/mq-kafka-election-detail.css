@@ -1,0 +1,571 @@
+.mq-kafka-election .section-flow {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(31, 28, 24, 0.2);
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.mq-kafka-election .section-flow::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+}
+
+.mq-kafka-election .section-flow::after {
+  content: "";
+  position: absolute;
+  border-left: 6px solid rgba(31, 28, 24, 0.4);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.mq-kafka-election .section-flow.is-on {
+  opacity: 1;
+}
+
+.mq-kafka-election .section-flow.is-on::before {
+  opacity: 1;
+}
+
+.mq-kafka-election .section-flow.flow-right {
+  right: -56px;
+  top: 50%;
+  width: 56px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-right--from-left {
+  left: -56px;
+  right: auto;
+}
+
+.mq-kafka-election .section-flow.flow-right::before {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-right::after {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-down {
+  bottom: -48px;
+  left: 50%;
+  width: 2px;
+  height: 48px;
+  transform: translateX(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-down::before {
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0);
+}
+
+.mq-kafka-election .section-flow.flow-down::after {
+  top: auto;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.mq-kafka-election .section-flow.flow-up {
+  top: -48px;
+  left: 50%;
+  width: 2px;
+  height: 48px;
+  transform: translateX(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-left {
+  left: -56px;
+  top: 50%;
+  width: 56px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-left--from-right {
+  right: -56px;
+  left: auto;
+  top: 58%;
+}
+
+.mq-kafka-election .section-flow.flow-left::before {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.mq-kafka-election .section-flow.flow-left::after {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.mq-kafka-election .section-flow.flow-up::before {
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0);
+}
+
+.mq-kafka-election .section-flow.flow-up::after {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+}
+
+.mq-kafka-election .section-flow.is-dashed {
+  background: transparent;
+  border-left: 2px dashed rgba(210, 100, 42, 0.55);
+  border-radius: 0;
+}
+
+.mq-kafka-election .section-flow.is-dashed::after {
+  border-left-color: rgba(210, 100, 42, 0.55);
+}
+
+.mq-kafka-election .section-flow.is-on.flow-right::before {
+  animation: kafkaFlowX 2.2s linear infinite;
+}
+
+.mq-kafka-election .section-flow.is-on.flow-down::before,
+
+.mq-kafka-election .section-flow.is-on.flow-up::before {
+  animation: kafkaFlowY 2.2s linear infinite;
+}
+
+.mq-kafka-election .section-flow.is-on.flow-left::before {
+  animation: kafkaFlowXReverse 2.2s linear infinite;
+}
+
+.mq-kafka-election .flow-tag {
+  position: absolute;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.15);
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.95);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.mq-kafka-election .flow-tag.is-on {
+  opacity: 1;
+}
+
+.mq-kafka-election .legend-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.mq-kafka-election .legend-chip.dashed {
+  border-style: dashed;
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+}
+
+.mq-kafka-election .msg--vote::before {
+  background: rgba(42, 111, 107, 0.55);
+}
+
+.mq-kafka-election .msg--vote .timing-message__label {
+  border-color: rgba(42, 111, 107, 0.3);
+  color: var(--accent-2);
+}
+
+.mq-kafka-election .msg--vote .timing-message__pulse {
+  background: rgba(42, 111, 107, 0.7);
+}
+
+.mq-kafka-election .msg--heartbeat::before {
+  background: rgba(210, 100, 42, 0.6);
+}
+
+.mq-kafka-election .msg--heartbeat .timing-message__label {
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+}
+
+.mq-kafka-election .msg--heartbeat .timing-message__pulse {
+  background: rgba(210, 100, 42, 0.7);
+}
+
+.mq-kafka-election .legend-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.mq-kafka-election .legend-chip.leader {
+  border-color: rgba(210, 100, 42, 0.4);
+  color: var(--accent);
+}
+
+.mq-kafka-election .legend-chip.candidate {
+  border-color: rgba(42, 111, 107, 0.4);
+  color: var(--accent-2);
+}
+
+.mq-kafka-election .legend-chip.down {
+  border-style: dashed;
+  border-color: rgba(31, 28, 24, 0.3);
+}
+
+@media (max-width: 960px) {
+  .mq-kafka-election .kafka-election__stage {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "controllers"
+      "metadata"
+      "brokers"
+      "client";
+  }
+
+  .mq-kafka-election .section-flow {
+    display: none;
+  }
+}
+
+.mq-kafka-election .election-section.controllers {
+  grid-area: controllers;
+}
+
+.mq-kafka-election .election-metadata.is-focus .metadata-stack {
+  box-shadow: 0 14px 26px rgba(210, 100, 42, 0.16);
+}
+
+.mq-kafka-election .election-node.controller.is-leader {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.16);
+}
+
+.mq-kafka-election .election-node.controller.is-voting {
+  animation: kafkaFloat3d 3s ease-in-out infinite;
+}
+
+.mq-kafka-election .election-metadata.is-active .metadata-stack {
+  animation: kafkaPulse3d 2.4s ease-in-out infinite;
+}
+
+.mq-kafka-election .metadata-stack {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.mq-kafka-election .metadata-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 28, 24, 0.15);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.mq-kafka-election .metadata-layer.layer-1 {
+  transform: translateZ(0);
+}
+
+.mq-kafka-election .metadata-layer.layer-2 {
+  transform: translateZ(-8px);
+  background: rgba(42, 111, 107, 0.05);
+}
+
+.mq-kafka-election .metadata-layer.layer-3 {
+  transform: translateZ(-16px);
+  background: rgba(31, 28, 24, 0.04);
+}
+
+.mq-kafka-election .metadata-layer.layer-4 {
+  transform: translateZ(-24px);
+  background: rgba(31, 28, 24, 0.03);
+}
+
+.mq-kafka-election .metadata-title {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 10px 8px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.mq-kafka-election .metadata-rows {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  display: grid;
+  gap: 4px;
+  font-size: 0.62rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .metadata-rows span {
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+.mq-kafka-election .client-node {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fff;
+  font-weight: 600;
+  transform: translateZ(10px) rotateX(6deg);
+  box-shadow: 0 10px 22px rgba(31, 28, 24, 0.08);
+}
+
+.mq-kafka-election .client-hint {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .election-client.is-active .client-node {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.16);
+}
+
+.mq-kafka-election .node-tags .tag-chosen {
+  border-color: rgba(210, 100, 42, 0.5);
+  color: var(--accent);
+  background: rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-election .node-tags .tag-candidate {
+  border-color: rgba(42, 111, 107, 0.45);
+  color: var(--accent-2);
+  background: rgba(42, 111, 107, 0.12);
+}
+
+.mq-kafka-election .replica-log {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.mq-kafka-election .replica-log span {
+  width: 12px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.25);
+}
+
+.mq-kafka-election .broker.is-leader .replica-log span {
+  background: rgba(210, 100, 42, 0.4);
+}
+
+.mq-kafka-election .tag-right {
+  left: calc(100% + 28px);
+  top: 50%;
+  transform: translate(-50%, -150%);
+}
+
+.mq-kafka-election .tag-right--meta {
+  left: -28px;
+  top: 50%;
+  transform: translate(-50%, -170%);
+}
+
+.mq-kafka-election .tag-right--client {
+  left: -28px;
+  top: 50%;
+  transform: translate(-50%, -170%);
+}
+
+.mq-kafka-election .tag-down {
+  left: 50%;
+  top: calc(100% + 16px);
+  transform: translate(-50%, 0);
+}
+
+.mq-kafka-election .tag-up {
+  left: 50%;
+  top: -16px;
+  transform: translate(-50%, -100%);
+}
+
+.mq-kafka-election .tag-left {
+  left: calc(0% - 28px);
+  top: 50%;
+  transform: translate(-50%, -100%);
+}
+
+.mq-kafka-election .tag-left--broker {
+  left: calc(100% + 28px);
+  top: 58%;
+  transform: translate(-50%, -160%);
+}
+
+.mq-kafka-election .axis-label {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mq-kafka-election .axis-steps {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mq-kafka-election .axis-step {
+  font-size: 0.7rem;
+  padding: 6px 8px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .axis-step.is-active {
+  border-color: rgba(42, 111, 107, 0.4);
+  color: var(--accent-2);
+  background: rgba(42, 111, 107, 0.12);
+  font-weight: 600;
+}
+
+.mq-kafka-election .lane-meta {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 10px;
+  background: rgba(31, 28, 24, 0.02);
+  display: grid;
+  gap: 6px;
+}
+
+.mq-kafka-election .lane-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.mq-kafka-election .lane-role {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .lane-chips {
+  display: grid;
+  gap: 4px;
+  font-size: 0.66rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .lane-chips span {
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 28, 24, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.mq-kafka-election .lane-chips.is-election span {
+  border-color: rgba(42, 111, 107, 0.2);
+  background: rgba(42, 111, 107, 0.06);
+  color: var(--ink);
+}
+
+.mq-kafka-election .lane-track {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  align-items: stretch;
+}
+
+.mq-kafka-election .lane-cell {
+  border: 1px solid rgba(31, 28, 24, 0.12);
+  border-radius: 12px;
+  padding: 8px 6px;
+  background: rgba(255, 255, 255, 0.92);
+  display: grid;
+  gap: 4px;
+  text-align: center;
+  min-height: 54px;
+}
+
+.mq-kafka-election .lane-cell .cell-title {
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+
+.mq-kafka-election .lane-cell .cell-note {
+  font-size: 0.65rem;
+  color: var(--ink-soft);
+}
+
+.mq-kafka-election .lane-cell.follower {
+  border-color: rgba(31, 28, 24, 0.18);
+}
+
+.mq-kafka-election .lane-cell.candidate {
+  border-color: rgba(42, 111, 107, 0.45);
+  background: rgba(42, 111, 107, 0.08);
+}
+
+.mq-kafka-election .lane-cell.leader {
+  border-color: rgba(210, 100, 42, 0.55);
+  background: rgba(210, 100, 42, 0.08);
+}
+
+.mq-kafka-election .lane-cell.down {
+  border-style: dashed;
+  border-color: rgba(31, 28, 24, 0.2);
+  color: rgba(31, 28, 24, 0.6);
+}
+
+.mq-kafka-election .lane-cell.is-active {
+  box-shadow: 0 10px 18px rgba(31, 28, 24, 0.12);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 960px) {
+  .mq-kafka-election .kraft-timing {
+    --lane-label-width: 140px;
+  }
+
+  .mq-kafka-election .axis-step {
+    font-size: 0.62rem;
+  }
+
+  .mq-kafka-election .lane-track {
+    gap: 6px;
+  }
+
+  .mq-kafka-election .lane-cell {
+    min-height: 62px;
+  }
+}

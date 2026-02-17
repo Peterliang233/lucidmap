@@ -1,0 +1,48 @@
+.graph-diagram .graph-board {
+  position: relative;
+  min-height: 220px;
+}
+
+.graph-node {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.graph-board.mode--bfs .node--a,
+
+.graph-board.mode--bfs .node--b,
+
+.graph-board.mode--bfs .node--c {
+  border-color: var(--accent);
+}
+
+.graph-board.mode--dfs .node--a,
+
+.graph-board.mode--dfs .node--d,
+
+.graph-board.mode--dfs .node--e {
+  border-color: var(--accent-2);
+}
+
+.graph-board.mode--shortest .node--a,
+
+.graph-board.mode--shortest .node--c,
+
+.graph-board.mode--shortest .node--e {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.graph-edge {
+  position: absolute;
+  height: 2px;
+  background: rgba(42, 111, 107, 0.3);
+}

@@ -10,6 +10,11 @@ export default function TopicShell({
   panel = [],
   flow = [],
   legend = null,
+  principles = [],
+  principlesTitle = "原理拆解",
+  principlesIntro = "",
+  principlesPlacement = "below",
+  principlesClass = "",
   interval = 2600,
   backPath = "/map",
   diagramClass = "",
@@ -37,6 +42,37 @@ export default function TopicShell({
     if (steps.length <= 1) return;
     setStepIndex((prev) => (prev + 1) % steps.length);
   };
+
+  const renderPrinciples = () => {
+    if (!principles.length) return null;
+    return (
+      <div className={`topic-shell__principles ${principlesClass}`}>
+        <div className="principles__header">
+          <h3>{principlesTitle}</h3>
+          {principlesIntro && <p>{principlesIntro}</p>}
+        </div>
+        <div className="principles__grid">
+          {principles.map((item) => (
+            <div key={item.title} className="principles__card">
+              <h4>{item.title}</h4>
+              {item.detail && <p className="principles__meta">{item.detail}</p>}
+              {item.points && (
+                <ul className="principles__list">
+                  {item.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const diagramNode = renderDiagram ? (
+    <div className={`topic-shell__diagram ${diagramClass}`}>{renderDiagram(step, stepIndex)}</div>
+  ) : null;
 
   return (
     <Layout>
@@ -115,9 +151,17 @@ export default function TopicShell({
 
           {legend && <div className="topic-shell__legend">{legend}</div>}
 
-          <div className={`topic-shell__diagram ${diagramClass}`}>
-            {renderDiagram ? renderDiagram(step, stepIndex) : null}
-          </div>
+          {principlesPlacement === "side" && renderDiagram && principles.length > 0 ? (
+            <div className="topic-shell__split">
+              {diagramNode}
+              {renderPrinciples()}
+            </div>
+          ) : (
+            <>
+              {diagramNode}
+              {renderPrinciples()}
+            </>
+          )}
 
           {flow.length > 0 && (
             <div className="topic-shell__flow">

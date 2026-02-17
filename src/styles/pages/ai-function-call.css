@@ -1,0 +1,44 @@
+.ai-fncall__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  position: relative;
+}
+
+.fncall-node {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.fncall-params,
+
+.fncall-result {
+  grid-column: span 2;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(42, 111, 107, 0.08);
+  padding: 10px;
+  font-family: \"JetBrains Mono\", \"SFMono-Regular\", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+}
+
+.fncall-arrow {
+  position: absolute;
+  width: 120px;
+  height: 2px;
+  background: rgba(210, 100, 42, 0.4);
+}
+
+.fncall-arrow.arrow-1 {
+  top: 46px;
+  left: 22%;
+}
+
+.fncall-arrow.arrow-2 {
+  top: 110px;
+  right: 22%;
+}

@@ -1,0 +1,171 @@
+.tcp-diagram .tcp-seq {
+  display: grid;
+  gap: 16px;
+}
+
+.tcp-diagram {
+  width: min(100%, 720px);
+  margin: 0 auto;
+}
+
+.tcp-header {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) 180px minmax(0, max-content);
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.tcp-header__lane {
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.tcp-header__line {
+  width: 2px;
+  height: 24px;
+  justify-self: center;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.2), rgba(18, 18, 18, 0.5));
+  border-radius: 999px;
+}
+
+.tcp-body {
+  display: grid;
+  gap: 12px;
+}
+
+.tcp-row {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) 180px minmax(0, max-content);
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  --tcp-gap: 12px;
+  --tcp-color: rgba(18, 18, 18, 0.7);
+}
+
+.tcp-row.is-active {
+  --tcp-color: rgba(212, 60, 47, 0.9);
+}
+
+.tcp-connector {
+  position: relative;
+  height: 2px;
+  width: 100%;
+  justify-self: center;
+  background: var(--tcp-color);
+  border-radius: 999px;
+}
+
+.tcp-arrow {
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid var(--tcp-color);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.tcp-row[data-dir="to-client"] .tcp-arrow {
+  right: auto;
+  left: -6px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.tcp-row.is-active .tcp-connector {
+  height: 3px;
+  box-shadow: 0 0 10px rgba(212, 60, 47, 0.35);
+}
+
+.tcp-bubble {
+  max-width: 220px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  position: relative;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+}
+
+.tcp-bubble--client {
+  justify-self: end;
+}
+
+.tcp-bubble--server {
+  justify-self: start;
+}
+
+.tcp-bubble--client::after,
+
+.tcp-bubble--server::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: var(--tcp-gap);
+  height: 2px;
+  background: var(--tcp-color);
+  transform: translateY(-50%);
+}
+
+.tcp-bubble--client::after {
+  right: calc(-1 * var(--tcp-gap));
+}
+
+.tcp-bubble--server::before {
+  left: calc(-1 * var(--tcp-gap));
+}
+
+.tcp-bubble.is-active {
+  opacity: 1;
+  background: rgba(212, 60, 47, 0.12);
+  border-color: rgba(212, 60, 47, 0.4);
+  transform: translateY(-2px);
+}
+
+.tcp-spacer {
+  display: block;
+}
+
+@media (max-width: 960px) {
+  .tcp-row,
+  .tcp-header {
+    grid-template-columns: 1fr 120px 1fr;
+  }
+
+  .tcp-bubble {
+    max-width: 180px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .tcp-row,
+  .tcp-header {
+    grid-template-columns: 1fr 90px 1fr;
+    gap: 8px;
+  }
+
+  .tcp-row {
+    --tcp-gap: 8px;
+  }
+
+  .tcp-bubble {
+    max-width: 150px;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+
+  .tcp-arrow {
+    border-left-width: 5px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+  }
+}

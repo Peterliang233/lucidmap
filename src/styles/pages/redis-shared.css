@@ -1,0 +1,44 @@
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stream-label {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.stream-line {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(42, 111, 107, 0.16);
+  overflow: hidden;
+}
+
+.stream-line span {
+  position: absolute;
+  top: 50%;
+  left: -20%;
+  width: 16px;
+  height: 8px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: rgba(210, 100, 42, 0.6);
+  animation: streamMove 2.6s linear infinite;
+  animation-delay: var(--delay);
+}
+
+.cmd-stream .stream-line span {
+  animation-duration: 2s;
+  animation-delay: calc(var(--delay) + 1.6s);
+}
+
+.legend-item {
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
