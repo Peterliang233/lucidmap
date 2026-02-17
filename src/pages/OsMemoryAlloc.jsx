@@ -504,11 +504,7 @@ export default function OsMemoryAlloc() {
           </div>
           </div>
 
-          <div className="topic__flow">
-            <div className="flow__step">段表负责访问控制与线性地址定位</div>
-            <div className="flow__step">TLB 命中最快，miss 需访问页表</div>
-            <div className="flow__step">缺页触发回收/置换，I/O 成本最高</div>
-          </div>
+          {null}
         </section>
       </div>
     </Layout>

@@ -296,12 +296,7 @@ export default function OsProcessStates() {
           </div>
         </div>
 
-        <div className="topic__flow">
-          <div className="flow__step">创建后进入就绪队列等待 CPU</div>
-          <div className="flow__step">运行中遇到 I/O 进入阻塞态</div>
-          <div className="flow__step">阻塞完成再次进入就绪</div>
-          <div className="flow__step">运行结束后终止并释放资源</div>
-        </div>
+        {null}
       </section>
       </div>
     </Layout>

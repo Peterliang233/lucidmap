@@ -163,15 +163,7 @@ export default function TopicShell({
             </>
           )}
 
-          {flow.length > 0 && (
-            <div className="topic-shell__flow">
-              {flow.map((item) => (
-                <div key={item} className="flow__step">
-                  {item}
-                </div>
-              ))}
-            </div>
-          )}
+          {null}
         </section>
       </div>
     </Layout>

@@ -285,11 +285,7 @@ export default function OsVirtualMemory() {
             </div>
           </div>
 
-          <div className="topic__flow">
-            <div className="flow__step">TLB 命中可直接完成地址翻译</div>
-            <div className="flow__step">TLB 未命中需要访问页表</div>
-            <div className="flow__step">缺页时触发磁盘换入与页表更新</div>
-          </div>
+          {null}
         </section>
       </div>
     </Layout>

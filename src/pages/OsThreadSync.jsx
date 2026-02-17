@@ -540,11 +540,7 @@ export default function OsThreadSync() {
           </div>
           </div>
 
-          <div className="topic__flow">
-            <div className="flow__step">互斥锁通过阻塞与唤醒保证串行进入临界区</div>
-            <div className="flow__step">自旋锁用忙等换取低切换成本，适合短临界区</div>
-            <div className="flow__step">条件变量释放锁并睡眠，等待条件满足再唤醒</div>
-          </div>
+          {null}
         </section>
       </div>
     </Layout>
