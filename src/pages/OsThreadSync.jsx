@@ -382,7 +382,7 @@ export default function OsThreadSync() {
             <div className="topic__card">
               <h3>当前场景</h3>
               <p>{step.title}</p>
-              <div className="topic__big">{modeLabel[step.mode]}</div>
+              <div className="sync-step__title">{modeLabel[step.mode]}</div>
             </div>
           </div>
         </header>
