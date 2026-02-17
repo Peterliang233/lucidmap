@@ -19,6 +19,11 @@
   align-items: start;
 }
 
+.vm-aside {
+  display: grid;
+  gap: 16px;
+}
+
 .vm-card {
   border-radius: 14px;
   border: 1px solid rgba(31, 28, 24, 0.12);

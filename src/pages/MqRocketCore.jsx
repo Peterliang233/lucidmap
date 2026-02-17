@@ -31,6 +31,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "路由发现",
+    detail: "Broker 定期向 NameServer 上报路由。",
+    points: ["NameServer 无状态", "客户端拉取并缓存", "心跳驱动更新"],
+  },
+  {
+    title: "存储组织",
+    detail: "CommitLog 顺序写入，ConsumeQueue 轻量索引。",
+    points: ["CommitLog 追加写", "ConsumeQueue 记录偏移", "Index 支持按 key 查询"],
+  },
+  {
+    title: "消费与重试",
+    detail: "Pull 拉取并提交进度，失败进入重试或 DLQ。",
+    points: ["Pull 模式可控批量", "Offset 保障幂等", "Retry/DLQ 隔离问题消息"],
+  },
+];
+
 export default function MqRocketCore() {
   return (
     <TopicShell
@@ -42,6 +60,8 @@ export default function MqRocketCore() {
         { title: "机制视角", detail: "注册发现 + 存储组织 + 拉取消费。" },
         { title: "可靠性", detail: "刷盘、主从、重试与死信。" },
       ]}
+      principles={principles}
+      principlesIntro="从路由、存储与消费链路拆解 RocketMQ 的核心机制。"
       flow={[
         "Broker 心跳注册路由",
         "客户端拉取并缓存路由",

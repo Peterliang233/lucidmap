@@ -24,6 +24,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "分区与有序",
+    detail: "分区内有序、跨分区无序。",
+    points: ["同一业务键路由同一分区", "分区数决定并行度", "消费者组按分区并行消费"],
+  },
+  {
+    title: "副本与 ISR",
+    detail: "Leader 写入，ISR 同步确保可用性。",
+    points: ["Follower 追随 Leader", "ISR 落后会被移出", "Leader 宕机触发选举"],
+  },
+  {
+    title: "acks 语义",
+    detail: "确认强度决定吞吐与可靠性。",
+    points: ["acks=0 高吞吐低可靠", "acks=1 只等 Leader", "acks=all 等 ISR 同步"],
+  },
+];
+
 export default function MqKafkaCore() {
   return (
     <TopicShell
@@ -35,6 +53,8 @@ export default function MqKafkaCore() {
         { title: "定位", detail: "高吞吐日志型队列。" },
         { title: "关键点", detail: "分区、有序、副本。" },
       ]}
+      principles={principles}
+      principlesIntro="从分区、复制与确认语义理解 Kafka 的可靠性与扩展性。"
       flow={["分区实现并行", "副本保证可用", "acks 控制可靠性"]}
       diagramClass="mq-kafka"
       renderDiagram={(step) => (

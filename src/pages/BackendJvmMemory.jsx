@@ -51,6 +51,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "分代回收",
+    detail: "新生代高频回收，老年代低频回收。",
+    points: ["Minor GC 复制存活对象", "晋升阈值决定老年代", "Full GC 成本高"],
+  },
+  {
+    title: "线程与栈帧",
+    detail: "每次方法调用创建栈帧，返回即释放。",
+    points: ["局部变量表 + 操作数栈", "递归过深可能 StackOverflow", "栈空间线程私有"],
+  },
+  {
+    title: "元空间示例",
+    detail: "类加载与卸载决定元空间变化。",
+    points: ["ClassLoader 加载元数据", "热部署可能导致类泄漏", "卸载后释放本地内存"],
+  },
+];
+
 export default function BackendJvmMemory() {
   return (
     <TopicShell
@@ -62,6 +80,8 @@ export default function BackendJvmMemory() {
         { title: "关键组件", detail: "堆、栈、方法区、直接内存。" },
         { title: "问题定位", detail: "OOM、GC 频繁、内存泄漏。" },
       ]}
+      principles={principles}
+      principlesIntro="结合分代回收、栈帧与类加载，理解 JVM 内存问题的根因。"
       flow={[
         "对象分配在堆，Eden → Survivor → Old",
         "线程调用形成栈帧，局部变量随调用释放",

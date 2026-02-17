@@ -24,6 +24,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "令牌桶机制",
+    detail: "按固定速率补充令牌，请求消耗令牌。",
+    points: ["允许短时突发", "令牌耗尽即拒绝/排队", "适合 API 限流"],
+  },
+  {
+    title: "漏桶机制",
+    detail: "请求先入桶，再以恒定速率流出。",
+    points: ["输出稳定", "高峰期会排队", "更适合流量整形"],
+  },
+  {
+    title: "熔断示例",
+    detail: "错误率升高时快速失败，避免雪崩。",
+    points: ["Closed → Open → Half-Open", "探测成功后恢复", "配合限流保护下游"],
+  },
+];
+
 export default function BackendRateLimit() {
   return (
     <TopicShell
@@ -35,6 +53,8 @@ export default function BackendRateLimit() {
         { title: "限流目的", detail: "保护服务稳定性。" },
         { title: "熔断策略", detail: "快速失败、自动恢复。" },
       ]}
+      principles={principles}
+      principlesIntro="对比限流模型与熔断状态机，理解服务保护的核心机制。"
       flow={["令牌桶允许突发", "漏桶输出稳定", "滑动窗口统计频率"]}
       diagramClass="ratelimit-diagram"
       renderDiagram={(step) => (

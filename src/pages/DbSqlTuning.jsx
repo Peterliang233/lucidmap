@@ -51,6 +51,24 @@ const readView = {
   active: ["T118", "T120"],
 };
 
+const principles = [
+  {
+    title: "一致性读路径",
+    detail: "Read View 决定当前事务可见的版本集合。",
+    points: ["up_limit 之前版本直接可见", "low_limit 之后版本不可见", "区间内查 active_trx_ids"],
+  },
+  {
+    title: "版本链结构",
+    detail: "每次更新都会形成新版本，旧版本指向 undo。",
+    points: ["trx_id 标记版本归属", "roll_pointer 连接 undo", "链头为最新版本"],
+  },
+  {
+    title: "示例拆解",
+    detail: "T124 读取 balance，T120 更新 balance=103。",
+    points: ["T124 看不到 T120 新版本", "命中 V2 版本返回 103", "Purge 等待活跃事务结束"],
+  },
+];
+
 export default function DbSqlTuning() {
   return (
     <TopicShell
@@ -62,6 +80,8 @@ export default function DbSqlTuning() {
         { title: "读路径", detail: "一致性读 = Read View + 版本链。" },
         { title: "写路径", detail: "更新生成新版本并写 undo log。" },
       ]}
+      principles={principles}
+      principlesIntro="用可见性规则 + 版本链追踪，解释 MVCC 如何做到无锁一致性读。"
       flow={["生成 Read View", "版本链判定可见性", "Purge 回收旧版本"]}
       diagramClass="mvcc-diagram"
       renderDiagram={(step) => (

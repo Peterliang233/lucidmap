@@ -8,6 +8,17 @@
   overflow: hidden;
 }
 
+.process-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.85fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.process-principles {
+  align-self: stretch;
+}
+
 .state-node {
   --state-color: 31, 28, 24;
   position: absolute;
@@ -149,6 +160,12 @@
 
   .state-connector__label {
     display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .process-stage {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

@@ -24,6 +24,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "HashMap 风险",
+    detail: "并发扩容可能导致链表成环或数据丢失。",
+    points: ["rehash 期间指针重排", "非线程安全", "高并发写入风险大"],
+  },
+  {
+    title: "同步容器",
+    detail: "全局锁保证一致性，但吞吐降低。",
+    points: ["锁粒度粗", "读写互斥", "适合低并发场景"],
+  },
+  {
+    title: "CHM 示例",
+    detail: "分段锁 + CAS 提升并发。",
+    points: ["读多写少更高效", "分段锁降低竞争", "扩容分段迁移降低停顿"],
+  },
+];
+
 export default function BackendCollections() {
   return (
     <TopicShell
@@ -35,6 +53,8 @@ export default function BackendCollections() {
         { title: "常见场景", detail: "缓存、计数器、并发读写。" },
         { title: "关注点", detail: "扩容、锁竞争、读写一致性。" },
       ]}
+      principles={principles}
+      principlesIntro="从并发风险、锁粒度与扩容机制理解容器选型。"
       flow={["HashMap 非线程安全", "同步容器牺牲并发", "CHM 提升吞吐"]}
       diagramClass="collections-diagram"
       renderDiagram={(step) => (

@@ -114,6 +114,24 @@ const stageMeta = {
   },
 };
 
+const principles = [
+  {
+    title: "连接复用模型",
+    detail: "从多连接到单连接多流，复用层级逐步上移。",
+    points: ["HTTP/1.0: 一资源一连接", "HTTP/1.1: Keep-Alive + 有限并发", "HTTP/2/3: 单连接多流"],
+  },
+  {
+    title: "头阻塞对比",
+    detail: "阻塞从应用层转移到传输层，再由 QUIC 分流。",
+    points: ["1.1 管线化响应必须按序", "2 仍受 TCP 丢包影响", "3 基于 QUIC 流独立恢复"],
+  },
+  {
+    title: "加载示例",
+    detail: "加载 1 个 HTML + 6 个静态资源。",
+    points: ["1.0 需 7 次连接/响应", "2 可在单连接并发 7 个 Stream", "3 支持 0-RTT，弱网更稳定"],
+  },
+];
+
 export default function NetworkHttpEvolution() {
   return (
     <TopicShell
@@ -125,6 +143,8 @@ export default function NetworkHttpEvolution() {
         { title: "演进主线", detail: "短连接 → 持久连接 → 多路复用 → QUIC 流独立。" },
         { title: "优化目标", detail: "并发能力、连接成本、弱网体验。" },
       ]}
+      principles={principles}
+      principlesIntro="对比连接模型、阻塞问题与版本演进的核心优化方向。"
       flow={[
         "0.9 简单请求",
         "1.0 完整消息格式",

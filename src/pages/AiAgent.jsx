@@ -47,6 +47,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "任务驱动闭环",
+    detail: "Goal → Plan → Act → Observe → Memory。",
+    points: ["Planner 拆解步骤与依赖", "Tool 执行输出证据", "Observation 反馈进入记忆"],
+  },
+  {
+    title: "工具与环境",
+    detail: "工具调用让模型接入外部能力。",
+    points: ["结构化参数减少歧义", "结果可追溯可复用", "失败可回退重试"],
+  },
+  {
+    title: "示例拆解",
+    detail: "预订酒店任务。",
+    points: ["先确认日期与预算", "调用酒店搜索", "记录偏好形成长期记忆"],
+  },
+];
+
 export default function AiAgent() {
   return (
     <TopicShell
@@ -58,6 +76,8 @@ export default function AiAgent() {
         { title: "核心模块", detail: "任务入口、规划、工具、记忆与观察。" },
         { title: "协作重点", detail: "模块间的数据流与反馈闭环。" },
       ]}
+      principles={principles}
+      principlesIntro="拆解 Agent 的核心循环与工具/记忆协作方式。"
       flow={["目标进入核心", "规划驱动工具执行", "观察与记忆强化"]}
       diagramClass="ai-agent"
       renderDiagram={(step) => (

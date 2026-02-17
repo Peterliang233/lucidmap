@@ -236,17 +236,51 @@ export default function OsVirtualMemory() {
               </div>
 
 
-              <div className={`vm-fault ${step.id === "page-fault" ? "is-active" : ""}`}>
-                缺页中断
-              </div>
+              <div className={`vm-fault ${step.id === "page-fault" ? "is-active" : ""}`}>缺页中断</div>
             </div>
 
-            <div className="vm-example">
-              <div className="vm-example__title">{step.example?.title || "示例"}</div>
-              <div className="vm-example__lines">
-                {(step.example?.lines || []).map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
+            <div className="vm-aside">
+              <div className="vm-example">
+                <div className="vm-example__title">{step.example?.title || "示例"}</div>
+                <div className="vm-example__lines">
+                  {(step.example?.lines || []).map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="vm-principles os-principles">
+                <div className="os-principles__card">
+                  <span className="os-principles__eyebrow">原理拆解</span>
+                  <h3 className="os-principles__title">地址翻译路径</h3>
+                  <p className="os-principles__desc">
+                    CPU 访问虚拟地址后优先查 TLB；未命中才访问页表；若 PTE
+                    不在内存则触发缺页中断并换入。
+                  </p>
+                  <div className="os-principles__list">
+                    <div className="os-principles__item">
+                      <strong>TLB 命中</strong>
+                      <span>VPN → PFN 直接映射，单次内存访问完成。</span>
+                    </div>
+                    <div className="os-principles__item">
+                      <strong>TLB 未命中</strong>
+                      <span>需要读取页表项，带来一次额外内存访问。</span>
+                    </div>
+                    <div className="os-principles__item">
+                      <strong>缺页中断</strong>
+                      <span>磁盘换入 + 更新 PTE/TLB，延迟最高。</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="os-principles__card">
+                  <h3 className="os-principles__title">示例拆解</h3>
+                  <p className="os-principles__desc">沿用当前示例，展示命中与缺页的差异。</p>
+                  <div className="os-principles__example">
+                    <span>VA 0x3A:19F0 → TLB hit → PA 0x1F:19F0</span>
+                    <span>VA 0x8E:08C0 → TLB miss → PTE=Disk:5</span>
+                    <span>缺页处理 → Disk page#5 → PFN 0x22</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

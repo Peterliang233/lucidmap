@@ -24,6 +24,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "调用决策",
+    detail: "模型判断是否需要外部数据或动作。",
+    points: ["意图识别 → 工具选择", "参数补全与约束校验", "失败可回退纯文本回答"],
+  },
+  {
+    title: "结构化调用",
+    detail: "JSON 参数确保调用可执行与可验证。",
+    points: ["参数 schema 约束", "可重复与可追踪", "便于审计与评估"],
+  },
+  {
+    title: "结果回注",
+    detail: "工具结果进入上下文，驱动最终回答。",
+    points: ["结果结构化更可控", "必要时二次调用", "减少幻觉与偏差"],
+  },
+];
+
 export default function AiFunctionCall() {
   return (
     <TopicShell
@@ -35,6 +53,8 @@ export default function AiFunctionCall() {
         { title: "优势", detail: "可靠性提升、结果可控。" },
         { title: "风险", detail: "参数错误、函数失败。" },
       ]}
+      principles={principles}
+      principlesIntro="从决策、结构化调用与结果回注理解 Function Call 的价值。"
       flow={["意图识别", "结构化调用", "结果回注再推理"]}
       diagramClass="ai-fncall"
       renderDiagram={(step) => (

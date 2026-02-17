@@ -38,6 +38,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "顺序写与分段",
+    detail: "Append-Only + segment 组织提升磁盘效率。",
+    points: ["顺序 I/O 降低随机寻址", "segment 滚动控制文件大小", "offset 作为天然索引"],
+  },
+  {
+    title: "索引与定位",
+    detail: "offset → position，快速定位消息。",
+    points: ["稀疏索引 + 二分查找", "定位到 segment 再偏移", "减少读取范围"],
+  },
+  {
+    title: "零拷贝读路径",
+    detail: "Page Cache + sendfile 降低 CPU 与内存开销。",
+    points: ["数据留在页缓存", "避免用户态复制", "高吞吐低延迟"],
+  },
+];
+
 export default function MqKafkaStorage() {
   return (
     <TopicShell
@@ -49,6 +67,8 @@ export default function MqKafkaStorage() {
         { title: "存储核心", detail: "分区日志 + 分段 + 索引组织。" },
         { title: "性能来源", detail: "顺序写、页缓存、零拷贝、批量压缩。" },
       ]}
+      principles={principles}
+      principlesIntro="从存储组织、定位路径与零拷贝解释 Kafka 高吞吐来源。"
       flow={["追加写入分区日志", "段索引定位", "页缓存直传", "批量压缩提升吞吐", "读取示例路径"]}
       diagramClass="mq-kafka-storage"
       renderDiagram={(step) => (

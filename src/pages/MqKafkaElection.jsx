@@ -52,6 +52,24 @@ const controllers = [
   { id: "c3", label: "C3" },
 ];
 
+const principles = [
+  {
+    title: "选举触发",
+    detail: "Leader 心跳超时触发新一轮选举。",
+    points: ["Follower 等待心跳", "超时提升为 Candidate", "Term 自增防止旧 Leader"],
+  },
+  {
+    title: "多数派投票",
+    detail: "票数过半即可当选并发送心跳。",
+    points: ["RequestVote 广播", "多数派=2/3", "当选后发送 AppendEntries"],
+  },
+  {
+    title: "一致性保障",
+    detail: "Term 与投票记录防止脑裂。",
+    points: ["每个 Term 只投一票", "旧 Term 票作废", "Heartbeat 维持权威"],
+  },
+];
+
 function ElectionDiagram({ step }) {
   const stageRef = useRef(null);
   const trackRef = useRef(null);
@@ -401,6 +419,8 @@ export default function MqKafkaElection() {
         { title: "重点", detail: "Raft 选主 + 多数派投票。" },
         { title: "结果", detail: "Leader 当选后发送心跳维持权威。" },
       ]}
+      principles={principles}
+      principlesIntro="结合 KRaft 的 Term、投票与心跳机制，理解选举过程。"
       flow={["Follower 等待", "超时变 Candidate", "RequestVote 广播", "计票", "Leader 心跳"]}
       interval={2800}
       diagramClass="mq-kafka-election"

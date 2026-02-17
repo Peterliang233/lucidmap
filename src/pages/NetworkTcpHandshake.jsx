@@ -71,6 +71,28 @@ const messages = [
   { id: "fin-close", from: "client", label: "ACK fin+1", phase: "teardown" },
 ];
 
+const principles = [
+  {
+    title: "连接建立",
+    detail: "三次握手确认双方收发能力，避免旧连接复用。",
+    points: [
+      "SYN=1, seq=x；SYN-ACK=1, ack=x+1",
+      "第三次 ACK 让服务端进入 ESTABLISHED",
+      "序列号确保连接的唯一性",
+    ],
+  },
+  {
+    title: "可靠传输",
+    detail: "序列号、ACK 与重传机制保证有序可靠。",
+    points: ["DATA 序号递增，丢包触发重传", "窗口控制发送速率", "RTT 估算超时"],
+  },
+  {
+    title: "挥手示例",
+    detail: "双方独立关闭，TIME-WAIT 确保可靠终止。",
+    points: ["客户端 FIN → FIN-WAIT-1", "服务端 ACK 后 CLOSE-WAIT，再发 FIN", "主动方等待 2MSL"],
+  },
+];
+
 export default function NetworkTcpHandshake() {
   return (
     <TopicShell
@@ -82,6 +104,8 @@ export default function NetworkTcpHandshake() {
         { title: "目的", detail: "可靠建立连接，确保双方具备收发能力。" },
         { title: "状态机", detail: "CLOSED → SYN-SENT → ESTABLISHED。" },
       ]}
+      principles={principles}
+      principlesIntro="结合握手/挥手时序，拆解连接建立、可靠传输与关闭的核心原理。"
       flow={[
         "三次握手避免旧连接复用",
         "序列号用于可靠传输",

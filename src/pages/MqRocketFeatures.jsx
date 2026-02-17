@@ -39,6 +39,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "顺序消息",
+    detail: "同一业务键固定队列，队列内严格有序。",
+    points: ["Producer 选队列固定 ShardingKey", "Consumer 单队列串行消费", "失败重试保持顺序"],
+  },
+  {
+    title: "延迟消息",
+    detail: "进入 DelayLevel 或时间轮，到期后转投真实 Topic。",
+    points: ["不阻塞主链路", "适合超时/补偿", "到期后再投递消费"],
+  },
+  {
+    title: "事务消息",
+    detail: "Half 消息隔离 + 回查保证最终一致。",
+    points: ["先写 Half", "本地事务提交后回查", "Commit/rollback 决定可见性"],
+  },
+];
+
 export default function MqRocketFeatures() {
   return (
     <TopicShell
@@ -50,6 +68,8 @@ export default function MqRocketFeatures() {
         { title: "核心特性", detail: "顺序、延迟、事务消息是高频考点。" },
         { title: "常见场景", detail: "订单编排、超时关闭、支付一致性。" },
       ]}
+      principles={principles}
+      principlesIntro="结合场景化示例，拆解 RocketMQ 三大特性的实现方式。"
       flow={["同一业务键 → 固定队列", "DelayLevel 缓冲 → 定时投递", "Half 消息 → 回查 → Commit/rollback"]}
       diagramClass="mq-rocket-features"
       renderDiagram={(step) => (

@@ -209,6 +209,24 @@ const exampleNotes = {
   deliver: "示例: 生成最终行程建议并交付给用户。",
 };
 
+const principles = [
+  {
+    title: "能力发现",
+    detail: "AgentCard/Registry 让协调器发现能力与入口。",
+    points: ["能力与 Auth 元数据", "支持多 Agent 目录", "自动化选择与路由"],
+  },
+  {
+    title: "任务协作",
+    detail: "任务拆解 + 并行执行提升效率。",
+    points: ["Task 可拆分并发处理", "状态流式更新", "输入不足触发补充"],
+  },
+  {
+    title: "交付闭环",
+    detail: "Artifacts 汇总成可交付结果。",
+    points: ["候选结果对比排序", "去重与冲突处理", "最终方案交付用户"],
+  },
+];
+
 export default function AiA2A() {
   return (
     <TopicShell
@@ -222,6 +240,8 @@ export default function AiA2A() {
         { title: "任务模型", detail: "Task + Message + Artifact。" },
         { title: "通信形态", detail: "JSON-RPC / HTTP / SSE。" },
       ]}
+      principles={principles}
+      principlesIntro="从发现、并行协作到交付闭环拆解 A2A 的核心流程。"
       flow={["发现 Agent", "任务拆解", "并行处理", "状态与补充", "Artifact 产出", "汇总交付"]}
       diagramClass="ai-a2a"
       renderDiagram={(step) => (

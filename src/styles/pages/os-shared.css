@@ -111,6 +111,79 @@
   color: var(--ink-soft);
 }
 
+.os-principles {
+  display: grid;
+  gap: 12px;
+}
+
+.os-principles__card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: grid;
+  gap: 10px;
+  box-shadow: 0 10px 24px rgba(31, 28, 24, 0.06);
+}
+
+.os-principles__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.os-principles__title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.os-principles__desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.os-principles__list {
+  display: grid;
+  gap: 8px;
+}
+
+.os-principles__item {
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(31, 28, 24, 0.04);
+  border: 1px dashed rgba(31, 28, 24, 0.12);
+  display: grid;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.os-principles__item strong {
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+
+.os-principles__example {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(31, 28, 24, 0.04);
+  border: 1px dashed rgba(31, 28, 24, 0.12);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+}
+
+.os-principles__example span {
+  display: block;
+}
+
 @media (max-width: 960px) {
   .topic__hero {
     grid-template-columns: 1fr;

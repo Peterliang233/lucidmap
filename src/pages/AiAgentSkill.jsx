@@ -94,6 +94,24 @@ const messages = [
   { id: "deliver", from: "agent", to: "user", label: "答复 / 行动" },
 ];
 
+const principles = [
+  {
+    title: "结构化定义",
+    detail: "Skill = 描述 + Schema + 执行器。",
+    points: ["描述驱动模型选择", "Schema 校验参数", "执行器产出可用结果"],
+  },
+  {
+    title: "治理与版本",
+    detail: "注册表管理权限、版本与可观测。",
+    points: ["权限控制调用范围", "版本变更可回滚", "统计调用效果"],
+  },
+  {
+    title: "调用闭环",
+    detail: "选择 → 调用 → 回传 → 生成。",
+    points: ["tool call 结构化", "结果回注模型", "输出与反馈迭代"],
+  },
+];
+
 export default function AiAgentSkill() {
   return (
     <TopicShell
@@ -106,6 +124,8 @@ export default function AiAgentSkill() {
         { title: "选择", detail: "模型基于描述与上下文挑选技能。" },
         { title: "闭环", detail: "执行回传 + 观测迭代。" },
       ]}
+      principles={principles}
+      principlesIntro="拆解 Skill 的定义、治理与调用闭环。"
       flow={["结构化定义", "路由选择", "执行回传", "结果生成"]}
       diagramClass="ai-skill"
       renderDiagram={(step) => (

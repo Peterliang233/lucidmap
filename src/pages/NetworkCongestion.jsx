@@ -44,6 +44,24 @@ const bars = [
   { id: 10, phase: "recovery", height: 72 },
 ];
 
+const principles = [
+  {
+    title: "窗口增长规则",
+    detail: "cwnd 控制发送速率，ssthresh 分界慢启动与拥塞避免。",
+    points: ["慢启动每 RTT 翻倍", "拥塞避免每 RTT +1", "到达阈值切换增长模式"],
+  },
+  {
+    title: "丢包处理",
+    detail: "重复 ACK 触发快速重传，超时则回到慢启动。",
+    points: ["3 个重复 ACK → fast retransmit", "ssthresh = cwnd / 2", "超时 → cwnd 归 1"],
+  },
+  {
+    title: "数值示例",
+    detail: "初始 cwnd=1，ssthresh=8。",
+    points: ["1 → 2 → 4 → 8 (慢启动)", "9 → 10 (线性增长)", "丢包后 cwnd 回落再爬升"],
+  },
+];
+
 export default function NetworkCongestion() {
   return (
     <TopicShell
@@ -55,6 +73,9 @@ export default function NetworkCongestion() {
         { title: "目标", detail: "防止网络拥塞，同时保证吞吐量。" },
         { title: "关键变量", detail: "cwnd、ssthresh、RTT。" },
       ]}
+      principles={principles}
+      principlesPlacement="side"
+      principlesIntro="结合曲线，拆解窗口增长与丢包恢复的核心规则。"
       flow={["慢启动快速增长", "拥塞避免平滑提升", "丢包触发快速重传"]}
       diagramClass="cwnd-diagram"
       renderDiagram={(step) => (

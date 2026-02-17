@@ -38,6 +38,24 @@ const cards = [
   { id: "durable", title: "Durability", detail: "提交持久" },
 ];
 
+const principles = [
+  {
+    title: "原子性与回滚",
+    detail: "事务失败可回滚到起点，避免半完成状态。",
+    points: ["Undo log 记录旧值", "异常触发回滚", "保证要么全成要么全不成"],
+  },
+  {
+    title: "一致性与约束",
+    detail: "业务规则 + 数据约束保证状态合法。",
+    points: ["主键/外键/唯一性约束", "检查约束与触发器", "应用层校验共同作用"],
+  },
+  {
+    title: "示例拆解",
+    detail: "转账 A→B 100 元。",
+    points: ["扣款失败则回滚", "并发读写用锁/MVCC 隔离", "提交后日志落盘保证持久"],
+  },
+];
+
 export default function DbAcid() {
   return (
     <TopicShell
@@ -49,6 +67,8 @@ export default function DbAcid() {
         { title: "事务目标", detail: "保证数据正确且可恢复。" },
         { title: "落地机制", detail: "日志 + 锁 + 约束。" },
       ]}
+      principles={principles}
+      principlesIntro="从日志、锁与约束三个角度拆解 ACID 的落地机制。"
       flow={["原子性依赖回滚", "隔离性依赖并发控制", "持久性依赖日志落盘"]}
       diagramClass="acid-diagram"
       renderDiagram={(step) => (

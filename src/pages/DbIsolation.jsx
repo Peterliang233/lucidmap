@@ -38,6 +38,24 @@ const matrix = [
   { level: "串行化", id: "serial", dirty: true, nonRepeat: true, phantom: true },
 ];
 
+const principles = [
+  {
+    title: "并发异常定义",
+    detail: "三类问题决定隔离级别的差异。",
+    points: ["脏读：读到未提交修改", "不可重复读：同一行读到不同值", "幻读：范围查询结果变化"],
+  },
+  {
+    title: "隔离级别权衡",
+    detail: "隔离更高，性能成本更大。",
+    points: ["RC 避免脏读但仍可能幻读", "RR 保证行一致性，需防幻读", "串行化最安全但吞吐最低"],
+  },
+  {
+    title: "实现手段",
+    detail: "锁与 MVCC 共同平衡一致性与性能。",
+    points: ["行锁/间隙锁控制并发写入", "MVCC 保障一致性读", "谓词锁应对范围写入"],
+  },
+];
+
 export default function DbIsolation() {
   return (
     <TopicShell
@@ -49,6 +67,8 @@ export default function DbIsolation() {
         { title: "并发异常", detail: "脏读、不可重复读、幻读。" },
         { title: "实现方式", detail: "锁 + MVCC。" },
       ]}
+      principles={principles}
+      principlesIntro="结合并发异常与实现手段，理解隔离级别的取舍。"
       flow={["隔离级别越高并发越低", "MVCC 平衡性能与一致性", "串行化最安全"]}
       diagramClass="isolation-diagram"
       renderDiagram={(step) => (

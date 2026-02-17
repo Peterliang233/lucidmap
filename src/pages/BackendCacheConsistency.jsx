@@ -24,6 +24,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "Cache Aside",
+    detail: "读缓存未命中再回源，写库后删除缓存。",
+    points: ["读路径快", "写路径避免脏读", "失效缓存降低不一致风险"],
+  },
+  {
+    title: "双写一致",
+    detail: "数据库与缓存同步更新，要求顺序与幂等。",
+    points: ["先写库再写缓存", "消息队列对账", "版本号防止乱序覆盖"],
+  },
+  {
+    title: "示例拆解",
+    detail: "更新商品库存场景。",
+    points: ["写库成功 → 删除缓存", "并发读触发回源重建", "延迟双删减少脏缓存"],
+  },
+];
+
 export default function BackendCacheConsistency() {
   return (
     <TopicShell
@@ -35,6 +53,8 @@ export default function BackendCacheConsistency() {
         { title: "目标", detail: "保持数据一致并提升读性能。" },
         { title: "常见问题", detail: "缓存击穿、雪崩、穿透。" },
       ]}
+      principles={principles}
+      principlesIntro="结合读写路径与失效策略，理解缓存一致性核心权衡。"
       flow={["读：缓存优先", "写：更新库 + 失效缓存", "双写需要异步对账"]}
       diagramClass="cache-diagram"
       renderDiagram={(step) => (

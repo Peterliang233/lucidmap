@@ -92,6 +92,24 @@ const messages = [
   { id: "deliver", from: "host", to: "user", label: "展示给用户" },
 ];
 
+const principles = [
+  {
+    title: "分层职责",
+    detail: "Host 负责权限与路由，Server 提供能力。",
+    points: ["Host 统一上下文与安全", "Server 暴露 tools/resources/prompts", "Model 只选择与决策"],
+  },
+  {
+    title: "协议优势",
+    detail: "标准化 JSON-RPC 让调用可移植。",
+    points: ["统一请求/响应格式", "工具可插拔", "多 Server 并行扩展"],
+  },
+  {
+    title: "示例链路",
+    detail: "搜索本地 RAG 论文。",
+    points: ["选择 search_docs", "MCP Server 返回文档列表", "模型基于结果生成答案"],
+  },
+];
+
 export default function AiMcp() {
   return (
     <TopicShell
@@ -104,6 +122,8 @@ export default function AiMcp() {
         { title: "能力层级", detail: "tools / resources / prompts。" },
         { title: "传输层", detail: "stdio / Streamable HTTP。" },
       ]}
+      principles={principles}
+      principlesIntro="从职责划分与协议优势理解 MCP 的调用链路。"
       flow={["模型选择工具", "Host 协议调度", "工具结果回传模型"]}
       diagramClass="ai-mcp"
       renderDiagram={(step) => (

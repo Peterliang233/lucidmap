@@ -192,69 +192,108 @@ export default function OsProcessStates() {
       </header>
 
       <section className="topic__stage">
-        <div className="state-machine" ref={containerRef}>
-          {connector && activeTransition ? (
-            <svg className="state-connector" viewBox={connector.viewBox} preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <marker
-                  id="stateArrow"
-                  viewBox="0 0 10 10"
-                  refX="9.4"
-                  refY="5"
-                  markerWidth="6"
-                  markerHeight="6"
-                  markerUnits="userSpaceOnUse"
-                  orient="auto"
-                >
-                  <path d="M 0 0 L 10 5 L 0 10 Z" fill="currentColor" />
-                </marker>
-              </defs>
-              <path
-                id="state-connector-path"
-                className="state-connector__path"
-                d={connector.path}
-                markerEnd="url(#stateArrow)"
-              />
-              {connector.isHorizontalLabel && connector.labelPoint ? (
-                <text
-                  className="state-connector__label is-horizontal"
-                  x={connector.labelPoint.x}
-                  y={connector.labelPoint.y}
-                  textAnchor="middle"
-                >
-                  {activeTransition.label}
-                </text>
-              ) : (
-                <text className="state-connector__label" textAnchor="middle" dy="-6">
-                  <textPath href="#state-connector-path" startOffset="58%" method="align" spacing="auto">
+        <div className="process-stage">
+          <div className="state-machine" ref={containerRef}>
+            {connector && activeTransition ? (
+              <svg className="state-connector" viewBox={connector.viewBox} preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <marker
+                    id="stateArrow"
+                    viewBox="0 0 10 10"
+                    refX="9.4"
+                    refY="5"
+                    markerWidth="6"
+                    markerHeight="6"
+                    markerUnits="userSpaceOnUse"
+                    orient="auto"
+                  >
+                    <path d="M 0 0 L 10 5 L 0 10 Z" fill="currentColor" />
+                  </marker>
+                </defs>
+                <path
+                  id="state-connector-path"
+                  className="state-connector__path"
+                  d={connector.path}
+                  markerEnd="url(#stateArrow)"
+                />
+                {connector.isHorizontalLabel && connector.labelPoint ? (
+                  <text
+                    className="state-connector__label is-horizontal"
+                    x={connector.labelPoint.x}
+                    y={connector.labelPoint.y}
+                    textAnchor="middle"
+                  >
                     {activeTransition.label}
-                  </textPath>
-                </text>
-              )}
-            </svg>
-          ) : null}
-          {Object.keys(stateMeta).map((state) => (
-            <div
-              key={state}
-              className={`state-node state-node--${state} ${activeState === state ? "is-active" : ""} ${
-                fromState === state ? "is-from" : ""
-              } ${toState === state ? "is-to" : ""} ${
-                focusStates.size && !focusStates.has(state) ? "is-dim" : ""
-              }`}
-              style={{
-                top: `${statePositions[state].y}%`,
-                left: `${statePositions[state].x}%`,
-              }}
-              ref={(el) => {
-                if (el) {
-                  nodeRefs.current[state] = el;
-                }
-              }}
-            >
-              <span>{stateMeta[state]}</span>
+                  </text>
+                ) : (
+                  <text className="state-connector__label" textAnchor="middle" dy="-6">
+                    <textPath href="#state-connector-path" startOffset="58%" method="align" spacing="auto">
+                      {activeTransition.label}
+                    </textPath>
+                  </text>
+                )}
+              </svg>
+            ) : null}
+            {Object.keys(stateMeta).map((state) => (
+              <div
+                key={state}
+                className={`state-node state-node--${state} ${activeState === state ? "is-active" : ""} ${
+                  fromState === state ? "is-from" : ""
+                } ${toState === state ? "is-to" : ""} ${
+                  focusStates.size && !focusStates.has(state) ? "is-dim" : ""
+                }`}
+                style={{
+                  top: `${statePositions[state].y}%`,
+                  left: `${statePositions[state].x}%`,
+                }}
+                ref={(el) => {
+                  if (el) {
+                    nodeRefs.current[state] = el;
+                  }
+                }}
+              >
+                <span>{stateMeta[state]}</span>
+              </div>
+            ))}
+            <div className="state-token" style={tokenStyle} />
+          </div>
+
+          <div className="process-principles os-principles">
+            <div className="os-principles__card">
+              <span className="os-principles__eyebrow">原理拆解</span>
+              <h3 className="os-principles__title">进程状态机主线</h3>
+              <p className="os-principles__desc">
+                进程在就绪队列中等待调度，获得时间片后进入运行；遇到 I/O 或事件等待会阻塞，
+                事件完成后回到就绪，最终退出并释放资源。
+              </p>
+              <div className="os-principles__list">
+                <div className="os-principles__item">
+                  <strong>创建 → 就绪</strong>
+                  <span>初始化 PCB/地址空间，将进程放入 ready queue。</span>
+                </div>
+                <div className="os-principles__item">
+                  <strong>就绪 → 运行</strong>
+                  <span>调度器分配 CPU，进入时间片执行。</span>
+                </div>
+                <div className="os-principles__item">
+                  <strong>运行 → 阻塞</strong>
+                  <span>I/O/锁等待触发 sleep，等待事件完成。</span>
+                </div>
+              </div>
             </div>
-          ))}
-          <div className="state-token" style={tokenStyle} />
+            <div className="os-principles__card">
+              <h3 className="os-principles__title">示例时序</h3>
+              <p className="os-principles__desc">以一次磁盘读取为例的状态流转。</p>
+              <div className="os-principles__example">
+                <span>t0: fork() → 创建</span>
+                <span>t1: ready queue → 运行</span>
+                <span>t2: read() → 阻塞等待 I/O</span>
+                <span>t3: I/O 完成 → 就绪</span>
+                <span>t4: 再次调度 → 运行</span>
+                <span>t5: exit() → 终止</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="topic__flow">

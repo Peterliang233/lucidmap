@@ -453,22 +453,55 @@ export default function OsMemoryAlloc() {
               <div className="mem-event">{step.event}</div>
             </div>
 
-            <div className="mem-detail">
-              <div className="mem-detail__card">
-                <div className="mem-detail__title">{step.title}</div>
-                <p className="mem-detail__summary">{step.description}</p>
+          <div className="mem-detail">
+            <div className="mem-detail__card">
+              <div className="mem-detail__title">{step.title}</div>
+              <p className="mem-detail__summary">{step.description}</p>
+            </div>
+            {step.detail.map((section) => (
+              <div key={section.title} className="mem-detail__section">
+                <h4>{section.title}</h4>
+                <div className="mem-detail__lines">
+                  {section.lines.map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                </div>
               </div>
-              {step.detail.map((section) => (
-                <div key={section.title} className="mem-detail__section">
-                  <h4>{section.title}</h4>
-                  <div className="mem-detail__lines">
-                    {section.lines.map((line) => (
-                      <span key={line}>{line}</span>
-                    ))}
+            ))}
+            <div className="mem-principles os-principles">
+              <div className="os-principles__card">
+                <span className="os-principles__eyebrow">原理拆解</span>
+                <h3 className="os-principles__title">段页式关键链路</h3>
+                <p className="os-principles__desc">
+                  段表负责权限与边界校验，页表负责虚实映射；TLB 缓存最近映射，
+                  缺页时触发回收与置换。
+                </p>
+                <div className="os-principles__list">
+                  <div className="os-principles__item">
+                    <strong>段表校验</strong>
+                    <span>越界直接异常，合法后得到线性地址。</span>
+                  </div>
+                  <div className="os-principles__item">
+                    <strong>页表映射</strong>
+                    <span>VPN → PFN，未命中则进入缺页路径。</span>
+                  </div>
+                  <div className="os-principles__item">
+                    <strong>回收置换</strong>
+                    <span>LRU 选择牺牲页，脏页需写回磁盘。</span>
                   </div>
                 </div>
-              ))}
+              </div>
+              <div className="os-principles__card">
+                <h3 className="os-principles__title">示例拆解</h3>
+                <p className="os-principles__desc">沿用当前示例地址 0x9A80 的换入路径。</p>
+                <div className="os-principles__example">
+                  <span>seg=2, offset=0x5A80 → linear 0x9A80</span>
+                  <span>page 0x9 present=0 → page fault</span>
+                  <span>LRU 选 F1(脏) → writeback → load P9</span>
+                </div>
+              </div>
             </div>
+          </div>
           </div>
 
           <div className="topic__flow">

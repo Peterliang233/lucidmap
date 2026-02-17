@@ -47,6 +47,28 @@ const messages = [
   { id: "finished-client", from: "client", label: "Finished" },
 ];
 
+const principles = [
+  {
+    title: "握手目标",
+    detail: "完成参数协商、身份认证与密钥派生。",
+    points: ["ClientHello 协商版本/套件/ALPN", "ServerHello 返回证书与协商结果", "Finished 校验握手完整性"],
+  },
+  {
+    title: "证书校验链路",
+    detail: "确保证书可信且绑定正确域名。",
+    points: ["根证书 → 中间证书 → 服务端证书", "校验域名/SAN 与有效期", "检查吊销状态与签名"],
+  },
+  {
+    title: "密钥派生示例",
+    detail: "ECDHE 共享秘密 + HKDF 派生会话密钥。",
+    points: [
+      "ClientKeyShare ⊕ ServerKeyShare",
+      "Handshake Secret → Traffic Keys",
+      "会话复用基于票据或 PSK",
+    ],
+  },
+];
+
 export default function NetworkTlsHandshake() {
   return (
     <TopicShell
@@ -58,6 +80,8 @@ export default function NetworkTlsHandshake() {
         { title: "安全保障", detail: "机密性、完整性、身份认证。" },
         { title: "关键概念", detail: "证书链、对称密钥、前向安全。" },
       ]}
+      principles={principles}
+      principlesIntro="结合握手时序，拆解 TLS 的身份认证、密钥协商与安全属性。"
       flow={["握手协商套件", "证书验证身份", "生成会话密钥"]}
       diagramClass="tls-diagram"
       renderDiagram={(step) => (
