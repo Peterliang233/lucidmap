@@ -1,6 +1,6 @@
 # LucidMap Knowledge Map
 
-LucidMap is a **React + Vite** configuration-driven knowledge map site. It uses animated topic pages to organize computer fundamentals and system design topics. Navigation, cards, and tags are all driven by JSON for easy, continuous expansion.
+LucidMap is a **React + Vite** configuration-driven knowledge map site. It uses animated topic pages to organize computer fundamentals and system design topics. Navigation, cards, tags, and per-page principles are driven by JSON or page data for easy, continuous expansion.
 
 ## Features
 - JSON-configured catalog and content
@@ -9,6 +9,7 @@ LucidMap is a **React + Vite** configuration-driven knowledge map site. It uses 
 - Tag filtering (toggle on/off)
 - Collapsible groups
 - Animated topic pages (step timeline + play/pause)
+- Principles panel that explains the core ideas per topic
 - Responsive layout + motion cards
 
 ## Tech Stack
@@ -103,8 +104,24 @@ All content is configured in `src/data.json`.
    ├─ pages
    ├─ data.json
    ├─ main.jsx
-   └─ styles.css
+   └─ styles
+      ├─ base.css
+      ├─ pages.css
+      ├─ topic-shell.css
+      └─ pages
+         ├─ shared-layout.css
+         ├─ shared-flow.css
+         ├─ shared-sequence.css
+         ├─ shared-animations.css
+         ├─ shared-utilities.css
+         └─ (page-level styles)
 ```
+
+## Styling & Animation
+- Global tokens and resets live in `src/styles/base.css`.
+- The TopicShell layout styles live in `src/styles/topic-shell.css`.
+- Page-level styles are split under `src/styles/pages/` and aggregated by `src/styles/pages.css`.
+- Each topic page defines its own diagram/animation markup and step data in `src/pages/`.
 
 ## FAQ
 - **Q: Why does opening the HTML directly show nothing?**
