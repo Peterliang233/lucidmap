@@ -349,7 +349,7 @@ export default function OsThreadSync() {
 
   return (
     <Layout>
-      <div className="topic">
+      <div className="topic topic--sync">
         <header className="topic__hero">
           <div>
             <p className="topic__eyebrow">操作系统动画</p>
@@ -504,40 +504,41 @@ export default function OsThreadSync() {
                 </div>
               </div>
             ))}
-            <div className="sync-principles os-principles">
-              <div className="os-principles__card">
-                <span className="os-principles__eyebrow">原理拆解</span>
-                <h3 className="os-principles__title">同步原语的定位</h3>
-                <p className="os-principles__desc">
-                  互斥锁负责互斥进入临界区，自旋锁以忙等换取低延迟，
-                  条件变量用于等待条件本身而非锁。
-                </p>
-                <div className="os-principles__list">
-                  <div className="os-principles__item">
-                    <strong>Mutex</strong>
-                    <span>失败线程睡眠入队，依赖唤醒与调度。</span>
-                  </div>
-                  <div className="os-principles__item">
-                    <strong>Spinlock</strong>
-                    <span>线程在 CPU 上持续 CAS，适合短临界区。</span>
-                  </div>
-                  <div className="os-principles__item">
-                    <strong>CondVar</strong>
-                    <span>wait 会释放 mutex，signal 只唤醒不交锁。</span>
-                  </div>
+          </div>
+          </div>
+
+          <div className="sync-principles os-principles">
+            <div className="os-principles__card">
+              <span className="os-principles__eyebrow">原理拆解</span>
+              <h3 className="os-principles__title">同步原语的定位</h3>
+              <p className="os-principles__desc">
+                互斥锁负责互斥进入临界区，自旋锁以忙等换取低延迟，
+                条件变量用于等待条件本身而非锁。
+              </p>
+              <div className="os-principles__list">
+                <div className="os-principles__item">
+                  <strong>Mutex</strong>
+                  <span>失败线程睡眠入队，依赖唤醒与调度。</span>
                 </div>
-              </div>
-              <div className="os-principles__card">
-                <h3 className="os-principles__title">生产者/消费者示例</h3>
-                <p className="os-principles__desc">buffer 为空时消费者等待，生产者唤醒。</p>
-                <div className="os-principles__example">
-                  <span>while (buffer==0) wait(cond) // release mutex</span>
-                  <span>produce(); signal(cond); // wake one waiter</span>
-                  <span>consumer wake → lock → consume</span>
+                <div className="os-principles__item">
+                  <strong>Spinlock</strong>
+                  <span>线程在 CPU 上持续 CAS，适合短临界区。</span>
+                </div>
+                <div className="os-principles__item">
+                  <strong>CondVar</strong>
+                  <span>wait 会释放 mutex，signal 只唤醒不交锁。</span>
                 </div>
               </div>
             </div>
-          </div>
+            <div className="os-principles__card">
+              <h3 className="os-principles__title">生产者/消费者示例</h3>
+              <p className="os-principles__desc">buffer 为空时消费者等待，生产者唤醒。</p>
+              <div className="os-principles__example">
+                <span>while (buffer==0) wait(cond) // release mutex</span>
+                <span>produce(); signal(cond); // wake one waiter</span>
+                <span>consumer wake → lock → consume</span>
+              </div>
+            </div>
           </div>
 
           {null}

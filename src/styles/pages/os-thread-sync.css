@@ -5,6 +5,15 @@
   align-items: start;
 }
 
+.topic--sync {
+  min-height: auto;
+  padding-bottom: 24px;
+}
+
+.topic--sync .topic__stage {
+  padding-bottom: 24px;
+}
+
 .sync-diagram {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--line);
@@ -405,6 +414,14 @@
   background: rgba(210, 100, 42, 0.7);
   box-shadow: 0 0 6px rgba(210, 100, 42, 0.4);
   flex: 0 0 auto;
+}
+
+.sync-principles {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.sync-principles .os-principles__card {
+  height: 100%;
 }
 
 @media (max-width: 900px) {
