@@ -17,6 +17,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "RDB 快照主线",
+    detail: "fork + COW + 原子替换",
+    points: ["BGSAVE 生成子进程", "写入触发 COW，父进程继续处理", "dump.rdb.tmp → rename"],
+  },
+  {
+    title: "AOF 追加链路",
+    detail: "顺序写 + fsync 策略",
+    points: ["写命令追加到 AOF buffer", "everysec/always/no 控制刷盘", "重启按日志回放恢复"],
+  },
+  {
+    title: "混合与恢复",
+    detail: "降低恢复时间，兼顾完整性",
+    points: ["RDB 作为基线 + AOF 增量", "rewrite 压缩历史日志", "示例：SET → AOF → rewrite"],
+  },
+];
+
 export default function RedisPersistence() {
   return (
     <TopicShell
@@ -29,6 +47,8 @@ export default function RedisPersistence() {
         { title: "组合策略", detail: "RDB + AOF 混合持久化。" },
       ]}
       flow={["RDB 快照生成", "AOF 追加落盘"]}
+      principles={principles}
+      principlesIntro="用 RDB/AOF 两条链路解释性能与可靠性的权衡。"
       diagramClass="redis-persist"
       renderDiagram={(step) => (
         <div className={`redis-persist__stage mode--${step.active}`}>

@@ -67,6 +67,12 @@
   gap: 10px;
 }
 
+.top-nav__logo span {
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
 .top-nav__logo img {
   width: 36px;
   height: 36px;

@@ -24,6 +24,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "槽位与路由",
+    detail: "CRC16(key) % 16384 → slot",
+    points: ["客户端缓存槽位映射", "MOVED/ASK 指引重定向", "热点 key 可拆分迁移"],
+  },
+  {
+    title: "迁移流程",
+    detail: "在线迁移，降低影响",
+    points: ["源节点标记 migrating", "目标节点标记 importing", "示例：slot 5461 迁移到 Node B"],
+  },
+  {
+    title: "故障转移",
+    detail: "集群投票提升从节点",
+    points: ["故障检测（PFAIL/FAIL）", "epoch 投票选主", "拓扑广播更新"],
+  },
+];
+
 export default function RedisCluster() {
   return (
     <TopicShell
@@ -36,6 +54,8 @@ export default function RedisCluster() {
         { title: "挑战", detail: "槽位迁移与热点均衡。" },
       ]}
       flow={["槽位均衡分配", "迁移平衡热点", "主从自动切换"]}
+      principles={principles}
+      principlesIntro="用槽位路由、迁移与选主解释 Cluster 的扩展与容错。"
       diagramClass="redis-cluster"
       renderDiagram={(step) => (
         <div className={`redis-cluster__grid mode--${step.active}`}>

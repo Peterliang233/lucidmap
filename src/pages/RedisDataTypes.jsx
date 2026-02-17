@@ -38,6 +38,28 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "选型与复杂度",
+    detail: "按访问模式选择结构，避免过度设计。",
+    points: ["计数/缓存 → String（O(1)）", "对象字段 → Hash（局部更新）", "排序榜单 → ZSet（score + range）"],
+  },
+  {
+    title: "编码与转化",
+    detail: "小结构用紧凑编码，阈值后升级。",
+    points: [
+      "Hash: listpack → hashtable",
+      "List: quicklist 分段链表",
+      "ZSet: listpack → skiplist + dict",
+    ],
+  },
+  {
+    title: "示例路径",
+    detail: "跟随一条 key 的生命周期。",
+    points: ["HSET user:42 → listpack", "字段增长触发 rehash", "ZADD leaderboard → skiplist 插入"],
+  },
+];
+
 const cards = [
   { id: "string", title: "String", detail: "计数 / 缓存", example: "例：page_view:10086" },
   { id: "hash", title: "Hash", detail: "对象字段", example: "例：user:42{name,level}" },
@@ -111,6 +133,8 @@ export default function RedisDataTypes() {
         { title: "关注点", detail: "操作复杂度、内存占用。" },
       ]}
       flow={["String 快速读写", "Hash 适合对象字段", "ZSet 支持排序"]}
+      principles={principles}
+      principlesIntro="结合结构编码与升级路径，解释为什么要选对数据类型。"
       diagramClass="redis-types"
       renderDiagram={(step) => (
         <div className="redis-types__stack">

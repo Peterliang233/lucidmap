@@ -24,6 +24,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "全量同步触发",
+    detail: "runid/offset 不匹配会退回全量",
+    points: ["PSYNC ? -1 首次全量", "runid 不一致 → FULLRESYNC", "offset 不在 backlog → FULLRESYNC"],
+  },
+  {
+    title: "增量同步路径",
+    detail: "Backlog 续传，补齐缺口",
+    points: ["+CONTINUE 表示可增量", "回放 backlog 追平 offset", "实时复制保持一致"],
+  },
+  {
+    title: "哨兵故障转移",
+    detail: "观察 → 投票 → 选主 → 重配",
+    points: ["SDOWN/ODOWN 触发选举", "按优先级/offset 选新主", "SLAVEOF 重配拓扑"],
+  },
+];
+
 export default function RedisReplication() {
   return (
     <TopicShell
@@ -36,6 +54,8 @@ export default function RedisReplication() {
         { title: "注意点", detail: "复制延迟、数据一致性。" },
       ]}
       flow={["首次全量同步", "后续增量传播", "哨兵自动故障转移"]}
+      principles={principles}
+      principlesIntro="从 PSYNC、backlog 到哨兵选主，拆解高可用链路。"
       diagramClass="redis-repl"
       renderDiagram={(step) => (
         <div className={`redis-repl__stage mode--${step.active}`}>

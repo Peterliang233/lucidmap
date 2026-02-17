@@ -16,7 +16,25 @@ const pillars = [
   },
 ];
 
-const floatingItems = ["OS", "Net", "DB", "JVM", "Algo", "Cache", "IO", "TCP"];
+const heroSatellites = [
+  { id: "kernel", label: "Kernel", x: "16%", y: "26%" },
+  { id: "network", label: "Network", x: "76%", y: "22%" },
+  { id: "storage", label: "Storage", x: "78%", y: "74%" },
+  { id: "runtime", label: "Runtime", x: "24%", y: "74%" },
+  { id: "ai", label: "AI", x: "82%", y: "52%" },
+  { id: "database", label: "Database", x: "60%", y: "16%" },
+  { id: "java", label: "Java", x: "12%", y: "52%" },
+  { id: "golang", label: "Go", x: "38%", y: "12%" },
+  { id: "algo", label: "Algorithm", x: "58%", y: "82%" },
+  { id: "linux", label: "Linux", x: "26%", y: "14%" },
+  { id: "io", label: "IO", x: "28%", y: "34%" },
+];
+
+const heroStreams = [
+  { id: "s1", x: "24%", delay: "0s" },
+  { id: "s2", x: "50%", delay: "0.6s" },
+  { id: "s3", x: "76%", delay: "1.2s" },
+];
 
 export default function LandingPage() {
   const scrollToMission = () => {
@@ -47,20 +65,48 @@ export default function LandingPage() {
           </div>
 
           <div className="landing__visual">
-            <div className="orbital">
-              <div className="orbital__core">B+</div>
-              <div className="orbital__ring" />
-              <div className="orbital__ring orbital__ring--inner" />
-              <div className="orbital__dot orbital__dot--a" />
-              <div className="orbital__dot orbital__dot--b" />
-              <div className="orbital__dot orbital__dot--c" />
-            </div>
-            <div className="floating-grid">
-              {floatingItems.map((item, index) => (
-                <span key={item} style={{ "--delay": `${index * 0.2}s` }}>
-                  {item}
-                </span>
-              ))}
+            <div className="hero-map hero-map--clean">
+              <div className="hero-map__backdrop" />
+              <div className="hero-map__grid" />
+              <div className="hero-map__arc hero-map__arc--a" />
+              <div className="hero-map__arc hero-map__arc--b" />
+              <div className="hero-map__pulse" />
+              <div className="hero-map__core">
+                <span className="hero-map__badge">LucidMap</span>
+                <span className="hero-map__metric">Knowledge Signal Hub</span>
+              </div>
+              <div className="hero-map__streams">
+                {heroStreams.map((stream) => (
+                  <span
+                    key={stream.id}
+                    className="hero-map__stream"
+                    style={{
+                      "--x": stream.x,
+                      "--delay": stream.delay,
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="hero-map__satellites">
+                {heroSatellites.map((satellite, index) => (
+                  <div
+                    key={satellite.id}
+                    className="hero-map__satellite"
+                    style={{
+                      "--x": satellite.x,
+                      "--y": satellite.y,
+                      "--delay": `${index * 0.25}s`,
+                    }}
+                  >
+                    {satellite.label}
+                  </div>
+                ))}
+              </div>
+              <div className="hero-map__legend">
+                <span>Signals: 42</span>
+                <span>Cards: 320+</span>
+                <span>Topics: 128</span>
+              </div>
             </div>
           </div>
         </div>

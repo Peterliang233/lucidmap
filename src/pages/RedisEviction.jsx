@@ -32,6 +32,24 @@ const steps = [
   },
 ];
 
+const principles = [
+  {
+    title: "触发与抽样",
+    detail: "超过 maxmemory 后进入淘汰",
+    points: ["触顶才触发淘汰", "random-sample 选择候选", "逐步释放直到回落"],
+  },
+  {
+    title: "TTL/LRU/LFU 对比",
+    detail: "不同维度衡量热度",
+    points: ["TTL 优先过期键", "LRU 看最近访问", "LFU 看访问频次"],
+  },
+  {
+    title: "策略选型",
+    detail: "allkeys vs volatile",
+    points: ["allkeys 适合纯缓存", "volatile 只淘汰带过期键", "示例：热点 key 优先保护"],
+  },
+];
+
 const samples = [
   { key: "user:1001", ttl: "60s", freq: 8, age: "刚访问" },
   { key: "config:v1", ttl: "永久", freq: 1, age: "30m 未访问" },
@@ -169,6 +187,8 @@ export default function RedisEviction() {
         { title: "选择原则", detail: "业务热点分布与容量。" },
       ]}
       flow={["TTL 优先清理过期", "LRU 偏向近期热点", "LFU 保护高频"]}
+      principles={principles}
+      principlesIntro="解释淘汰触发、候选选择与策略差异。"
       diagramClass="redis-evict"
       renderDiagram={(step) => (
         <div className={`redis-evict__grid mode--${step.active}`}>
