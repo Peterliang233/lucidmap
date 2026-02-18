@@ -26,11 +26,6 @@ const steps = [
 
 const stackOps = ["push Order#521", "push Item#9", "pop Item#9", "pop Order#521"];
 const queueTasks = ["task-A", "task-B", "task-C", "task-D"];
-const heapLevels = [
-  ["2"],
-  ["5", "7"],
-  ["9", "8", "10", "12"],
-];
 const heapOps = ["insert 3", "shiftUp", "extractMin = 2", "heapify"];
 
 export default function AlgoStructures() {
@@ -126,22 +121,36 @@ export default function AlgoStructures() {
             </div>
             <p className="struct-desc">快速获得最小/最大值。</p>
             <div className="heap-visual">
-              <div className="heap-tree">
-                {heapLevels.map((level, levelIndex) => (
-                  <div key={`level-${levelIndex}`} className="heap-level">
-                    {level.map((node) => (
-                      <span key={node} className="heap-node">
-                        {node}
-                      </span>
-                    ))}
-                  </div>
-                ))}
-                <span className="heap-pulse" />
+              <div className="heap-tree-wrap">
+                <svg className="heap-svg" viewBox="0 0 260 148" aria-hidden="true">
+                  {/* 静态边 */}
+                  <line className="heap-edge" x1="130" y1="24" x2="65"  y2="72" />
+                  <line className="heap-edge" x1="130" y1="24" x2="195" y2="72" />
+                  <line className="heap-edge" x1="65"  y1="72" x2="35"  y2="120"/>
+                  <line className="heap-edge" x1="65"  y1="72" x2="100" y2="120"/>
+                  <line className="heap-edge" x1="195" y1="72" x2="165" y2="120"/>
+                  <line className="heap-edge" x1="195" y1="72" x2="225" y2="120"/>
+                  {/* sift-up 高亮路径 */}
+                  <line className="heap-edge heap-edge--sift"  x1="225" y1="120" x2="195" y2="72" />
+                  <line className="heap-edge heap-edge--sift heap-edge--sift2" x1="195" y1="72"  x2="130" y2="24" />
+                </svg>
+                {/* 静态节点 */}
+                <span className="heap-node heap-node--root" style={{left:130, top:24}}>2</span>
+                <span className="heap-node" style={{left:65,  top:72}}>5</span>
+                <span className="heap-node heap-node--l1b" style={{left:195, top:72}}>7</span>
+                <span className="heap-node" style={{left:35,  top:120}}>9</span>
+                <span className="heap-node" style={{left:100, top:120}}>8</span>
+                <span className="heap-node" style={{left:165, top:120}}>10</span>
+                {/* 动画节点：insert 3 → sift-up */}
+                <span className="heap-node heap-node--insert">3</span>
+                {/* min 标签 */}
+                <span className="heap-min-badge">min</span>
               </div>
-              <div className="heap-path">
-                <span className="path-node">3</span>
-                <span className="path-node">↥</span>
-                <span className="path-node">2</span>
+              <div className="heap-ops">
+                <span className="heap-op heap-op--1">insert 3</span>
+                <span className="heap-op heap-op--2">↑ sift-up</span>
+                <span className="heap-op heap-op--3">extractMin</span>
+                <span className="heap-op heap-op--4">heapify↓</span>
               </div>
             </div>
             <div className="struct-example">

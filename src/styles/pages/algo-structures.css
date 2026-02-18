@@ -322,98 +322,107 @@
   min-height: 170px;
 }
 
-.heap-tree {
+.heap-tree-wrap {
   position: relative;
-  display: grid;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(76, 157, 149, 0.2);
-  background: rgba(76, 157, 149, 0.06);
-  overflow: hidden;
+  width: 260px;
+  height: 148px;
+  margin: 0 auto;
 }
 
-.heap-level {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+.heap-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.heap-edge {
+  stroke: rgba(76, 157, 149, 0.25);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  stroke-linecap: round;
+}
+
+.heap-edge--sift {
+  stroke: rgba(76, 157, 149, 0.3);
+  animation: heapEdgeSift 8s ease-in-out infinite;
+}
+
+.heap-edge--sift2 {
+  animation-delay: 0.2s;
 }
 
 .heap-node {
-  min-width: 34px;
-  padding: 6px 8px;
-  border-radius: 10px;
-  background: #fff;
-  border: 1px solid rgba(76, 157, 149, 0.2);
-  text-align: center;
-  font-size: 12px;
-  animation: heapNode 2.8s ease-in-out infinite;
-}
-
-.heap-level:nth-child(1) .heap-node {
-  animation-delay: 0s;
-}
-
-.heap-level:nth-child(2) .heap-node:nth-child(1) {
-  animation-delay: 0.4s;
-}
-
-.heap-level:nth-child(2) .heap-node:nth-child(2) {
-  animation-delay: 0.8s;
-}
-
-.heap-level:nth-child(3) .heap-node:nth-child(1) {
-  animation-delay: 1.2s;
-}
-
-.heap-level:nth-child(3) .heap-node:nth-child(2) {
-  animation-delay: 1.5s;
-}
-
-.heap-level:nth-child(3) .heap-node:nth-child(3) {
-  animation-delay: 1.8s;
-}
-
-.heap-level:nth-child(3) .heap-node:nth-child(4) {
-  animation-delay: 2.1s;
-}
-
-.heap-pulse {
   position: absolute;
-  left: 50%;
-  top: 14px;
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 1px dashed rgba(76, 157, 149, 0.4);
-  transform: translateX(-50%);
-  animation: heapPulse 2.8s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.heap-path {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   font-size: 12px;
-  color: var(--muted);
+  font-weight: 600;
+  background: #fff;
+  border: 1.5px solid rgba(76, 157, 149, 0.3);
+  transform: translate(-50%, -50%);
 }
 
-.heap-path .path-node {
+.heap-node--root {
+  animation: heapRootPulse 8s ease-in-out infinite;
+}
+
+.heap-node--l1b {
+  animation: heapL1bPulse 8s ease-in-out infinite;
+}
+
+.heap-node--insert {
+  animation: heapInsert 8s ease-in-out infinite;
+}
+
+.heap-min-badge {
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  text-transform: uppercase;
+  animation: heapBadgeFade 8s ease-in-out infinite;
+}
+
+.heap-ops {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+}
+
+.heap-op {
   padding: 4px 8px;
   border-radius: 8px;
   border: 1px solid rgba(76, 157, 149, 0.2);
   background: rgba(76, 157, 149, 0.08);
-  animation: heapSwap 2.8s ease-in-out infinite;
+  color: var(--muted);
+  animation: heapOpStep 8s ease-in-out infinite;
 }
 
-.heap-path .path-node:nth-child(2) {
-  animation-delay: 0.6s;
+.heap-op--1 {
+  animation-delay: 0s;
 }
 
-.heap-path .path-node:nth-child(3) {
-  animation-delay: 1.2s;
+.heap-op--2 {
+  animation-delay: 1.6s;
+}
+
+.heap-op--3 {
+  animation-delay: 4s;
+}
+
+.heap-op--4 {
+  animation-delay: 5.6s;
 }
 
 @keyframes stackPushPopA {
@@ -533,36 +542,94 @@
   }
 }
 
-@keyframes heapNode {
+@keyframes heapRootPulse {
   0%,
   100% {
-    transform: translateY(0);
+    border-color: rgba(76, 157, 149, 0.3);
+    box-shadow: 0 0 0 0 rgba(76, 157, 149, 0);
   }
   50% {
-    transform: translateY(-6px);
-    box-shadow: 0 6px 14px rgba(42, 111, 107, 0.15);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(76, 157, 149, 0.15);
   }
 }
 
-@keyframes heapPulse {
+@keyframes heapL1bPulse {
   0%,
   100% {
-    opacity: 0.2;
-    transform: translateX(-50%) scale(0.9);
+    border-color: rgba(76, 157, 149, 0.3);
   }
-  50% {
-    opacity: 0.8;
-    transform: translateX(-50%) scale(1.1);
+  30%,
+  40% {
+    border-color: var(--accent);
   }
 }
 
-@keyframes heapSwap {
+@keyframes heapInsert {
+  0% {
+    left: 225px;
+    top: 120px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  40% {
+    left: 195px;
+    top: 72px;
+    opacity: 1;
+  }
+  70% {
+    left: 130px;
+    top: 24px;
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    left: 225px;
+    top: 120px;
+    opacity: 0;
+  }
+}
+
+@keyframes heapEdgeSift {
   0%,
   100% {
-    transform: translateY(0);
+    stroke: rgba(76, 157, 149, 0.3);
+    stroke-width: 1.5;
   }
-  50% {
-    transform: translateY(-6px);
+  30%,
+  70% {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+  }
+}
+
+@keyframes heapBadgeFade {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50%,
+  70% {
+    opacity: 1;
+  }
+}
+
+@keyframes heapOpStep {
+  0%,
+  100% {
+    opacity: 0.5;
+    background: rgba(76, 157, 149, 0.08);
+    color: var(--muted);
+  }
+  20%,
+  40% {
+    opacity: 1;
+    background: rgba(76, 157, 149, 0.2);
+    color: var(--accent);
   }
 }
 
