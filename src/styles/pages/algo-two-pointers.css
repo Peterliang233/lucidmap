@@ -1,40 +1,369 @@
-.pointer-diagram .pointer-board {
-  position: relative;
+.tp-diagram {
+  width: min(100%, 780px);
+  margin: 0 auto;
 }
 
-.pointer-array {
+.tp-scene {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 14px;
 }
 
-.pointer-cell {
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 12px 8px;
-  background: #fff;
-  text-align: center;
+.tp-svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.pointer-marker {
-  position: absolute;
-  top: -16px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(210, 100, 42, 0.8);
-  color: #fff;
-  display: grid;
-  place-items: center;
+/* ── Target / title label ── */
+.tp-target {
+  text-anchor: middle;
+  font-size: 11px;
   font-weight: 700;
-  transition: transform 0.6s ease;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.03em;
 }
 
-.pointer-left {
-  transform: translateX(calc(var(--left) * 52px));
+/* ── Array cells ── */
+.tp-cell {
+  fill: rgba(255, 255, 255, 0.95);
+  stroke: rgba(0, 0, 0, 0.12);
+  stroke-width: 1.2;
+  transition: fill 0.4s ease, stroke 0.4s ease;
 }
 
-.pointer-right {
-  transform: translateX(calc(var(--right) * 52px));
-  background: rgba(42, 111, 107, 0.8);
+.tp-cell--range {
+  fill: rgba(42, 111, 107, 0.06);
+  stroke: rgba(42, 111, 107, 0.2);
+}
+
+.tp-cell--found {
+  fill: rgba(210, 100, 42, 0.12);
+  stroke: rgba(210, 100, 42, 0.6);
+  animation: tpCellFound 1.6s ease-in-out infinite;
+}
+
+.tp-cell--window {
+  fill: rgba(76, 120, 168, 0.1);
+  stroke: rgba(76, 120, 168, 0.4);
+}
+
+.tp-val {
+  text-anchor: middle;
+  font-size: 15px;
+  font-weight: 700;
+  fill: rgba(0, 0, 0, 0.6);
+  transition: fill 0.3s ease;
+}
+
+.tp-val--found {
+  fill: rgba(210, 100, 42, 0.9);
+}
+
+.tp-val--window {
+  fill: rgba(76, 120, 168, 0.9);
+}
+
+.tp-idx {
+  text-anchor: middle;
+  font-size: 9px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0, 0, 0, 0.25);
+}
+
+/* ── Pointer markers ── */
+.tp-ptr__circle {
+  stroke-width: 0;
+  transition: cx 0.5s ease;
+}
+
+.tp-ptr__circle--l {
+  fill: rgba(210, 100, 42, 0.85);
+  animation: tpPtrPulseL 2s ease-in-out infinite;
+}
+
+.tp-ptr__circle--r {
+  fill: rgba(42, 111, 107, 0.85);
+  animation: tpPtrPulseR 2s ease-in-out infinite;
+}
+
+.tp-ptr__label {
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: 800;
+  fill: #fff;
+}
+
+/* ── Window background highlight ── */
+.tp-window-bg {
+  fill: rgba(76, 120, 168, 0.06);
+  stroke: rgba(76, 120, 168, 0.25);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 3;
+  animation: tpWindowPulse 3s ease-in-out infinite;
+}
+
+/* ── Sum display ── */
+.tp-sum {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+.tp-sum--hit {
+  fill: rgba(210, 100, 42, 0.9);
+}
+
+.tp-sum--low {
+  fill: rgba(42, 111, 107, 0.7);
+}
+
+.tp-sum--high {
+  fill: rgba(180, 60, 60, 0.7);
+}
+
+.tp-sum--window {
+  fill: rgba(76, 120, 168, 0.8);
+}
+
+/* ── Fast-Slow: edges ── */
+.tp-fs-edge {
+  stroke: rgba(0, 0, 0, 0.15);
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.tp-fs-edge--cycle {
+  stroke: rgba(180, 60, 60, 0.25);
+  stroke-dasharray: 5 3;
+}
+
+/* ── Fast-Slow: nodes ── */
+.tp-fs-node {
+  fill: rgba(255, 255, 255, 0.95);
+  stroke: rgba(0, 0, 0, 0.15);
+  stroke-width: 1.5;
+  transition: fill 0.4s ease, stroke 0.4s ease;
+}
+
+.tp-fs-node--slow {
+  stroke: rgba(210, 100, 42, 0.6);
+  fill: rgba(210, 100, 42, 0.08);
+}
+
+.tp-fs-node--fast {
+  stroke: rgba(42, 111, 107, 0.6);
+  fill: rgba(42, 111, 107, 0.08);
+}
+
+.tp-fs-node--met {
+  stroke: rgba(140, 80, 180, 0.8);
+  fill: rgba(140, 80, 180, 0.12);
+  animation: tpNodeMet 1.4s ease-in-out infinite;
+}
+
+.tp-fs-node--entry {
+  stroke-dasharray: 4 2;
+}
+
+.tp-fs-label {
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-size: 13px;
+  font-weight: 700;
+  fill: rgba(0, 0, 0, 0.6);
+}
+
+.tp-fs-entry-badge {
+  text-anchor: middle;
+  font-size: 8px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(180, 60, 60, 0.6);
+}
+
+/* ── Fast-Slow: pointer indicators ── */
+.tp-fs-indicator {
+  stroke: none;
+}
+
+.tp-fs-indicator--slow {
+  fill: rgba(210, 100, 42, 0.8);
+}
+
+.tp-fs-indicator--fast {
+  fill: rgba(42, 111, 107, 0.8);
+}
+
+.tp-fs-indicator-label {
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-size: 8px;
+  font-weight: 800;
+  fill: #fff;
+}
+
+.tp-fs-meet-ring {
+  fill: none;
+  stroke: rgba(140, 80, 180, 0.5);
+  stroke-width: 2;
+}
+
+/* ── State panel ── */
+.tp-ds {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tp-ds__label {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tp-ds--two .tp-ds__label {
+  background: rgba(210, 100, 42, 0.1);
+  color: rgba(210, 100, 42, 0.9);
+}
+
+.tp-ds--win .tp-ds__label {
+  background: rgba(76, 120, 168, 0.1);
+  color: rgba(76, 120, 168, 0.9);
+}
+
+.tp-ds--fs .tp-ds__label {
+  background: rgba(140, 80, 180, 0.1);
+  color: rgba(140, 80, 180, 0.9);
+}
+
+.tp-ds__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.tp-ds__step {
+  font-size: 11px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  opacity: 0.35;
+  transition: opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.tp-ds__step--past {
+  opacity: 0.55;
+}
+
+.tp-ds--two .tp-ds__step--active {
+  opacity: 1;
+  background: rgba(210, 100, 42, 0.08);
+  border-color: rgba(210, 100, 42, 0.3);
+  color: rgba(210, 100, 42, 0.9);
+}
+
+.tp-ds--win .tp-ds__step--active {
+  opacity: 1;
+  background: rgba(76, 120, 168, 0.08);
+  border-color: rgba(76, 120, 168, 0.3);
+  color: rgba(76, 120, 168, 0.9);
+}
+
+.tp-ds--fs .tp-ds__step--active {
+  opacity: 1;
+  background: rgba(140, 80, 180, 0.08);
+  border-color: rgba(140, 80, 180, 0.3);
+  color: rgba(140, 80, 180, 0.9);
+}
+
+/* ── Keyframes ── */
+
+@keyframes tpPtrPulseL {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(210, 100, 42, 0)); }
+  50% { filter: drop-shadow(0 0 6px rgba(210, 100, 42, 0.4)); }
+}
+
+@keyframes tpPtrPulseR {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(42, 111, 107, 0)); }
+  50% { filter: drop-shadow(0 0 6px rgba(42, 111, 107, 0.4)); }
+}
+
+@keyframes tpCellFound {
+  0%, 100% {
+    stroke: rgba(210, 100, 42, 0.5);
+    fill: rgba(210, 100, 42, 0.08);
+  }
+  50% {
+    stroke: rgba(210, 100, 42, 0.8);
+    fill: rgba(210, 100, 42, 0.16);
+    filter: drop-shadow(0 0 8px rgba(210, 100, 42, 0.25));
+  }
+}
+
+@keyframes tpWindowPulse {
+  0%, 100% {
+    stroke: rgba(76, 120, 168, 0.2);
+  }
+  50% {
+    stroke: rgba(76, 120, 168, 0.45);
+    filter: drop-shadow(0 0 6px rgba(76, 120, 168, 0.15));
+  }
+}
+
+@keyframes tpNodeMet {
+  0%, 100% {
+    stroke: rgba(140, 80, 180, 0.6);
+    fill: rgba(140, 80, 180, 0.08);
+  }
+  50% {
+    stroke: rgba(140, 80, 180, 0.9);
+    fill: rgba(140, 80, 180, 0.18);
+    filter: drop-shadow(0 0 8px rgba(140, 80, 180, 0.35));
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .tp-target {
+    font-size: 9px;
+  }
+
+  .tp-val {
+    font-size: 12px;
+  }
+
+  .tp-idx {
+    display: none;
+  }
+
+  .tp-sum {
+    font-size: 10px;
+  }
+
+  .tp-ds__step {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .tp-ds__label {
+    font-size: 10px;
+  }
+
+  .tp-fs-entry-badge {
+    display: none;
+  }
 }

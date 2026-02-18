@@ -1,36 +1,373 @@
-.dp-diagram .dp-grid {
+.dp-diagram {
+  width: min(100%, 780px);
+  margin: 0 auto;
+}
+
+.dp-scene {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-  position: relative;
+  gap: 14px;
 }
 
-.dp-cell {
+.dp-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Title label ── */
+.dp-title {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.03em;
+}
+
+/* ── 1D array cells ── */
+.dp-cell-svg {
+  fill: rgba(255, 255, 255, 0.95);
+  stroke: rgba(0, 0, 0, 0.12);
+  stroke-width: 1.2;
+  transition: fill 0.4s ease, stroke 0.4s ease;
+}
+
+.dp-cell-svg--filled {
+  fill: rgba(210, 100, 42, 0.08);
+  stroke: rgba(210, 100, 42, 0.3);
+}
+
+.dp-cell-svg--base {
+  fill: rgba(210, 100, 42, 0.05);
+  stroke: rgba(210, 100, 42, 0.2);
+  stroke-dasharray: 4 2;
+}
+
+.dp-cell-svg--active {
+  fill: rgba(210, 100, 42, 0.15);
+  stroke: rgba(210, 100, 42, 0.7);
+  animation: dpCellPulse 1.6s ease-in-out infinite;
+}
+
+/* Climb variants (teal) */
+.dp-cell-svg--climb {
+  fill: rgba(42, 111, 107, 0.08);
+  stroke: rgba(42, 111, 107, 0.3);
+}
+
+.dp-cell-svg--base-climb {
+  fill: rgba(42, 111, 107, 0.05);
+  stroke: rgba(42, 111, 107, 0.2);
+  stroke-dasharray: 4 2;
+}
+
+.dp-cell-svg--active-climb {
+  fill: rgba(42, 111, 107, 0.15);
+  stroke: rgba(42, 111, 107, 0.7);
+  animation: dpCellPulseClimb 1.6s ease-in-out infinite;
+}
+
+/* ── Cell values ── */
+.dp-cell-val {
+  text-anchor: middle;
+  font-size: 15px;
+  font-weight: 700;
+  fill: rgba(0, 0, 0, 0.25);
+  transition: fill 0.3s ease;
+}
+
+.dp-cell-val--filled {
+  fill: rgba(210, 100, 42, 0.85);
+}
+
+.dp-cell-val--climb {
+  fill: rgba(42, 111, 107, 0.85);
+}
+
+/* ── Cell index labels ── */
+.dp-cell-idx {
+  text-anchor: middle;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0, 0, 0, 0.3);
+}
+
+/* ── Dependency arrows ── */
+.dp-arrow {
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.dp-arrow--fib {
+  stroke: rgba(210, 100, 42, 0.5);
+}
+
+.dp-arrow--climb {
+  stroke: rgba(42, 111, 107, 0.5);
+}
+
+.dp-arrow--climb-2 {
+  stroke: rgba(42, 111, 107, 0.35);
+  stroke-dasharray: 4 3;
+}
+
+.dp-arrow--lcs {
+  stroke: rgba(140, 80, 180, 0.5);
+}
+
+.dp-arrow-label {
+  text-anchor: middle;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(210, 100, 42, 0.7);
+}
+
+.dp-arrow-label--climb {
+  fill: rgba(42, 111, 107, 0.6);
+}
+
+/* ── 2D table cells (LCS) ── */
+.dp-tbl-cell {
+  fill: rgba(255, 255, 255, 0.95);
+  stroke: rgba(0, 0, 0, 0.08);
+  stroke-width: 1;
+  transition: fill 0.4s ease, stroke 0.4s ease;
+}
+
+.dp-tbl-cell--filled {
+  fill: rgba(140, 80, 180, 0.04);
+  stroke: rgba(140, 80, 180, 0.15);
+}
+
+.dp-tbl-cell--row-active {
+  fill: rgba(140, 80, 180, 0.08);
+  stroke: rgba(140, 80, 180, 0.25);
+}
+
+.dp-tbl-cell--match {
+  fill: rgba(140, 80, 180, 0.15);
+  stroke: rgba(140, 80, 180, 0.6);
+  animation: dpMatchPulse 2s ease-in-out infinite;
+}
+
+.dp-tbl-cell--path {
+  fill: rgba(210, 100, 42, 0.12);
+  stroke: rgba(210, 100, 42, 0.6);
+  animation: dpPathPulse 1.6s ease-in-out infinite;
+}
+
+.dp-tbl-val {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 700;
+  fill: rgba(0, 0, 0, 0.15);
+  transition: fill 0.3s ease;
+}
+
+.dp-tbl-val--filled {
+  fill: rgba(0, 0, 0, 0.45);
+}
+
+.dp-tbl-val--match {
+  fill: rgba(140, 80, 180, 0.9);
+}
+
+.dp-tbl-val--path {
+  fill: rgba(210, 100, 42, 0.9);
+}
+
+/* ── Table headers ── */
+.dp-tbl-hdr {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 700;
+  fill: rgba(0, 0, 0, 0.35);
+}
+
+.dp-tbl-hdr--s1 {
+  fill: rgba(210, 100, 42, 0.7);
+}
+
+.dp-tbl-hdr--s2 {
+  fill: rgba(140, 80, 180, 0.7);
+}
+
+/* ── LCS result ── */
+.dp-lcs-result {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(210, 100, 42, 0.9);
+}
+
+/* ── State panel ── */
+.dp-ds {
+  padding: 10px 14px;
+  border-radius: 12px;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  height: 42px;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.dp-ds__label {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dp-ds--fib .dp-ds__label {
+  background: rgba(210, 100, 42, 0.1);
+  color: rgba(210, 100, 42, 0.9);
+}
+
+.dp-ds--climb .dp-ds__label {
+  background: rgba(42, 111, 107, 0.1);
+  color: rgba(42, 111, 107, 0.9);
+}
+
+.dp-ds--lcs .dp-ds__label {
+  background: rgba(140, 80, 180, 0.1);
+  color: rgba(140, 80, 180, 0.9);
+}
+
+.dp-ds__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.dp-ds__step {
+  font-size: 11px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
   background: #fff;
+  opacity: 0.35;
+  transition: opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-.dp-grid.mode--transition .dp-cell:nth-child(7),
-
-.dp-grid.mode--transition .dp-cell:nth-child(13),
-
-.dp-grid.mode--transition .dp-cell:nth-child(19) {
-  background: rgba(210, 100, 42, 0.2);
+.dp-ds__step--past {
+  opacity: 0.55;
 }
 
-.dp-grid.mode--fill .dp-cell:nth-child(-n + 15) {
-  background: rgba(42, 111, 107, 0.2);
+.dp-ds--fib .dp-ds__step--active {
+  opacity: 1;
+  background: rgba(210, 100, 42, 0.08);
+  border-color: rgba(210, 100, 42, 0.3);
+  color: rgba(210, 100, 42, 0.9);
 }
 
-.dp-path {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  width: 80%;
-  height: 80%;
-  border: 2px dashed rgba(210, 100, 42, 0.4);
-  border-radius: 16px;
-  opacity: 0.3;
+.dp-ds--climb .dp-ds__step--active {
+  opacity: 1;
+  background: rgba(42, 111, 107, 0.08);
+  border-color: rgba(42, 111, 107, 0.3);
+  color: rgba(42, 111, 107, 0.9);
+}
+
+.dp-ds--lcs .dp-ds__step--active {
+  opacity: 1;
+  background: rgba(140, 80, 180, 0.08);
+  border-color: rgba(140, 80, 180, 0.3);
+  color: rgba(140, 80, 180, 0.9);
+}
+
+/* ── Keyframes ── */
+
+@keyframes dpCellPulse {
+  0%, 100% {
+    stroke: rgba(210, 100, 42, 0.5);
+    fill: rgba(210, 100, 42, 0.1);
+  }
+  50% {
+    stroke: rgba(210, 100, 42, 0.8);
+    fill: rgba(210, 100, 42, 0.2);
+    filter: drop-shadow(0 0 6px rgba(210, 100, 42, 0.25));
+  }
+}
+
+@keyframes dpCellPulseClimb {
+  0%, 100% {
+    stroke: rgba(42, 111, 107, 0.5);
+    fill: rgba(42, 111, 107, 0.1);
+  }
+  50% {
+    stroke: rgba(42, 111, 107, 0.8);
+    fill: rgba(42, 111, 107, 0.2);
+    filter: drop-shadow(0 0 6px rgba(42, 111, 107, 0.25));
+  }
+}
+
+@keyframes dpMatchPulse {
+  0%, 100% {
+    stroke: rgba(140, 80, 180, 0.4);
+    fill: rgba(140, 80, 180, 0.1);
+  }
+  50% {
+    stroke: rgba(140, 80, 180, 0.8);
+    fill: rgba(140, 80, 180, 0.2);
+    filter: drop-shadow(0 0 6px rgba(140, 80, 180, 0.25));
+  }
+}
+
+@keyframes dpPathPulse {
+  0%, 100% {
+    stroke: rgba(210, 100, 42, 0.4);
+    fill: rgba(210, 100, 42, 0.08);
+  }
+  50% {
+    stroke: rgba(210, 100, 42, 0.8);
+    fill: rgba(210, 100, 42, 0.18);
+    filter: drop-shadow(0 0 6px rgba(210, 100, 42, 0.3));
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .dp-title {
+    font-size: 9px;
+  }
+
+  .dp-cell-val {
+    font-size: 12px;
+  }
+
+  .dp-cell-idx {
+    font-size: 7px;
+  }
+
+  .dp-arrow-label {
+    font-size: 7px;
+  }
+
+  .dp-tbl-val {
+    font-size: 10px;
+  }
+
+  .dp-tbl-hdr {
+    font-size: 10px;
+  }
+
+  .dp-ds__step {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .dp-ds__label {
+    font-size: 10px;
+  }
+
+  .dp-lcs-result {
+    font-size: 10px;
+  }
 }
