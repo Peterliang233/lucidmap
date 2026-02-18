@@ -1,44 +1,181 @@
-.ai-fncall__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  position: relative;
+/* ── Function Call sequence diagram ── */
+.ai-fncall {
+  width: min(100%, 780px);
+  margin: 0 auto;
 }
 
-.fncall-node {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #fff;
-  padding: 12px;
-  text-align: center;
+.fc-svg-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Progress bar ── */
+.fc-progress-bar {
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.fc-progress-bar__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(42, 111, 107, 0.8), rgba(210, 100, 42, 0.8));
+  transition: width 0.5s ease;
+}
+
+/* ── SVG canvas ── */
+.fc-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Machine boxes ── */
+.fc-svg__machine {
+  fill: rgba(255, 255, 255, 0.85);
+  stroke: var(--line, rgba(0, 0, 0, 0.1));
+  stroke-width: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06));
+}
+
+.fc-svg__machine-name {
+  text-anchor: middle;
+  font-size: 13px;
   font-weight: 600;
+  fill: var(--ink-soft, #555);
 }
 
-.fncall-params,
-
-.fncall-result {
-  grid-column: span 2;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(42, 111, 107, 0.08);
-  padding: 10px;
-  font-family: \"JetBrains Mono\", \"SFMono-Regular\", Menlo, Monaco, Consolas, monospace;
-  font-size: 0.75rem;
+.fc-svg__machine-sub {
+  text-anchor: middle;
+  font-size: 9px;
+  fill: rgba(0, 0, 0, 0.3);
 }
 
-.fncall-arrow {
-  position: absolute;
-  width: 120px;
-  height: 2px;
-  background: rgba(210, 100, 42, 0.4);
+/* ── Lifelines ── */
+.fc-svg__lifeline {
+  stroke: var(--line, rgba(0, 0, 0, 0.12));
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  opacity: 0.6;
 }
 
-.fncall-arrow.arrow-1 {
-  top: 46px;
-  left: 22%;
+/* ── LLM status indicator ── */
+.fc-svg__status {
+  transition: fill 0.4s ease;
 }
 
-.fncall-arrow.arrow-2 {
-  top: 110px;
-  right: 22%;
+.fc-svg__status--thinking {
+  fill: #b8960a;
+  animation: fcStatusPulse 1.4s ease-in-out infinite;
+}
+
+.fc-svg__status--calling {
+  fill: #2a6f6b;
+  animation: fcStatusPulse 1.4s ease-in-out infinite;
+}
+
+.fc-svg__status--generating {
+  fill: #d2642a;
+  animation: fcStatusPulse 1.4s ease-in-out infinite;
+}
+
+.fc-svg__status--idle {
+  fill: rgba(140, 140, 140, 0.5);
+}
+
+/* ── Phase dividers ── */
+.fc-svg__phase-text {
+  text-anchor: middle;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+/* ── Message groups ── */
+.fc-svg__msg {
+  transition: opacity 0.4s ease;
+}
+
+.fc-svg__msg.is-future {
+  opacity: 0.35;
+}
+
+.fc-svg__msg.is-past {
+  opacity: 0.7;
+}
+
+.fc-svg__msg.is-active {
+  opacity: 1;
+}
+
+/* ── Message lines ── */
+.fc-svg__line {
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.fc-svg__msg.is-active .fc-svg__line {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+/* ── Animated packet ── */
+.fc-svg__packet {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* ── Label backgrounds ── */
+.fc-svg__label-bg {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.fc-svg__msg.is-active .fc-svg__label-bg {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+}
+
+/* ── Label text ── */
+.fc-svg__label {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 600;
+  transition: fill 0.3s ease;
+}
+
+.fc-svg__sub {
+  text-anchor: middle;
+  font-size: 8.5px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  transition: fill 0.3s ease;
+}
+
+/* ── JSON code blocks ── */
+.fc-svg__json-bg {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.fc-svg__json-text {
+  font-size: 8px;
+  font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
+  transition: fill 0.3s ease;
+}
+
+/* ── Keyframes ── */
+@keyframes fcStatusPulse {
+  0%, 100% { opacity: 0.6; r: 5; }
+  50% { opacity: 1; r: 6; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .fc-svg__machine-sub {
+    display: none;
+  }
+
+  .fc-svg__sub {
+    font-size: 7px;
+  }
+
+  .fc-svg__json {
+    display: none;
+  }
 }
