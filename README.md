@@ -130,3 +130,22 @@ All content is configured in `src/data.json`.
 ## How to Extend
 - Add a new topic page: create a page in `src/pages/` and register a route in `src/App.jsx`.
 - Add knowledge cards: add `section/group/item` entries in `src/data.json`.
+
+## Contributing
+
+1. Fork this repository and clone it locally
+2. Create a feature branch from `main`
+```bash
+git checkout -b feat_xxx
+```
+3. Make your changes and verify the build passes
+```bash
+npm run build
+```
+4. Commit and push to your fork
+```bash
+git add .
+git commit -m "feat: describe your change"
+git push origin feat_xxx
+```
+5. Open a Pull Request targeting the `main` branch and wait for review
