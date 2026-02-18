@@ -100,11 +100,8 @@ export default function NetworkTcpHandshake() {
               preserveAspectRatio="xMidYMid meet"
             >
               <defs>
-                <marker id="tcp-arrow-r" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <marker id="tcp-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
                   <path d="M0,0 L8,3 L0,6" fill="currentColor" />
-                </marker>
-                <marker id="tcp-arrow-l" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto">
-                  <path d="M8,0 L0,3 L8,6" fill="currentColor" />
                 </marker>
               </defs>
 
@@ -163,7 +160,7 @@ export default function NetworkTcpHandshake() {
                         className="tcp-svg__line"
                         stroke={isActive ? pc.main : isPast ? pc.mid : "rgba(0,0,0,0.15)"}
                         strokeWidth={isActive ? 2 : 1.2}
-                        markerEnd={msg.dir === "right" ? "url(#tcp-arrow-r)" : "url(#tcp-arrow-l)"}
+                        markerEnd="url(#tcp-arrow)"
                         style={{ color: isActive ? pc.main : isPast ? pc.mid : "rgba(0,0,0,0.15)" }}
                       />
 

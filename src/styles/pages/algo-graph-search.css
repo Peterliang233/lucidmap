@@ -1,48 +1,412 @@
-.graph-diagram .graph-board {
-  position: relative;
-  min-height: 220px;
+.graph-diagram {
+  width: min(100%, 780px);
+  margin: 0 auto;
 }
 
-.graph-node {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #fff;
-  border: 1px solid var(--line);
+.graph-scene {
   display: grid;
-  place-items: center;
-  font-weight: 600;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  gap: 16px;
 }
 
-.graph-board.mode--bfs .node--a,
-
-.graph-board.mode--bfs .node--b,
-
-.graph-board.mode--bfs .node--c {
-  border-color: var(--accent);
+/* ── SVG ── */
+.graph-svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.graph-board.mode--dfs .node--a,
-
-.graph-board.mode--dfs .node--d,
-
-.graph-board.mode--dfs .node--e {
-  border-color: var(--accent-2);
-}
-
-.graph-board.mode--shortest .node--a,
-
-.graph-board.mode--shortest .node--c,
-
-.graph-board.mode--shortest .node--e {
-  border-color: var(--accent);
-  transform: translateY(-4px);
-}
-
+/* ── Edges ── */
 .graph-edge {
-  position: absolute;
-  height: 2px;
-  background: rgba(42, 111, 107, 0.3);
+  stroke: rgba(0, 0, 0, 0.12);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transition: stroke 0.4s ease, stroke-width 0.4s ease;
+}
+
+/* BFS: edges light up in wave order */
+.graph-edge--bfs {
+  stroke: rgba(42, 111, 107, 0.2);
+  stroke-width: 1.5;
+  animation: graphEdgeBfs 6s ease-in-out infinite;
+  animation-delay: calc(var(--edge-idx, 0) * 0.6s);
+}
+
+/* DFS: edges light up in depth order */
+.graph-edge--dfs {
+  stroke: rgba(140, 80, 180, 0.2);
+  stroke-width: 1.5;
+  animation: graphEdgeDfs 6s ease-in-out infinite;
+  animation-delay: calc(var(--edge-idx, 0) * 0.8s);
+}
+
+/* Dijkstra: shortest path edges glow */
+.graph-edge--path {
+  stroke: rgba(210, 100, 42, 0.3);
+  stroke-width: 2;
+  animation: graphEdgePath 4s ease-in-out infinite;
+  animation-delay: calc(var(--edge-idx, 0) * 0.5s);
+}
+
+/* ── Weight labels ── */
+.graph-weight-bg {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: rgba(210, 100, 42, 0.2);
+  stroke-width: 0.8;
+}
+
+.graph-weight-text {
+  text-anchor: middle;
+  font-size: 9px;
+  font-weight: 700;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(210, 100, 42, 0.8);
+}
+
+/* ── Nodes ── */
+.graph-node__circle {
+  fill: rgba(255, 255, 255, 0.95);
+  stroke: rgba(0, 0, 0, 0.15);
+  stroke-width: 1.5;
+  transition: fill 0.4s ease, stroke 0.4s ease;
+}
+
+.graph-node__label {
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-size: 13px;
+  font-weight: 700;
+  fill: rgba(0, 0, 0, 0.6);
+  transition: fill 0.4s ease;
+}
+
+.graph-node__order {
+  text-anchor: middle;
+  font-size: 8px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0, 0, 0, 0.35);
+  transition: fill 0.4s ease;
+}
+
+/* BFS node layers: wave-in by layer */
+.graph-node--bfs-0 .graph-node__circle {
+  animation: graphNodeBfs 6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+.graph-node--bfs-0 .graph-node__label { fill: rgba(42, 111, 107, 0.9); }
+.graph-node--bfs-0 .graph-node__order { fill: rgba(42, 111, 107, 0.7); }
+
+.graph-node--bfs-1 .graph-node__circle {
+  animation: graphNodeBfs 6s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+.graph-node--bfs-1 .graph-node__label { fill: rgba(42, 111, 107, 0.8); }
+.graph-node--bfs-1 .graph-node__order { fill: rgba(42, 111, 107, 0.6); }
+
+.graph-node--bfs-2 .graph-node__circle {
+  animation: graphNodeBfs 6s ease-in-out infinite;
+  animation-delay: 1.6s;
+}
+.graph-node--bfs-2 .graph-node__label { fill: rgba(42, 111, 107, 0.7); }
+.graph-node--bfs-2 .graph-node__order { fill: rgba(42, 111, 107, 0.5); }
+
+.graph-node--bfs-3 .graph-node__circle {
+  animation: graphNodeBfs 6s ease-in-out infinite;
+  animation-delay: 2.4s;
+}
+.graph-node--bfs-3 .graph-node__label { fill: rgba(42, 111, 107, 0.6); }
+.graph-node--bfs-3 .graph-node__order { fill: rgba(42, 111, 107, 0.4); }
+
+/* DFS node order: sequential light-up */
+.graph-node--dfs-0 .graph-node__circle { animation: graphNodeDfs 6s ease-in-out infinite; animation-delay: 0s; }
+.graph-node--dfs-1 .graph-node__circle { animation: graphNodeDfs 6s ease-in-out infinite; animation-delay: 0.8s; }
+.graph-node--dfs-2 .graph-node__circle { animation: graphNodeDfs 6s ease-in-out infinite; animation-delay: 1.6s; }
+.graph-node--dfs-3 .graph-node__circle { animation: graphNodeDfs 6s ease-in-out infinite; animation-delay: 2.4s; }
+.graph-node--dfs-4 .graph-node__circle { animation: graphNodeDfs 6s ease-in-out infinite; animation-delay: 3.2s; }
+.graph-node--dfs-5 .graph-node__circle { animation: graphNodeDfs 6s ease-in-out infinite; animation-delay: 4.0s; }
+
+.graph-node[class*="--dfs-"] .graph-node__label { fill: rgba(140, 80, 180, 0.85); }
+.graph-node[class*="--dfs-"] .graph-node__order { fill: rgba(140, 80, 180, 0.6); }
+
+/* Dijkstra: path nodes glow */
+.graph-node--path .graph-node__circle {
+  animation: graphNodePath 4s ease-in-out infinite;
+}
+
+.graph-node--path .graph-node__label { fill: rgba(210, 100, 42, 0.9); }
+.graph-node--path .graph-node__order { fill: rgba(210, 100, 42, 0.7); }
+
+/* ── Data structure panel ── */
+.graph-ds {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.8);
+  min-height: 48px;
+}
+
+.graph-ds__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.graph-ds__label {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.graph-ds--bfs .graph-ds__label {
+  background: rgba(42, 111, 107, 0.1);
+  color: rgba(42, 111, 107, 0.9);
+}
+
+.graph-ds--dfs .graph-ds__label {
+  background: rgba(140, 80, 180, 0.1);
+  color: rgba(140, 80, 180, 0.9);
+}
+
+.graph-ds--dijkstra .graph-ds__label {
+  background: rgba(210, 100, 42, 0.1);
+  color: rgba(210, 100, 42, 0.9);
+}
+
+.graph-ds__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.graph-ds__step {
+  font-size: 11px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  opacity: 0.4;
+  animation: graphDsStep 6s ease-in-out infinite;
+  animation-delay: calc(var(--step-idx, 0) * 0.7s);
+}
+
+/* Stagger each step */
+.graph-ds__step--0 { --step-idx: 0; }
+.graph-ds__step--1 { --step-idx: 1; }
+.graph-ds__step--2 { --step-idx: 2; }
+.graph-ds__step--3 { --step-idx: 3; }
+.graph-ds__step--4 { --step-idx: 4; }
+.graph-ds__step--5 { --step-idx: 5; }
+.graph-ds__step--6 { --step-idx: 6; }
+
+.graph-ds--bfs .graph-ds__step {
+  animation-name: graphDsStepBfs;
+}
+
+.graph-ds--dfs .graph-ds__step {
+  animation-name: graphDsStepDfs;
+}
+
+.graph-ds--dijkstra .graph-ds__step {
+  animation-name: graphDsStepDijk;
+}
+
+/* ── Legend ── */
+.graph-legend {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.graph-legend__item {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.graph-legend__item--start {
+  border-color: rgba(42, 111, 107, 0.3);
+  color: rgba(42, 111, 107, 0.9);
+  background: rgba(42, 111, 107, 0.06);
+}
+
+.graph-legend__item--wave,
+.graph-legend__item--queue {
+  border-color: rgba(42, 111, 107, 0.2);
+  color: rgba(42, 111, 107, 0.7);
+}
+
+.graph-legend__item--depth,
+.graph-legend__item--back {
+  border-color: rgba(140, 80, 180, 0.2);
+  color: rgba(140, 80, 180, 0.7);
+}
+
+.graph-legend__item--relax {
+  border-color: rgba(210, 100, 42, 0.2);
+  color: rgba(210, 100, 42, 0.7);
+}
+
+.graph-legend__item--path {
+  border-color: rgba(210, 100, 42, 0.3);
+  color: rgba(210, 100, 42, 0.9);
+  background: rgba(210, 100, 42, 0.06);
+}
+
+/* ── Keyframes ── */
+
+/* BFS: node circle pulses teal */
+@keyframes graphNodeBfs {
+  0%, 100% {
+    stroke: rgba(42, 111, 107, 0.2);
+    fill: rgba(255, 255, 255, 0.95);
+  }
+  20%, 50% {
+    stroke: rgba(42, 111, 107, 0.8);
+    fill: rgba(42, 111, 107, 0.12);
+    filter: drop-shadow(0 0 6px rgba(42, 111, 107, 0.3));
+  }
+}
+
+/* BFS: edge lights up teal */
+@keyframes graphEdgeBfs {
+  0%, 100% {
+    stroke: rgba(42, 111, 107, 0.15);
+    stroke-width: 1.5;
+  }
+  15%, 45% {
+    stroke: rgba(42, 111, 107, 0.7);
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 4px rgba(42, 111, 107, 0.3));
+  }
+}
+
+/* DFS: node circle pulses purple */
+@keyframes graphNodeDfs {
+  0%, 100% {
+    stroke: rgba(140, 80, 180, 0.2);
+    fill: rgba(255, 255, 255, 0.95);
+  }
+  15%, 35% {
+    stroke: rgba(140, 80, 180, 0.8);
+    fill: rgba(140, 80, 180, 0.12);
+    filter: drop-shadow(0 0 6px rgba(140, 80, 180, 0.3));
+  }
+}
+
+/* DFS: edge lights up purple */
+@keyframes graphEdgeDfs {
+  0%, 100% {
+    stroke: rgba(140, 80, 180, 0.15);
+    stroke-width: 1.5;
+  }
+  12%, 35% {
+    stroke: rgba(140, 80, 180, 0.7);
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 4px rgba(140, 80, 180, 0.3));
+  }
+}
+
+/* Dijkstra: path node glows orange */
+@keyframes graphNodePath {
+  0%, 100% {
+    stroke: rgba(210, 100, 42, 0.3);
+    fill: rgba(255, 255, 255, 0.95);
+  }
+  40%, 70% {
+    stroke: rgba(210, 100, 42, 0.8);
+    fill: rgba(210, 100, 42, 0.1);
+    filter: drop-shadow(0 0 8px rgba(210, 100, 42, 0.3));
+  }
+}
+
+/* Dijkstra: path edge glows orange */
+@keyframes graphEdgePath {
+  0%, 100% {
+    stroke: rgba(210, 100, 42, 0.2);
+    stroke-width: 2;
+  }
+  30%, 70% {
+    stroke: rgba(210, 100, 42, 0.8);
+    stroke-width: 3;
+    filter: drop-shadow(0 0 6px rgba(210, 100, 42, 0.4));
+  }
+}
+
+/* DS step highlight — BFS teal */
+@keyframes graphDsStepBfs {
+  0%, 100% {
+    opacity: 0.35;
+    background: #fff;
+    border-color: var(--line);
+  }
+  15%, 40% {
+    opacity: 1;
+    background: rgba(42, 111, 107, 0.08);
+    border-color: rgba(42, 111, 107, 0.3);
+    color: rgba(42, 111, 107, 0.9);
+  }
+}
+
+/* DS step highlight — DFS purple */
+@keyframes graphDsStepDfs {
+  0%, 100% {
+    opacity: 0.35;
+    background: #fff;
+    border-color: var(--line);
+  }
+  12%, 30% {
+    opacity: 1;
+    background: rgba(140, 80, 180, 0.08);
+    border-color: rgba(140, 80, 180, 0.3);
+    color: rgba(140, 80, 180, 0.9);
+  }
+}
+
+/* DS step highlight — Dijkstra orange */
+@keyframes graphDsStepDijk {
+  0%, 100% {
+    opacity: 0.35;
+    background: #fff;
+    border-color: var(--line);
+  }
+  20%, 50% {
+    opacity: 1;
+    background: rgba(210, 100, 42, 0.08);
+    border-color: rgba(210, 100, 42, 0.3);
+    color: rgba(210, 100, 42, 0.9);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .graph-ds__step {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .graph-ds__label {
+    font-size: 10px;
+  }
+
+  .graph-legend__item {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+
+  .graph-node__order {
+    display: none;
+  }
+
+  .graph-weight-text {
+    font-size: 8px;
+  }
 }
