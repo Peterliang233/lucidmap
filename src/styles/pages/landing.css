@@ -433,6 +433,12 @@
   gap: 16px;
 }
 
+@media (max-width: 960px) {
+  .landing__hero {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 720px) {
   .landing {
     padding: 48px 6vw 64px;
@@ -616,58 +622,6 @@
 .landing__cta .landing__ghost {
   display: inline-flex;
   margin-top: 12px;
-}
-
-@media (max-width: 700px) {
-  .top-nav__bar {
-    padding: 12px 6vw;
-  }
-
-  .landing {
-    padding: 48px 6vw 64px;
-  }
-
-  .landing__visual {
-    min-height: 240px;
-  }
-
-  .hero-map {
-    height: 300px;
-  }
-
-  .hero-map__arc {
-    width: 240px;
-    height: 240px;
-  }
-
-  .hero-map__arc--b {
-    width: 180px;
-    height: 180px;
-  }
-
-  .hero-map__arc--c {
-    width: 130px;
-    height: 130px;
-  }
-
-  .hero-map__pulse {
-    width: 160px;
-    height: 160px;
-  }
-
-  .hero-map__pulse--b {
-    width: 210px;
-    height: 210px;
-  }
-
-  .hero-map__radar {
-    width: 240px;
-    height: 240px;
-  }
-
-  .hero-map__legend {
-    gap: 10px;
-  }
 }
 
 @keyframes arcSpin {

@@ -190,7 +190,7 @@ export default function BackendCollections() {
                   const isActive = phase === 0 ? i < 2 : i === 0;
                   return (
                     <g key={seg.id}>
-                      <rect x={x} y={36} width={82} height={100} rx={10} className={`coll-seg ${isActive ? "coll-seg--active" : ""}`} />
+                      <rect x={x} y={36} width={82} height={116} rx={10} className={`coll-seg ${isActive ? "coll-seg--active" : ""}`} />
                       <text x={x + 41} y={52} className="coll-seg-label">{seg.id}</text>
                       {seg.keys.map((k, j) => (
                         <g key={k}>

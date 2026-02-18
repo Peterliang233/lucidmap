@@ -110,7 +110,7 @@ export default function AlgoGraphSearch() {
         const mode = step.active;
         return (
           <div className="graph-scene">
-            <svg className="graph-svg" viewBox="0 0 580 200" preserveAspectRatio="xMidYMid meet">
+            <svg className="graph-svg" viewBox="0 0 580 210" preserveAspectRatio="xMidYMid meet">
               <defs>
                 <marker id="graph-arrow" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
                   <path d="M0,0 L6,2.5 L0,5" fill="currentColor" opacity="0.5" />
@@ -184,7 +184,7 @@ export default function AlgoGraphSearch() {
                     <circle cx={n.x} cy={n.y} r={22} className="graph-node__circle" />
                     <text x={n.x} y={n.y + 1} className="graph-node__label">{n.id}</text>
                     {orderLabel && (
-                      <text x={n.x} y={n.y + 14} className="graph-node__order">{orderLabel}</text>
+                      <text x={n.x} y={n.y + 36} className="graph-node__order">{orderLabel}</text>
                     )}
                   </g>
                 );

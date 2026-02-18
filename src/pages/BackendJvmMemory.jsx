@@ -185,15 +185,15 @@ export default function BackendJvmMemory() {
         if (mode === "meta") {
           return (
             <div className="jvm-scene">
-              <svg className="jvm-svg" viewBox="0 0 340 170" preserveAspectRatio="xMidYMid meet">
+              <svg className="jvm-svg" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid meet">
                 <text x={170} y={16} className="jvm-title">Metaspace（本地内存）</text>
                 <rect x={20} y={32} width={110} height={28} rx={8} className="jvm-meta-loader" />
                 <text x={75} y={50} className="jvm-meta-loader-text">AppClassLoader</text>
                 <line x1={130} y1={46} x2={155} y2={46} className="jvm-arr jvm-arr--meta" markerEnd="url(#jvm-am)" />
                 {metaClasses.map((c, i) => (
                   <g key={c}>
-                    <rect x={165} y={28 + i * 32} width={150} height={26} rx={6} className="jvm-meta-class" style={{ "--meta-i": i }} />
-                    <text x={240} y={45 + i * 32} className="jvm-meta-text">{c}.class</text>
+                    <rect x={165} y={30 + i * 34} width={150} height={26} rx={6} className="jvm-meta-class" style={{ "--meta-i": i }} />
+                    <text x={240} y={47 + i * 34} className="jvm-meta-text">{c}.class</text>
                   </g>
                 ))}
                 <defs>

@@ -140,7 +140,7 @@ export default function BackendRateLimit() {
           const waterH = s.level * 10;
           return (
             <div className="rl-scene">
-              <svg className="rl-svg" viewBox="0 0 360 160" preserveAspectRatio="xMidYMid meet">
+              <svg className="rl-svg" viewBox="0 0 360 170" preserveAspectRatio="xMidYMid meet">
                 <text x={180} y={16} className="rl-title">漏桶 Leaky Bucket</text>
                 {/* Bucket outline */}
                 <rect x={130} y={30} width={100} height={90} rx={14} className="rl-bucket" />
@@ -174,8 +174,8 @@ export default function BackendRateLimit() {
           const barW = 30, barGap = 6, barX0 = 40, barMaxH = 60, barY = 110;
           return (
             <div className="rl-scene">
-              <svg className="rl-svg" viewBox="0 0 360 160" preserveAspectRatio="xMidYMid meet">
-                <text x={180} y={16} className="rl-title">滑动窗口 Sliding Window</text>
+              <svg className="rl-svg" viewBox="0 0 370 160" preserveAspectRatio="xMidYMid meet">
+                <text x={185} y={16} className="rl-title">滑动窗口 Sliding Window</text>
                 {/* Threshold line */}
                 <line x1={barX0} y1={barY - 40} x2={barX0 + winBars.length * (barW + barGap)} y2={barY - 40}
                   className="rl-threshold" strokeDasharray="4 3" />
@@ -197,7 +197,7 @@ export default function BackendRateLimit() {
                 <rect x={barX0 + s.active[0] * (barW + barGap) - 3} y={barY - barMaxH - 6}
                   width={s.active.length * (barW + barGap) - barGap + 6} height={barMaxH + 10}
                   rx={6} className="rl-win-bracket" />
-                <text x={180} y={barY + 34} className="rl-phase-label">{s.label}</text>
+                <text x={185} y={barY + 34} className="rl-phase-label">{s.label}</text>
               </svg>
               <div className="rl-ds rl-ds--win">
                 <span className="rl-ds__label">窗口</span>
@@ -218,8 +218,8 @@ export default function BackendRateLimit() {
           const SX = 60, SY = 70, SGAP = 120;
           return (
             <div className="rl-scene">
-              <svg className="rl-svg" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid meet">
-                <text x={200} y={16} className="rl-title">熔断器状态机 Circuit Breaker</text>
+              <svg className="rl-svg" viewBox="0 0 420 155" preserveAspectRatio="xMidYMid meet">
+                <text x={210} y={16} className="rl-title">熔断器状态机 Circuit Breaker</text>
                 {states.map((st, i) => {
                   const x = SX + i * SGAP;
                   const c = stateColors[i];
@@ -243,7 +243,7 @@ export default function BackendRateLimit() {
                 <path d={`M${SX + 2 * SGAP + 50},${SY + 36} Q${SX + SGAP},${SY + 70} ${SX + 50},${SY + 36}`}
                   className="rl-cb-arrow rl-cb-arrow--return" fill="none" markerEnd="url(#rl-cb-arr)" />
                 <text x={SX + SGAP + 50} y={SY + 66} className="rl-cb-return-label">探测成功</text>
-                <text x={200} y={SY - 16} className="rl-phase-label">错误率: {s.errRate}</text>
+                <text x={210} y={SY - 16} className="rl-phase-label">错误率: {s.errRate}</text>
                 <defs>
                   <marker id="rl-cb-arr" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L6,2.5 L0,5" fill="rgba(0,0,0,0.3)" /></marker>
                 </defs>
