@@ -364,7 +364,6 @@
   font-weight: 600;
   background: #fff;
   border: 1.5px solid rgba(76, 157, 149, 0.3);
-  transform: translate(-50%, -50%);
 }
 
 .heap-node--root {
@@ -567,29 +566,29 @@
 
 @keyframes heapInsert {
   0% {
-    left: 225px;
-    top: 120px;
+    left: 209px;
+    top: 104px;
     opacity: 0;
   }
   10% {
     opacity: 1;
   }
   40% {
-    left: 195px;
-    top: 72px;
+    left: 179px;
+    top: 56px;
     opacity: 1;
   }
   70% {
-    left: 130px;
-    top: 24px;
+    left: 114px;
+    top: 8px;
     opacity: 1;
   }
   85% {
     opacity: 0.5;
   }
   100% {
-    left: 225px;
-    top: 120px;
+    left: 209px;
+    top: 104px;
     opacity: 0;
   }
 }

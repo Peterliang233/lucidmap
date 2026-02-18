@@ -121,6 +121,17 @@
   animation-duration: 14s;
 }
 
+.hero-map__arc--c {
+  width: 160px;
+  height: 160px;
+  border-color: rgba(42, 111, 107, 0.15);
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  --rotate: 30deg;
+  animation-duration: 10s;
+}
+
 .hero-map__pulse {
   position: absolute;
   left: 50%;
@@ -134,6 +145,158 @@
   z-index: 1;
 }
 
+.hero-map__pulse--b {
+  width: 260px;
+  height: 260px;
+  border-color: rgba(42, 111, 107, 0.15);
+  animation: pulse 6s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+/* 雷达扫描线 */
+.hero-map__radar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-map__radar::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0 0;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(42, 111, 107, 0.12) 30deg,
+    transparent 60deg
+  );
+  animation: radarSweep 6s linear infinite;
+}
+
+/* 轨道运动粒子 */
+.hero-map__orbit-dots {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.orbit-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  box-shadow: 0 0 8px rgba(42, 111, 107, 0.6);
+}
+
+.orbit-dot--1 {
+  animation: orbitMove1 20s linear infinite;
+}
+
+.orbit-dot--2 {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(210, 100, 42, 0.6);
+  animation: orbitMove2 14s linear infinite;
+}
+
+.orbit-dot--3 {
+  width: 4px;
+  height: 4px;
+  animation: orbitMove3 10s linear infinite;
+}
+
+/* SVG 连接线 */
+.hero-map__links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-map__link-line {
+  stroke: rgba(42, 111, 107, 0.1);
+  stroke-width: 0.3;
+  stroke-dasharray: 2 3;
+  animation: linkPulse 4s ease-in-out infinite;
+}
+
+.hero-map__link-line:nth-child(odd) {
+  animation-delay: 0.5s;
+  stroke: rgba(210, 100, 42, 0.08);
+}
+
+/* 核心光晕 */
+.hero-map__core-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 36px;
+  background: radial-gradient(
+    circle,
+    rgba(210, 100, 42, 0.1) 0%,
+    rgba(42, 111, 107, 0.08) 40%,
+    transparent 70%
+  );
+  animation: coreGlow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* 卫星状态指示灯 */
+.hero-map__sat-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  margin-right: 6px;
+  animation: satDotBlink 3s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(42, 111, 107, 0.5);
+}
+
+.hero-map__satellite:nth-child(odd) .hero-map__sat-dot {
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(210, 100, 42, 0.5);
+  animation-delay: 0.4s;
+}
+
+/* 水平扫描光线 */
+.hero-map__scanline {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(42, 111, 107, 0.3) 30%,
+    rgba(42, 111, 107, 0.5) 50%,
+    rgba(42, 111, 107, 0.3) 70%,
+    transparent 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+  animation: scanlineMove 8s ease-in-out infinite;
+}
+
 .hero-map__core {
   position: absolute;
   left: 50%;
@@ -143,6 +306,7 @@
   height: 170px;
   border-radius: 26px;
   background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(31, 28, 24, 0.16);
   display: flex;
   flex-direction: column;
@@ -151,7 +315,8 @@
   gap: 6px;
   text-align: center;
   z-index: 3;
-  box-shadow: 0 14px 30px rgba(31, 28, 24, 0.15);
+  box-shadow: 0 14px 30px rgba(31, 28, 24, 0.15), 0 0 40px rgba(42, 111, 107, 0.08);
+  overflow: hidden;
 }
 
 .hero-map__badge {
@@ -214,12 +379,21 @@
   padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid rgba(31, 28, 24, 0.14);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
   font-size: 0.72rem;
   color: var(--ink);
-  box-shadow: 0 10px 20px rgba(31, 28, 24, 0.08);
+  box-shadow: 0 10px 20px rgba(31, 28, 24, 0.08), 0 0 12px rgba(42, 111, 107, 0.06);
   animation: satelliteFloat 5.4s ease-in-out infinite;
   animation-delay: var(--delay, 0s);
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-map__satellite:hover {
+  border-color: var(--accent-2);
+  box-shadow: 0 10px 24px rgba(31, 28, 24, 0.12), 0 0 16px rgba(42, 111, 107, 0.15);
 }
 
 .hero-map__legend {
@@ -284,9 +458,24 @@
     height: 180px;
   }
 
+  .hero-map__arc--c {
+    width: 130px;
+    height: 130px;
+  }
+
   .hero-map__pulse {
     width: 160px;
     height: 160px;
+  }
+
+  .hero-map__pulse--b {
+    width: 210px;
+    height: 210px;
+  }
+
+  .hero-map__radar {
+    width: 240px;
+    height: 240px;
   }
 
   .hero-map__core {
@@ -344,9 +533,24 @@
     height: 150px;
   }
 
+  .hero-map__arc--c {
+    width: 110px;
+    height: 110px;
+  }
+
   .hero-map__pulse {
     width: 140px;
     height: 140px;
+  }
+
+  .hero-map__pulse--b {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-map__radar {
+    width: 200px;
+    height: 200px;
   }
 
   .hero-map__core {
@@ -364,6 +568,33 @@
   padding: 16px;
   border: 1px solid var(--line);
   background: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.mission__card::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(42, 111, 107, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.mission__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(31, 28, 24, 0.1);
+  border-color: rgba(42, 111, 107, 0.25);
+}
+
+.mission__card:hover::before {
+  opacity: 1;
 }
 
 .mission__card h3 {
@@ -414,9 +645,24 @@
     height: 180px;
   }
 
+  .hero-map__arc--c {
+    width: 130px;
+    height: 130px;
+  }
+
   .hero-map__pulse {
     width: 160px;
     height: 160px;
+  }
+
+  .hero-map__pulse--b {
+    width: 210px;
+    height: 210px;
+  }
+
+  .hero-map__radar {
+    width: 240px;
+    height: 240px;
   }
 
   .hero-map__legend {
@@ -471,5 +717,89 @@
   }
   100% {
     transform: translate(-50%, -50%) translateY(0);
+  }
+}
+
+@keyframes radarSweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitMove1 {
+  from {
+    transform: rotate(0deg) translateX(150px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(150px) rotate(-360deg);
+  }
+}
+
+@keyframes orbitMove2 {
+  from {
+    transform: rotate(0deg) translateX(110px) rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg) translateX(110px) rotate(360deg);
+  }
+}
+
+@keyframes orbitMove3 {
+  from {
+    transform: rotate(0deg) translateX(80px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(80px) rotate(-360deg);
+  }
+}
+
+@keyframes linkPulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes coreGlow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes satDotBlink {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes scanlineMove {
+  0% {
+    top: -2px;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
   }
 }

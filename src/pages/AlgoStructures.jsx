@@ -135,12 +135,12 @@ export default function AlgoStructures() {
                   <line className="heap-edge heap-edge--sift heap-edge--sift2" x1="195" y1="72"  x2="130" y2="24" />
                 </svg>
                 {/* 静态节点 */}
-                <span className="heap-node heap-node--root" style={{left:130, top:24}}>2</span>
-                <span className="heap-node" style={{left:65,  top:72}}>5</span>
-                <span className="heap-node heap-node--l1b" style={{left:195, top:72}}>7</span>
-                <span className="heap-node" style={{left:35,  top:120}}>9</span>
-                <span className="heap-node" style={{left:100, top:120}}>8</span>
-                <span className="heap-node" style={{left:165, top:120}}>10</span>
+                <span className="heap-node heap-node--root" style={{left:114, top:8}}>2</span>
+                <span className="heap-node" style={{left:49,  top:56}}>5</span>
+                <span className="heap-node heap-node--l1b" style={{left:179, top:56}}>7</span>
+                <span className="heap-node" style={{left:19,  top:104}}>9</span>
+                <span className="heap-node" style={{left:84,  top:104}}>8</span>
+                <span className="heap-node" style={{left:149, top:104}}>10</span>
                 {/* 动画节点：insert 3 → sift-up */}
                 <span className="heap-node heap-node--insert">3</span>
                 {/* min 标签 */}

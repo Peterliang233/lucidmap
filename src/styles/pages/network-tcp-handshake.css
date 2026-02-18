@@ -1,171 +1,191 @@
-.tcp-diagram .tcp-seq {
-  display: grid;
-  gap: 16px;
-}
-
 .tcp-diagram {
-  width: min(100%, 720px);
+  width: min(100%, 780px);
   margin: 0 auto;
 }
 
-.tcp-header {
-  display: grid;
-  grid-template-columns: minmax(0, max-content) 180px minmax(0, max-content);
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed var(--line);
+.tcp-svg-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.tcp-header__lane {
-  font-weight: 600;
-  color: var(--ink-soft);
-  text-align: center;
-}
-
-.tcp-header__line {
-  width: 2px;
-  height: 24px;
-  justify-self: center;
-  background: linear-gradient(180deg, rgba(18, 18, 18, 0.2), rgba(18, 18, 18, 0.5));
-  border-radius: 999px;
-}
-
-.tcp-body {
-  display: grid;
-  gap: 12px;
-}
-
-.tcp-row {
-  display: grid;
-  grid-template-columns: minmax(0, max-content) 180px minmax(0, max-content);
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  --tcp-gap: 12px;
-  --tcp-color: rgba(18, 18, 18, 0.7);
-}
-
-.tcp-row.is-active {
-  --tcp-color: rgba(212, 60, 47, 0.9);
-}
-
-.tcp-connector {
-  position: relative;
-  height: 2px;
-  width: 100%;
-  justify-self: center;
-  background: var(--tcp-color);
-  border-radius: 999px;
-}
-
-.tcp-arrow {
-  position: absolute;
-  top: 50%;
-  right: -6px;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-left: 6px solid var(--tcp-color);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-}
-
-.tcp-row[data-dir="to-client"] .tcp-arrow {
-  right: auto;
-  left: -6px;
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.tcp-row.is-active .tcp-connector {
+/* ── Progress bar ── */
+.tcp-progress-bar {
   height: 3px;
-  box-shadow: 0 0 10px rgba(212, 60, 47, 0.35);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
 }
 
-.tcp-bubble {
-  max-width: 220px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: #fff;
-  font-size: 0.85rem;
-  opacity: 0.6;
-  position: relative;
-  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+.tcp-progress-bar__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(42, 111, 107, 0.8), rgba(76, 120, 168, 0.8), rgba(210, 100, 42, 0.8));
+  transition: width 0.5s ease;
 }
 
-.tcp-bubble--client {
-  justify-self: end;
-}
-
-.tcp-bubble--server {
-  justify-self: start;
-}
-
-.tcp-bubble--client::after,
-
-.tcp-bubble--server::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: var(--tcp-gap);
-  height: 2px;
-  background: var(--tcp-color);
-  transform: translateY(-50%);
-}
-
-.tcp-bubble--client::after {
-  right: calc(-1 * var(--tcp-gap));
-}
-
-.tcp-bubble--server::before {
-  left: calc(-1 * var(--tcp-gap));
-}
-
-.tcp-bubble.is-active {
-  opacity: 1;
-  background: rgba(212, 60, 47, 0.12);
-  border-color: rgba(212, 60, 47, 0.4);
-  transform: translateY(-2px);
-}
-
-.tcp-spacer {
+/* ── SVG canvas ── */
+.tcp-svg {
+  width: 100%;
+  height: auto;
   display: block;
 }
 
-@media (max-width: 960px) {
-  .tcp-row,
-  .tcp-header {
-    grid-template-columns: 1fr 120px 1fr;
-  }
-
-  .tcp-bubble {
-    max-width: 180px;
-    font-size: 0.8rem;
-  }
+/* ── Machine boxes ── */
+.tcp-svg__machine {
+  fill: rgba(255, 255, 255, 0.85);
+  stroke: var(--line, rgba(0, 0, 0, 0.1));
+  stroke-width: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06));
 }
 
+.tcp-svg__machine-name {
+  text-anchor: middle;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--ink-soft, #555);
+}
+
+.tcp-svg__machine-port {
+  text-anchor: middle;
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0, 0, 0, 0.3);
+}
+
+/* ── Lifelines ── */
+.tcp-svg__lifeline {
+  stroke: var(--line, rgba(0, 0, 0, 0.12));
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  opacity: 0.6;
+}
+
+/* ── Status indicators ── */
+.tcp-svg__status {
+  transition: fill 0.4s ease;
+}
+
+.tcp-svg__status--ok {
+  fill: #388e3c;
+  filter: drop-shadow(0 0 4px rgba(56, 142, 60, 0.5));
+}
+
+.tcp-svg__status--wait {
+  fill: #b8960a;
+  animation: tcpStatusPulse 1.4s ease-in-out infinite;
+}
+
+.tcp-svg__status--warn {
+  fill: #d2822a;
+  animation: tcpStatusPulse 1.4s ease-in-out infinite;
+}
+
+.tcp-svg__status--off {
+  fill: rgba(140, 140, 140, 0.5);
+}
+
+/* ── Phase dividers ── */
+.tcp-svg__phase-text {
+  text-anchor: middle;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+/* ── Message groups ── */
+.tcp-svg__msg {
+  transition: opacity 0.4s ease;
+}
+
+.tcp-svg__msg.is-future {
+  opacity: 0.35;
+}
+
+.tcp-svg__msg.is-past {
+  opacity: 0.7;
+}
+
+.tcp-svg__msg.is-active {
+  opacity: 1;
+}
+
+/* ── Message lines ── */
+.tcp-svg__line {
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.tcp-svg__msg.is-active .tcp-svg__line {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+/* ── Animated packet ── */
+.tcp-svg__packet {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* ── Label backgrounds ── */
+.tcp-svg__label-bg {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.tcp-svg__msg.is-active .tcp-svg__label-bg {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+}
+
+/* ── Label text ── */
+.tcp-svg__label {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 600;
+  transition: fill 0.3s ease;
+}
+
+.tcp-svg__sub {
+  text-anchor: middle;
+  font-size: 8.5px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  transition: fill 0.3s ease;
+}
+
+/* ── State text ── */
+.tcp-svg__state {
+  font-size: 8px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  letter-spacing: 0.03em;
+  transition: fill 0.3s ease, opacity 0.3s ease;
+}
+
+.tcp-svg__state--right {
+  text-anchor: end;
+}
+
+.tcp-svg__state--left {
+  text-anchor: start;
+}
+
+.tcp-svg__state.is-past {
+  opacity: 0.45;
+}
+
+/* ── Keyframes ── */
+@keyframes tcpStatusPulse {
+  0%, 100% { opacity: 0.6; r: 5; }
+  50% { opacity: 1; r: 6; }
+}
+
+/* ── Responsive ── */
 @media (max-width: 640px) {
-  .tcp-row,
-  .tcp-header {
-    grid-template-columns: 1fr 90px 1fr;
-    gap: 8px;
+  .tcp-svg__state {
+    display: none;
   }
 
-  .tcp-row {
-    --tcp-gap: 8px;
+  .tcp-svg__machine-port {
+    display: none;
   }
 
-  .tcp-bubble {
-    max-width: 150px;
-    padding: 6px 10px;
-    font-size: 0.78rem;
-  }
-
-  .tcp-arrow {
-    border-left-width: 5px;
-    border-top-width: 3px;
-    border-bottom-width: 3px;
+  .tcp-svg__sub {
+    font-size: 7px;
   }
 }

@@ -68,13 +68,46 @@ export default function LandingPage() {
             <div className="hero-map hero-map--clean">
               <div className="hero-map__backdrop" />
               <div className="hero-map__grid" />
+
+              {/* 雷达扫描线 */}
+              <div className="hero-map__radar" />
+
+              {/* 多层轨道弧 */}
               <div className="hero-map__arc hero-map__arc--a" />
               <div className="hero-map__arc hero-map__arc--b" />
+              <div className="hero-map__arc hero-map__arc--c" />
+
+              {/* 轨道上的运动粒子 */}
+              <div className="hero-map__orbit-dots">
+                <span className="orbit-dot orbit-dot--1" />
+                <span className="orbit-dot orbit-dot--2" />
+                <span className="orbit-dot orbit-dot--3" />
+              </div>
+
+              {/* 脉冲环 */}
               <div className="hero-map__pulse" />
+              <div className="hero-map__pulse hero-map__pulse--b" />
+
+              {/* SVG 连接线：核心到卫星 */}
+              <svg className="hero-map__links" viewBox="0 0 100 100" preserveAspectRatio="none">
+                {heroSatellites.map((sat) => (
+                  <line
+                    key={`link-${sat.id}`}
+                    className="hero-map__link-line"
+                    x1="50" y1="50"
+                    x2={parseFloat(sat.x)} y2={parseFloat(sat.y)}
+                  />
+                ))}
+              </svg>
+
+              {/* 核心 */}
               <div className="hero-map__core">
+                <div className="hero-map__core-glow" />
                 <span className="hero-map__badge">LucidMap</span>
                 <span className="hero-map__metric">Knowledge Signal Hub</span>
               </div>
+
+              {/* 数据流 */}
               <div className="hero-map__streams">
                 {heroStreams.map((stream) => (
                   <span
@@ -87,6 +120,8 @@ export default function LandingPage() {
                   />
                 ))}
               </div>
+
+              {/* 卫星节点 */}
               <div className="hero-map__satellites">
                 {heroSatellites.map((satellite, index) => (
                   <div
@@ -98,10 +133,15 @@ export default function LandingPage() {
                       "--delay": `${index * 0.25}s`,
                     }}
                   >
+                    <span className="hero-map__sat-dot" />
                     {satellite.label}
                   </div>
                 ))}
               </div>
+
+              {/* 扫描光线 */}
+              <div className="hero-map__scanline" />
+
               <div className="hero-map__legend">
                 <span>Signals: 42</span>
                 <span>Cards: 320+</span>

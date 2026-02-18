@@ -10,7 +10,7 @@ npm run build     # Production build to dist/
 npm run preview   # Preview production build
 ```
 
-No linting, testing, or TypeScript tooling is configured.
+No linting, testing, or TypeScript tooling is configured. Verify changes by running `npm run dev` and smoke-checking affected routes in the browser.
 
 ## Architecture
 
@@ -23,11 +23,11 @@ Hash-based routing (`HashRouter`) with three main route types:
 - `#/map` — Knowledge map browser (reads from `src/data.json`)
 - `#/topics/*` — Individual topic pages (e.g. `#/topics/os/thread-sync`)
 
-All routes are registered in `src/App.jsx`.
+All routes are registered in `src/App.jsx` (~39 routes across sections: os, network, database, backend, algorithms, redis, mq, ai).
 
 ### Key Components
 
-- **`TopicShell.jsx`** — The reusable template used by nearly all topic pages. Accepts `eyebrow`, `title`, `subtitle`, `steps`, `renderDiagram`, `principles`, `panel`, `interval`, `backPath`, `diagramClass`, and `principlesPlacement` props. Handles play/pause/prev/next controls and auto-advance timer. Some complex pages bypass this and use `Layout` directly to manage their own state.
+- **`TopicShell.jsx`** — The reusable template used by ~95% of topic pages. Accepts `eyebrow`, `title`, `subtitle`, `steps`, `renderDiagram`, `principles`, `panel`, `interval`, `backPath`, `diagramClass`, and `principlesPlacement` props. Handles play/pause/prev/next controls and auto-advance timer (default 2600ms). Some complex pages (e.g. `Home.jsx`) bypass this and use `Layout` directly.
 - **`TopNav.jsx`** — Navigation header; reads section structure from `data.json` to build dropdowns dynamically.
 - **`Layout.jsx`** — Wraps all pages with TopNav and footer.
 
@@ -59,7 +59,7 @@ Drives both the Home map browser and TopNav dropdowns. Schema:
   }]
 }
 ```
-`link` values starting with `/topics/` are treated as internal routes; others open externally.
+`link` values starting with `/topics/` are internal routes; `"#"` means disabled; others open externally.
 
 ### Step and Panel Shapes
 
@@ -71,15 +71,36 @@ Drives both the Home map browser and TopNav dropdowns. Schema:
 { title, detail }
 
 // principles array
-{ title, detail }
+{ title, detail, points?: string[] }
 ```
 
 `principlesPlacement` is `"below"` (default) or `"side"`.
 
-### Styling Conventions
+## Coding Style
 
-- Global tokens and resets: `src/styles/base.css` — defines CSS vars `--bg`, `--ink`, `--accent`, `--line`, `--shadow`
-- TopicShell layout: `src/styles/topic-shell.css`
-- Page-specific styles: `src/styles/pages/*.css`, aggregated in `src/styles/pages.css`
-- Class naming follows BEM-like patterns: `.component__element--modifier`
-- Responsive via media queries; no CSS framework used
+- 2-space indentation, double quotes in JS/JSX.
+- React components use PascalCase filenames (e.g. `NetworkTcpHandshake.jsx`).
+- Commit messages follow Conventional Commits style (e.g. `feat: add TCP handshake animation`).
+
+## Styling Conventions
+
+- Global tokens: `src/styles/base.css` — CSS vars `--bg`, `--bg-deep`, `--ink`, `--ink-soft`, `--accent` (orange), `--accent-2` (teal), `--card`, `--line`, `--shadow`.
+- TopicShell layout: `src/styles/topic-shell.css`.
+- Page-specific styles: `src/styles/pages/*.css`, aggregated via `@import` in `src/styles/pages.css`.
+- Class naming follows BEM-like patterns: `.component__element--modifier`.
+- Each CSS file must stay under 1000 lines. Split into multiple files if needed.
+- Shared animation patterns live in `shared-animations.css`, `shared-flow.css`, `shared-sequence.css`, `shared-layout.css`, `shared-utilities.css`. Reuse existing keyframes before adding new ones.
+- Responsive via media queries; no CSS framework. Small screens must remain readable — compress spacing but don't break layout.
+
+## Animation Standards
+
+Animations are the core value of this project. Every topic page must have a meaningful, technically accurate visualization.
+
+- **Map to real steps**: every motion should correspond to a real system step. List the core steps first, then assign each a visual cue (node state, signal, buffer, transfer).
+- **Interaction over text**: use moving signals, pulses, state changes to show causality. Keep labels short.
+- **Example-driven**: use concrete values (keys, sequence numbers, offsets) to make abstract concepts tangible.
+- **Temporal clarity**: stagger animations to reflect order. Avoid more than 3–4 concurrent motions per scene.
+- **Visual richness minimum**: multi-element coordinated animation, concrete process visualization (nodes/flows/queues/states), and clear comparison between strategies/versions/phases.
+- **No hover-only triggers**: mobile must be fully operable.
+- **Avoid `position: absolute`** layouts that prevent height from expanding and cause overlap with sections below.
+- Scope new keyframes to the diagram class. Reuse existing patterns (`flow`, `frameFlow`, pulses) from shared CSS files.
