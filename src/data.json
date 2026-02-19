@@ -233,6 +233,15 @@
                 "高频",
                 "JVM"
               ]
+            },
+            {
+              "title": "Spring 核心原理",
+              "desc": "IoC 容器、依赖注入与 AOP 代理机制",
+              "link": "/topics/backend/spring",
+              "tags": [
+                "高频",
+                "基础"
+              ]
             }
           ]
         },

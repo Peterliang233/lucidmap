@@ -20,6 +20,7 @@ import BackendCollections from "./pages/BackendCollections.jsx";
 import BackendRateLimit from "./pages/BackendRateLimit.jsx";
 import BackendCacheConsistency from "./pages/BackendCacheConsistency.jsx";
 import BackendClassLoader from "./pages/BackendClassLoader.jsx";
+import BackendSpring from "./pages/BackendSpring.jsx";
 import AlgoStructures from "./pages/AlgoStructures.jsx";
 import AlgoGraphSearch from "./pages/AlgoGraphSearch.jsx";
 import AlgoTwoPointers from "./pages/AlgoTwoPointers.jsx";
@@ -74,6 +75,7 @@ export default function App() {
         <Route path="/topics/backend/rate-limit" element={<BackendRateLimit />} />
         <Route path="/topics/backend/cache-consistency" element={<BackendCacheConsistency />} />
         <Route path="/topics/backend/classloader" element={<BackendClassLoader />} />
+        <Route path="/topics/backend/spring" element={<BackendSpring />} />
         <Route path="/topics/algorithms/basic-structures" element={<AlgoStructures />} />
         <Route path="/topics/algorithms/graph-search" element={<AlgoGraphSearch />} />
         <Route path="/topics/algorithms/two-pointers" element={<AlgoTwoPointers />} />
