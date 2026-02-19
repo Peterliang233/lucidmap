@@ -1,0 +1,236 @@
+/* ── RAG Pipeline ── */
+.rag-diagram { width: min(100%, 780px); margin: 0 auto; }
+.rag-scene { display: grid; gap: 14px; }
+.rag-svg { width: 100%; height: auto; display: block; }
+
+/* Phase labels */
+.rag-phase-label {
+  font-size: 8px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.25);
+}
+
+/* Nodes */
+.rag-node { transition: opacity 0.4s; }
+.rag-node__box {
+  stroke-width: 1;
+  transition: fill 0.4s, stroke 0.4s;
+}
+.rag-node--active .rag-node__box {
+  animation: ragNodePulse 2.4s ease-in-out infinite;
+}
+.rag-node__label {
+  text-anchor: middle;
+  font-size: 9px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  transition: fill 0.4s;
+}
+.rag-node__sub {
+  text-anchor: middle;
+  font-size: 7px;
+  fill: rgba(0,0,0,0.25);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+/* Shared model indicator */
+.rag-shared-label {
+  font-size: 7px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(140,80,180,0.45);
+}
+
+/* Arrows */
+.rag-arrow {
+  stroke-width: 1;
+  stroke-linecap: round;
+  fill: none;
+}
+.rag-arrow--active {
+  stroke-dasharray: 5 3;
+  animation: ragDash 1.4s linear infinite;
+}
+
+/* Animated packet */
+.rag-packet {
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+/* ── Context panel ── */
+.rag-context__box {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.85);
+  display: grid;
+  gap: 8px;
+}
+
+.rag-context__tag {
+  font-size: 9px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+/* Chunks */
+.rag-context__chunks { display: grid; gap: 4px; }
+.rag-chunk {
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  color: rgba(0,0,0,0.45);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(76,120,168,0.15);
+  background: rgba(76,120,168,0.03);
+  animation: ragChunkFade 2.4s ease-in-out infinite;
+}
+.rag-chunk:nth-child(2) { animation-delay: 0.3s; }
+.rag-chunk:nth-child(3) { animation-delay: 0.6s; }
+
+/* Vectors */
+.rag-context__vectors { display: grid; gap: 4px; }
+.rag-vec {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  color: rgba(0,0,0,0.4);
+}
+.rag-vec__text {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(140,80,180,0.06);
+  color: rgba(140,80,180,0.7);
+  font-weight: 500;
+}
+.rag-vec__arrow { color: rgba(0,0,0,0.2); }
+.rag-vec__val { color: rgba(0,0,0,0.35); }
+
+/* Query */
+.rag-context__query { display: grid; gap: 4px; }
+.rag-query-text {
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  color: rgba(210,100,42,0.7);
+  font-weight: 500;
+}
+.rag-query-vec {
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  color: rgba(0,0,0,0.35);
+}
+
+/* Results */
+.rag-context__results { display: grid; gap: 4px; }
+.rag-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  color: rgba(0,0,0,0.4);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  transition: opacity 0.3s, border-color 0.3s;
+}
+.rag-result--top {
+  border-color: rgba(42,111,107,0.25);
+  background: rgba(42,111,107,0.03);
+}
+.rag-result--dim { opacity: 0.4; }
+.rag-result__score {
+  font-weight: 500;
+  color: rgba(42,111,107,0.7);
+  flex-shrink: 0;
+}
+
+/* Prompt */
+.rag-context__prompt { display: grid; gap: 3px; }
+.rag-prompt-line {
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.rag-prompt-line--sys { color: rgba(0,0,0,0.35); background: rgba(0,0,0,0.02); }
+.rag-prompt-line--ctx { color: rgba(42,111,107,0.65); background: rgba(42,111,107,0.04); }
+.rag-prompt-line--q   { color: rgba(210,100,42,0.7); background: rgba(210,100,42,0.04); }
+.rag-prompt-line--a   { color: rgba(56,142,60,0.7); background: rgba(56,142,60,0.04); animation: ragAnswerPulse 2s ease-in-out infinite; }
+
+/* ── State panel ── */
+.rag-ds {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.rag-ds__label {
+  font-size: 10px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rag-ds--chunk .rag-ds__label,
+.rag-ds--embed .rag-ds__label  { background: rgba(76,120,168,0.08); color: rgba(76,120,168,0.75); }
+.rag-ds--query .rag-ds__label  { background: rgba(210,100,42,0.08); color: rgba(210,100,42,0.75); }
+.rag-ds--retrieve .rag-ds__label { background: rgba(42,111,107,0.08); color: rgba(42,111,107,0.75); }
+.rag-ds--rerank .rag-ds__label { background: rgba(210,100,42,0.08); color: rgba(210,100,42,0.75); }
+.rag-ds--generate .rag-ds__label { background: rgba(180,60,60,0.08); color: rgba(180,60,60,0.75); }
+
+.rag-ds__items { display: flex; flex-wrap: wrap; gap: 6px; }
+.rag-ds__step {
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  opacity: 0.3;
+  transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s;
+}
+.rag-ds__step--past { opacity: 0.5; }
+.rag-ds__step--active { opacity: 1; background: rgba(42,111,107,0.06); border-color: rgba(42,111,107,0.22); color: rgba(42,111,107,0.8); }
+
+/* ── Keyframes ── */
+@keyframes ragNodePulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 4px rgba(0,0,0,0.08)); }
+}
+
+@keyframes ragDash {
+  to { stroke-dashoffset: -16; }
+}
+
+@keyframes ragChunkFade {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; border-color: rgba(76,120,168,0.35); }
+}
+
+@keyframes ragAnswerPulse {
+  0%, 100% { background: rgba(56,142,60,0.04); }
+  50% { background: rgba(56,142,60,0.1); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .rag-phase-label { font-size: 7px; }
+  .rag-node__label { font-size: 8px; }
+  .rag-node__sub { display: none; }
+  .rag-chunk { font-size: 8.5px; }
+  .rag-vec { font-size: 8.5px; }
+  .rag-result { font-size: 8.5px; }
+  .rag-prompt-line { font-size: 8.5px; }
+  .rag-ds__step { font-size: 8.5px; padding: 2px 6px; }
+  .rag-shared-label { display: none; }
+}
