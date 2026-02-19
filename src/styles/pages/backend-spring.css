@@ -297,6 +297,109 @@
   fill: rgba(0,0,0,0.2);
 }
 
+/* ── Three-Level Cache ── */
+.spring-cache-row {
+  animation: springFadeIn 0.5s ease-out both;
+  animation-delay: var(--cache-delay, 0s);
+}
+.spring-cache-box {
+  fill: rgba(255,255,255,0.9);
+  stroke: var(--cache-c);
+  stroke-width: 1;
+  stroke-opacity: 0.3;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.04));
+}
+.spring-cache-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.spring-cache-sub {
+  text-anchor: middle;
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.35);
+}
+.spring-cache-desc {
+  text-anchor: end;
+  font-size: 10px;
+  fill: rgba(0,0,0,0.25);
+}
+.spring-cache-step {
+  animation: springFadeIn 0.4s ease-out both;
+  animation-delay: var(--cache-delay, 0s);
+}
+.spring-cache-node {
+  fill: rgba(255,255,255,0.9);
+  stroke: var(--cache-c);
+  stroke-width: 1.5;
+  stroke-opacity: 0.5;
+  animation: springNodePulse 2.5s ease-in-out infinite;
+  animation-delay: var(--cache-delay, 0s);
+}
+.spring-cache-step-label {
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: 600;
+}
+.spring-cache-step-desc {
+  text-anchor: middle;
+  font-size: 9px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.25);
+}
+
+/* ── Circular dependency ── */
+.spring-circ-box {
+  stroke-width: 1;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.04));
+}
+.spring-circ-box--a {
+  fill: rgba(42,111,107,0.04);
+  stroke: rgba(42,111,107,0.25);
+}
+.spring-circ-box--b {
+  fill: rgba(76,120,168,0.04);
+  stroke: rgba(76,120,168,0.25);
+}
+.spring-circ-name {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 600;
+}
+.spring-circ-sub {
+  text-anchor: middle;
+  font-size: 9px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.25);
+}
+.spring-circ-arrow {
+  stroke: rgba(210,100,42,0.35);
+  stroke-width: 1.5;
+}
+.spring-circ-arrow--top {
+  animation: springCircPulse 2s ease-in-out infinite;
+}
+.spring-circ-arrow--bottom {
+  animation: springCircPulse 2s ease-in-out infinite 0.5s;
+}
+.spring-circ-dep {
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: 500;
+  fill: rgba(210,100,42,0.6);
+}
+.spring-circ-warn {
+  fill: rgba(210,100,42,0.05);
+  stroke: rgba(210,100,42,0.2);
+  stroke-width: 1;
+}
+.spring-circ-warn-text {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 500;
+  fill: rgba(210,100,42,0.65);
+}
+
 /* ── AOP Intercept chain ── */
 .spring-chain-box {
   fill: rgba(0,0,0,0.015);
@@ -448,6 +551,10 @@
 @keyframes springDotPulse {
   0%, 100% { opacity: 0.4; r: 5; }
   50% { opacity: 0.9; r: 7; }
+}
+@keyframes springCircPulse {
+  0%, 100% { stroke-opacity: 0.35; }
+  50% { stroke-opacity: 0.7; filter: drop-shadow(0 0 4px rgba(210,100,42,0.15)); }
 }
 
 /* ── Responsive ── */

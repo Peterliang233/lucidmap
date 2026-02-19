@@ -27,6 +27,24 @@ const steps = [
     mode: "lifecycle", phase: 0,
   },
   {
+    id: "cache-overview", title: "三级缓存结构",
+    description: "Spring 用三级缓存解决单例 Bean 的循环依赖问题。",
+    bullets: ["一级：singletonObjects（完整 Bean）", "二级：earlySingletonObjects（早期引用）", "三级：singletonFactories（ObjectFactory）"],
+    mode: "cache", phase: 0,
+  },
+  {
+    id: "cache-circular", title: "循环依赖场景",
+    description: "A 依赖 B，B 又依赖 A，直接创建会死循环。",
+    bullets: ["A 创建时需要注入 B", "B 创建时又需要注入 A", "没有缓存 → 无限递归"],
+    mode: "cache", phase: 1,
+  },
+  {
+    id: "cache-resolve", title: "三级缓存解决流程",
+    description: "通过提前暴露半成品引用，打破循环依赖。",
+    bullets: ["A 实例化后放入三级缓存", "创建 B 时从三级缓存获取 A 的早期引用", "B 完成后 A 继续注入，最终都进入一级缓存"],
+    mode: "cache", phase: 2,
+  },
+  {
     id: "aop-concept", title: "AOP 核心概念",
     description: "面向切面编程将横切关注点（日志、事务、权限）从业务逻辑中分离。",
     bullets: ["Aspect 切面 = Pointcut + Advice", "JoinPoint 连接点：方法执行", "Weaving 织入：编译期 / 运行时"],
@@ -56,6 +74,7 @@ const principles = [
   { title: "控制反转 IoC", detail: "将对象创建和依赖管理交给容器，降低组件耦合度。", points: ["容器管理 Bean 全生命周期", "依赖注入替代 new 硬编码", "便于测试和替换实现"] },
   { title: "面向切面 AOP", detail: "横切关注点与业务逻辑分离，通过代理透明增强。", points: ["动态代理实现方法拦截", "事务/日志/权限统一管理", "不侵入业务代码"] },
   { title: "Bean 生命周期", detail: "从定义到销毁的完整回调链，支持自定义扩展。", points: ["BeanPostProcessor 扩展点", "Aware 接口注入容器资源", "作用域：singleton / prototype"] },
+  { title: "三级缓存", detail: "通过三级缓存提前暴露引用，解决单例循环依赖。", points: ["三级缓存存 ObjectFactory", "二级缓存存早期引用", "构造器注入无法解决循环依赖"] },
 ];
 
 /* ── IoC Scene ── */
@@ -335,9 +354,101 @@ function FlowScene() {
   );
 }
 
+/* ── Three-Level Cache Scene ── */
+function CacheScene({ phase }) {
+  const caches = [
+    { label: "一级缓存", sub: "singletonObjects", desc: "完整 Bean", color: "#388e3c", y: 60 },
+    { label: "二级缓存", sub: "earlySingletonObjects", desc: "早期引用", color: "#d2642a", y: 130 },
+    { label: "三级缓存", sub: "singletonFactories", desc: "ObjectFactory", color: "#8c50b4", y: 200 },
+  ];
+
+  if (phase === 0) {
+    // Cache structure overview
+    return (
+      <svg className="spring-svg" viewBox="0 0 600 260" preserveAspectRatio="xMidYMid meet">
+        <text x={300} y={24} className="spring-heading">Spring 三级缓存结构</text>
+        {caches.map((c, i) => (
+          <g key={i} className="spring-cache-row" style={{ "--cache-delay": `${i * 0.2}s` }}>
+            <rect x={60} y={c.y - 18} width={480} height={44} rx={10}
+              className="spring-cache-box" style={{ "--cache-c": c.color }} />
+            <text x={90} y={c.y + 7} className="spring-cache-label" fill={c.color}>{c.label}</text>
+            <text x={300} y={c.y + 7} className="spring-cache-sub">{c.sub}</text>
+            <text x={510} y={c.y + 7} className="spring-cache-desc">{c.desc}</text>
+          </g>
+        ))}
+        <text x={300} y={245} className="spring-hint">查找顺序：一级 → 二级 → 三级</text>
+      </svg>
+    );
+  }
+
+  if (phase === 1) {
+    // Circular dependency problem
+    return (
+      <svg className="spring-svg" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid meet">
+        <text x={300} y={24} className="spring-heading">循环依赖问题</text>
+        {/* Bean A */}
+        <rect x={80} y={80} width={120} height={50} rx={12} className="spring-circ-box spring-circ-box--a" />
+        <text x={140} y={102} className="spring-circ-name" fill="#2a6f6b">Bean A</text>
+        <text x={140} y={120} className="spring-circ-sub">UserService</text>
+        {/* Bean B */}
+        <rect x={400} y={80} width={120} height={50} rx={12} className="spring-circ-box spring-circ-box--b" />
+        <text x={460} y={102} className="spring-circ-name" fill="#4c78a8">Bean B</text>
+        <text x={460} y={120} className="spring-circ-sub">OrderService</text>
+        {/* Arrows forming cycle */}
+        <line x1={200} y1={95} x2={400} y2={95} className="spring-circ-arrow spring-circ-arrow--top" markerEnd="url(#spring-arr-circ)" />
+        <text x={300} y={88} className="spring-circ-dep">A 依赖 B</text>
+        <line x1={400} y1={115} x2={200} y2={115} className="spring-circ-arrow spring-circ-arrow--bottom" markerEnd="url(#spring-arr-circ)" />
+        <text x={300} y={135} className="spring-circ-dep">B 依赖 A</text>
+        {/* Warning */}
+        <rect x={180} y={170} width={240} height={32} rx={8} className="spring-circ-warn" />
+        <text x={300} y={191} className="spring-circ-warn-text">无缓存 → 无限递归创建</text>
+        <defs>
+          <marker id="spring-arr-circ" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6" fill="rgba(210,100,42,0.5)" />
+          </marker>
+        </defs>
+      </svg>
+    );
+  }
+
+  // phase === 2: Resolution flow
+  const resolveSteps = [
+    { label: "A 实例化", desc: "放入三级缓存", color: "#2a6f6b", x: 60 },
+    { label: "创建 B", desc: "发现依赖 A", color: "#4c78a8", x: 180 },
+    { label: "查三级缓存", desc: "获取 A 早期引用", color: "#8c50b4", x: 300 },
+    { label: "B 完成", desc: "进入一级缓存", color: "#388e3c", x: 420 },
+    { label: "A 完成", desc: "进入一级缓存", color: "#388e3c", x: 540 },
+  ];
+  return (
+    <svg className="spring-svg" viewBox="0 0 600 230" preserveAspectRatio="xMidYMid meet">
+      <text x={300} y={24} className="spring-heading">三级缓存解决循环依赖</text>
+      {/* Timeline */}
+      <line x1={40} y1={110} x2={560} y2={110} className="spring-timeline" />
+      {resolveSteps.map((s, i) => (
+        <g key={i} className="spring-cache-step" style={{ "--cache-delay": `${i * 0.2}s` }}>
+          <circle cx={s.x + 20} cy={110} r={12} className="spring-cache-node" style={{ "--cache-c": s.color }} />
+          <text x={s.x + 20} y={114} className="spring-lc-num">{i + 1}</text>
+          <text x={s.x + 20} y={85} className="spring-cache-step-label" fill={s.color}>{s.label}</text>
+          <text x={s.x + 20} y={138} className="spring-cache-step-desc">{s.desc}</text>
+          {i < resolveSteps.length - 1 && (
+            <line x1={s.x + 32} y1={110} x2={resolveSteps[i + 1].x + 8} y2={110}
+              className="spring-lc-arrow" markerEnd="url(#spring-lc-arr)" />
+          )}
+        </g>
+      ))}
+      <text x={300} y={175} className="spring-hint">提前暴露半成品引用 → 打破循环</text>
+      <defs>
+        <marker id="spring-lc-arr" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+          <path d="M0,0 L6,2.5 L0,5" fill="rgba(0,0,0,0.15)" />
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
 /* ── Phase bar ── */
 function PhaseBar({ mode, phase, labels, color }) {
-  const tagMap = { ioc: "IoC", lifecycle: "生命周期", aop: "AOP", flow: "流程" };
+  const tagMap = { ioc: "IoC", lifecycle: "生命周期", cache: "三级缓存", aop: "AOP", flow: "流程" };
   return (
     <div className={`spring-phase-bar`} style={{ "--phase-c": color }}>
       <span className="spring-phase-bar__tag">{tagMap[mode]}</span>
@@ -355,12 +466,14 @@ export default function BackendSpring() {
   const phaseLabels = {
     ioc: ["容器全景", "Bean 注册", "依赖注入"],
     lifecycle: ["完整生命周期"],
+    cache: ["缓存结构", "循环依赖", "解决流程"],
     aop: ["核心概念", "代理创建", "方法拦截"],
     flow: ["完整流程"],
   };
   const phaseColors = {
     ioc: "#2a6f6b",
     lifecycle: "#4c78a8",
+    cache: "#8c50b4",
     aop: "#d2642a",
     flow: "#8c50b4",
   };
@@ -369,7 +482,7 @@ export default function BackendSpring() {
     <TopicShell
       eyebrow="后端基础动画"
       title="Spring 核心原理"
-      subtitle="IoC 容器、依赖注入、Bean 生命周期与 AOP 代理机制。"
+      subtitle="IoC 容器、依赖注入、三级缓存、Bean 生命周期与 AOP 代理机制。"
       steps={steps}
       panel={[
         { title: "核心机制", detail: "IoC 控制反转 + AOP 面向切面编程。" },
@@ -377,7 +490,7 @@ export default function BackendSpring() {
       ]}
       principles={principles}
       principlesIntro="理解 IoC 和 AOP 是掌握 Spring 框架的基础。"
-      flow={["扫描注册 → 实例化 → 注入 → 代理", "请求经过代理链透明增强", "生命周期回调贯穿始终"]}
+      flow={["扫描注册 → 实例化 → 注入 → 代理", "三级缓存解决循环依赖", "请求经过代理链透明增强"]}
       diagramClass="spring-diagram"
       renderDiagram={(step) => {
         const { mode, phase } = step;
@@ -389,6 +502,7 @@ export default function BackendSpring() {
             </div>
             {mode === "ioc" && <IocScene phase={phase} />}
             {mode === "lifecycle" && <LifecycleScene />}
+            {mode === "cache" && <CacheScene phase={phase} />}
             {mode === "aop" && <AopScene phase={phase} />}
             {mode === "flow" && <FlowScene />}
             <PhaseBar mode={mode} phase={phase} labels={phaseLabels[mode]} color={phaseColors[mode]} />
