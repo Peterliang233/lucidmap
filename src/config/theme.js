@@ -1,5 +1,6 @@
 /**
  * 主题配置
- * 将 CNY_THEME_ENABLED 设为 true 开启春节主题，false 恢复默认主题
+ * "default"           — 默认主题（橙 + 青）
+ * "chinese-new-year"  — 春节主题（红 + 金 + 灯笼烟花装饰）
  */
-export const CNY_THEME_ENABLED = true;
+export const THEME = "chinese-new-year";

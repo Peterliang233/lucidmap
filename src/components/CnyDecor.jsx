@@ -1,7 +1,120 @@
-import { CNY_THEME_ENABLED } from "../config/theme.js";
+import { THEME } from "../config/theme.js";
+
+/**
+ * 烟花粒子数据 — 每朵烟花用不规则角度、距离、大小模拟真实绽放
+ * ang: 射出角度, dist: 距中心距离, r: 粒子半径, color: 颜色, op: 不透明度
+ */
+const particles1 = [
+  { ang: 5, dist: 30, r: 2.2, color: "#ff4444", op: 0.95 },
+  { ang: 28, dist: 22, r: 1.4, color: "#ff6644", op: 0.8 },
+  { ang: 55, dist: 27, r: 1.8, color: "#ffcc00", op: 0.9 },
+  { ang: 78, dist: 18, r: 1.1, color: "#ff4444", op: 0.65 },
+  { ang: 105, dist: 32, r: 2.4, color: "#e8c840", op: 0.95 },
+  { ang: 130, dist: 20, r: 1.3, color: "#ff6644", op: 0.7 },
+  { ang: 158, dist: 26, r: 1.7, color: "#ff4444", op: 0.85 },
+  { ang: 185, dist: 15, r: 1.0, color: "#ffcc00", op: 0.6 },
+  { ang: 210, dist: 29, r: 2.0, color: "#ff4444", op: 0.9 },
+  { ang: 238, dist: 21, r: 1.5, color: "#e8c840", op: 0.75 },
+  { ang: 262, dist: 25, r: 1.6, color: "#ff6644", op: 0.8 },
+  { ang: 290, dist: 17, r: 1.2, color: "#ffcc00", op: 0.65 },
+  { ang: 318, dist: 28, r: 2.1, color: "#ff4444", op: 0.9 },
+  { ang: 345, dist: 19, r: 1.3, color: "#e8c840", op: 0.7 },
+  { ang: 15, dist: 34, r: 2.5, color: "#ffcc00", op: 0.95 },
+  { ang: 72, dist: 24, r: 1.6, color: "#ff4444", op: 0.75 },
+  { ang: 120, dist: 35, r: 2.3, color: "#ffcc00", op: 0.9 },
+  { ang: 195, dist: 16, r: 1.0, color: "#e8c840", op: 0.55 },
+  { ang: 250, dist: 28, r: 1.8, color: "#ff6644", op: 0.8 },
+  { ang: 320, dist: 31, r: 2.6, color: "#ffcc00", op: 0.95 },
+  { ang: 42, dist: 14, r: 0.9, color: "#ff8844", op: 0.5 },
+  { ang: 168, dist: 12, r: 0.8, color: "#ffaa00", op: 0.45 },
+  { ang: 248, dist: 13, r: 0.8, color: "#ff6644", op: 0.4 },
+  { ang: 305, dist: 11, r: 0.7, color: "#ffcc00", op: 0.4 },
+  { ang: 48, dist: 16, r: 1.0, color: "#ff8844", op: 0.55 },
+  { ang: 275, dist: 20, r: 1.2, color: "#e8c840", op: 0.6 },
+];
+
+const particles2 = [
+  { ang: 12, dist: 26, r: 1.8, color: "#e8c840", op: 0.9 },
+  { ang: 38, dist: 20, r: 1.3, color: "#ffaa00", op: 0.75 },
+  { ang: 68, dist: 30, r: 2.3, color: "#e8c840", op: 0.95 },
+  { ang: 95, dist: 16, r: 1.0, color: "#ff6666", op: 0.6 },
+  { ang: 122, dist: 24, r: 1.6, color: "#ffcc00", op: 0.85 },
+  { ang: 148, dist: 28, r: 2.0, color: "#e8c840", op: 0.9 },
+  { ang: 175, dist: 18, r: 1.2, color: "#ff6666", op: 0.7 },
+  { ang: 202, dist: 22, r: 1.5, color: "#ffaa00", op: 0.8 },
+  { ang: 230, dist: 31, r: 2.4, color: "#e8c840", op: 0.95 },
+  { ang: 255, dist: 14, r: 0.9, color: "#ff6666", op: 0.55 },
+  { ang: 282, dist: 27, r: 1.9, color: "#ffcc00", op: 0.9 },
+  { ang: 310, dist: 19, r: 1.3, color: "#e8c840", op: 0.75 },
+  { ang: 338, dist: 23, r: 1.7, color: "#ffaa00", op: 0.85 },
+  { ang: 25, dist: 33, r: 2.2, color: "#e8c840", op: 0.9 },
+  { ang: 85, dist: 34, r: 2.5, color: "#ffcc00", op: 0.95 },
+  { ang: 155, dist: 22, r: 1.4, color: "#ff6666", op: 0.7 },
+  { ang: 220, dist: 35, r: 2.3, color: "#e8c840", op: 0.9 },
+  { ang: 295, dist: 26, r: 1.7, color: "#ffaa00", op: 0.8 },
+  { ang: 345, dist: 20, r: 1.2, color: "#ffcc00", op: 0.65 },
+  { ang: 52, dist: 11, r: 0.7, color: "#ff8844", op: 0.4 },
+  { ang: 165, dist: 13, r: 0.8, color: "#ffcc00", op: 0.45 },
+  { ang: 270, dist: 10, r: 0.7, color: "#e8c840", op: 0.35 },
+  { ang: 130, dist: 15, r: 1.0, color: "#ff8844", op: 0.5 },
+];
+
+const particles3 = [
+  { ang: 8, dist: 24, r: 1.6, color: "#ff6666", op: 0.85 },
+  { ang: 35, dist: 28, r: 2.0, color: "#ffaa00", op: 0.9 },
+  { ang: 62, dist: 16, r: 1.0, color: "#ff6666", op: 0.6 },
+  { ang: 88, dist: 26, r: 1.8, color: "#e8c840", op: 0.9 },
+  { ang: 118, dist: 20, r: 1.4, color: "#ffaa00", op: 0.75 },
+  { ang: 145, dist: 30, r: 2.3, color: "#ff6666", op: 0.95 },
+  { ang: 172, dist: 14, r: 0.9, color: "#e8c840", op: 0.55 },
+  { ang: 198, dist: 25, r: 1.7, color: "#ffaa00", op: 0.85 },
+  { ang: 225, dist: 18, r: 1.2, color: "#ff6666", op: 0.7 },
+  { ang: 252, dist: 29, r: 2.1, color: "#e8c840", op: 0.95 },
+  { ang: 280, dist: 21, r: 1.5, color: "#ffaa00", op: 0.8 },
+  { ang: 308, dist: 15, r: 1.0, color: "#ff6666", op: 0.6 },
+  { ang: 335, dist: 27, r: 1.9, color: "#e8c840", op: 0.9 },
+  { ang: 20, dist: 32, r: 2.2, color: "#ffaa00", op: 0.9 },
+  { ang: 95, dist: 33, r: 2.5, color: "#e8c840", op: 0.95 },
+  { ang: 160, dist: 34, r: 2.3, color: "#ff6666", op: 0.9 },
+  { ang: 235, dist: 22, r: 1.4, color: "#ffcc00", op: 0.7 },
+  { ang: 300, dist: 31, r: 2.4, color: "#e8c840", op: 0.95 },
+  { ang: 48, dist: 12, r: 0.8, color: "#ff8844", op: 0.45 },
+  { ang: 155, dist: 10, r: 0.7, color: "#ffcc00", op: 0.4 },
+  { ang: 215, dist: 11, r: 0.7, color: "#ffaa00", op: 0.35 },
+  { ang: 295, dist: 13, r: 0.9, color: "#e8c840", op: 0.45 },
+  { ang: 55, dist: 18, r: 1.1, color: "#ff8844", op: 0.55 },
+  { ang: 270, dist: 15, r: 1.0, color: "#ffaa00", op: 0.5 },
+  { ang: 340, dist: 28, r: 1.7, color: "#ff6666", op: 0.8 },
+];
+
+/** 将极坐标转为 x,y */
+function polar(ang, dist) {
+  const r = (ang * Math.PI) / 180;
+  return { x: Math.cos(r) * dist, y: Math.sin(r) * dist };
+}
+
+function renderBurst(particles) {
+  return (
+    <g transform="translate(40,40)">
+      {particles.map((p, i) => {
+        const pos = polar(p.ang, p.dist);
+        return (
+          <circle
+            key={i}
+            cx={pos.x.toFixed(1)}
+            cy={pos.y.toFixed(1)}
+            r={p.r}
+            fill={p.color}
+            opacity={p.op}
+          />
+        );
+      })}
+    </g>
+  );
+}
 
 export default function CnyDecor() {
-  if (!CNY_THEME_ENABLED) return null;
+  if (THEME !== "chinese-new-year") return null;
 
   return (
     <div className="cny-decor" aria-hidden="true">
@@ -25,58 +138,19 @@ export default function CnyDecor() {
       <div className="cny-firework cny-firework--1">
         <div className="cny-firework__trail" />
         <svg className="cny-firework__burst" viewBox="0 0 80 80" aria-hidden="true">
-          <g transform="translate(40,40)">
-            {[0,30,60,90,120,150,180,210,240,270,300,330].map(deg => (
-              <line key={deg} x1="0" y1="0" x2="0" y2="-28" stroke="#ff4444" strokeWidth="1.2" strokeLinecap="round"
-                transform={`rotate(${deg})`} opacity="0.8" />
-            ))}
-            {[15,75,135,195,255,315].map(deg => (
-              <line key={`s${deg}`} x1="0" y1="0" x2="0" y2="-18" stroke="#e8c840" strokeWidth="0.8" strokeLinecap="round"
-                transform={`rotate(${deg})`} opacity="0.6" />
-            ))}
-            {[0,60,120,180,240,300].map(deg => (
-              <circle key={`d${deg}`} cx="0" cy="-30" r="1.5" fill="#ffcc00"
-                transform={`rotate(${deg})`} />
-            ))}
-          </g>
+          {renderBurst(particles1)}
         </svg>
       </div>
       <div className="cny-firework cny-firework--2">
         <div className="cny-firework__trail" />
         <svg className="cny-firework__burst" viewBox="0 0 80 80" aria-hidden="true">
-          <g transform="translate(40,40)">
-            {[0,45,90,135,180,225,270,315].map(deg => (
-              <line key={deg} x1="0" y1="0" x2="0" y2="-26" stroke="#e8c840" strokeWidth="1.2" strokeLinecap="round"
-                transform={`rotate(${deg})`} opacity="0.8" />
-            ))}
-            {[22,67,112,157,202,247,292,337].map(deg => (
-              <line key={`s${deg}`} x1="0" y1="0" x2="0" y2="-16" stroke="#ff6666" strokeWidth="0.8" strokeLinecap="round"
-                transform={`rotate(${deg})`} opacity="0.6" />
-            ))}
-            {[0,90,180,270].map(deg => (
-              <circle key={`d${deg}`} cx="0" cy="-28" r="1.5" fill="#ff4444"
-                transform={`rotate(${deg})`} />
-            ))}
-          </g>
+          {renderBurst(particles2)}
         </svg>
       </div>
       <div className="cny-firework cny-firework--3">
         <div className="cny-firework__trail" />
         <svg className="cny-firework__burst" viewBox="0 0 80 80" aria-hidden="true">
-          <g transform="translate(40,40)">
-            {[0,36,72,108,144,180,216,252,288,324].map(deg => (
-              <line key={deg} x1="0" y1="0" x2="0" y2="-24" stroke="#ff6666" strokeWidth="1" strokeLinecap="round"
-                transform={`rotate(${deg})`} opacity="0.8" />
-            ))}
-            {[18,54,90,126,162,198,234,270,306,342].map(deg => (
-              <line key={`s${deg}`} x1="0" y1="0" x2="0" y2="-15" stroke="#ffaa00" strokeWidth="0.8" strokeLinecap="round"
-                transform={`rotate(${deg})`} opacity="0.5" />
-            ))}
-            {[0,72,144,216,288].map(deg => (
-              <circle key={`d${deg}`} cx="0" cy="-26" r="1.2" fill="#e8c840"
-                transform={`rotate(${deg})`} />
-            ))}
-          </g>
+          {renderBurst(particles3)}
         </svg>
       </div>
       {/* 爆竹 */}

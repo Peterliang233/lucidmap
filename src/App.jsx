@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { CNY_THEME_ENABLED } from "./config/theme.js";
+import { THEME } from "./config/theme.js";
 import LandingPage from "./pages/Landing.jsx";
 import HomePage from "./pages/Home.jsx";
 import BPlusTreePage from "./pages/BPlusTree.jsx";
@@ -45,7 +45,7 @@ import AiRag from "./pages/AiRag.jsx";
 
 export default function App() {
   useEffect(() => {
-    if (CNY_THEME_ENABLED) {
+    if (THEME === "chinese-new-year") {
       document.documentElement.classList.add("cny-theme");
     } else {
       document.documentElement.classList.remove("cny-theme");
