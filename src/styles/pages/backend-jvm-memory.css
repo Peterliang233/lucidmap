@@ -1,92 +1,316 @@
+/* ── JVM Memory Structure ── */
 .jvm-diagram { width: min(100%, 780px); margin: 0 auto; }
-.jvm-scene { display: grid; gap: 14px; }
+.jvm-scene { display: flex; flex-direction: column; gap: 10px; }
 .jvm-svg { width: 100%; height: auto; display: block; }
 
-.jvm-title { text-anchor: middle; font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(0,0,0,0.32); }
+/* ── Progress bar ── */
+.jvm-progress {
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+.jvm-progress__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(42,111,107,0.8), rgba(76,120,168,0.8), rgba(140,80,180,0.7), rgba(210,100,42,0.8));
+  transition: width 0.5s ease;
+}
 
-/* Heap regions */
-.jvm-region { stroke-width: 0.8; }
-.jvm-region--eden { fill: rgba(42,111,107,0.03); stroke: rgba(42,111,107,0.18); }
-.jvm-region--s { fill: rgba(76,120,168,0.03); stroke: rgba(76,120,168,0.18); }
-.jvm-region--old { fill: rgba(210,100,42,0.03); stroke: rgba(210,100,42,0.18); }
-.jvm-region-label { font-size: 8px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; }
-.jvm-rl--eden { fill: rgba(42,111,107,0.5); }
-.jvm-rl--s { fill: rgba(76,120,168,0.5); }
-.jvm-rl--old { fill: rgba(210,100,42,0.5); }
+/* ── SVG text styles ── */
+.jvm-heading {
+  text-anchor: middle;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--ink-soft, #555);
+  font-family: system-ui, sans-serif;
+}
+.jvm-sub-heading {
+  text-anchor: middle;
+  font-size: 10px;
+  fill: rgba(0,0,0,0.3);
+  font-family: system-ui, sans-serif;
+}
+.jvm-group-label {
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: 500;
+  fill: rgba(0,0,0,0.3);
+  letter-spacing: 0.06em;
+}
 
-/* Objects */
-.jvm-obj { fill: rgba(42,111,107,0.08); stroke: rgba(42,111,107,0.25); stroke-width: 0.8; animation: jvmObjPulse 2.4s ease-in-out infinite; }
-.jvm-obj--old { fill: rgba(210,100,42,0.08); stroke: rgba(210,100,42,0.25); }
-.jvm-obj-text { text-anchor: middle; font-size: 8px; font-weight: 500; fill: rgba(0,0,0,0.5); }
+/* ── Overview boxes ── */
+.jvm-ov-box {
+  fill: rgba(255,255,255,0.85);
+  stroke: var(--box-c);
+  stroke-width: 1;
+  stroke-opacity: 0.3;
+  animation: jvmBoxPulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.04));
+}
+.jvm-ov-name {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 600;
+}
+.jvm-ov-sub {
+  text-anchor: middle;
+  font-size: 9px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.25);
+}
+.jvm-ov-hint {
+  font-size: 8px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(42,111,107,0.4);
+}
+.jvm-hint-footer {
+  text-anchor: middle;
+  font-size: 9px;
+  fill: rgba(0,0,0,0.2);
+}
 
-/* Arrows */
-.jvm-arr { stroke-width: 1; stroke-linecap: round; }
-.jvm-arr--teal { stroke: rgba(42,111,107,0.35); }
-.jvm-arr--orange { stroke: rgba(210,100,42,0.35); }
-.jvm-arr--meta { stroke: rgba(140,80,180,0.35); }
-.jvm-arr--gc { stroke: rgba(56,142,60,0.35); }
+/* ── Heap regions ── */
+.jvm-region { stroke-width: 1; }
+.jvm-region--eden { fill: rgba(42,111,107,0.03); stroke: rgba(42,111,107,0.2); }
+.jvm-region--s { fill: rgba(76,120,168,0.03); stroke: rgba(76,120,168,0.2); }
+.jvm-region--old { fill: rgba(210,100,42,0.03); stroke: rgba(210,100,42,0.2); }
+.jvm-region-label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.jvm-size-hint {
+  font-size: 9px;
+  fill: rgba(0,0,0,0.2);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
 
-/* Stack */
-.jvm-stack-bg { fill: rgba(42,111,107,0.02); stroke: rgba(42,111,107,0.1); stroke-width: 0.8; }
-.jvm-frame { fill: rgba(42,111,107,0.05); stroke: rgba(42,111,107,0.18); stroke-width: 0.8; }
-.jvm-frame--top { fill: rgba(42,111,107,0.1); stroke: rgba(42,111,107,0.4); animation: jvmFramePulse 2.4s ease-in-out infinite; }
-.jvm-frame-name { font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(42,111,107,0.7); }
-.jvm-frame-vars { text-anchor: end; font-size: 8px; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(0,0,0,0.28); }
-.jvm-pop-label { text-anchor: middle; font-size: 9px; font-weight: 500; fill: rgba(210,100,42,0.6); }
+/* ── Objects ── */
+.jvm-obj { stroke-width: 1; }
+.jvm-obj--eden { fill: rgba(42,111,107,0.08); stroke: rgba(42,111,107,0.3); }
+.jvm-obj--surv { fill: rgba(76,120,168,0.08); stroke: rgba(76,120,168,0.3); }
+.jvm-obj--old { fill: rgba(210,100,42,0.08); stroke: rgba(210,100,42,0.3); }
+.jvm-obj--new { animation: jvmObjEnter 1.8s ease-in-out infinite; }
+.jvm-obj-text {
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: 500;
+  fill: rgba(0,0,0,0.5);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.jvm-obj-g--active { opacity: 1; transition: opacity 0.4s; }
+.jvm-obj-g--dim { opacity: 0.35; transition: opacity 0.4s; }
+.jvm-obj-g--entering { animation: jvmFadeIn 0.6s ease-out both; }
 
-/* Metaspace */
-.jvm-meta-loader { fill: rgba(140,80,180,0.05); stroke: rgba(140,80,180,0.2); stroke-width: 0.8; }
-.jvm-meta-loader-text { text-anchor: middle; font-size: 9px; font-weight: 500; fill: rgba(140,80,180,0.65); }
-.jvm-meta-class { fill: rgba(140,80,180,0.04); stroke: rgba(140,80,180,0.14); stroke-width: 0.8; animation: jvmMetaFade 3s ease-in-out infinite; animation-delay: calc(var(--meta-i,0) * 0.4s); }
-.jvm-meta-text { text-anchor: middle; font-size: 9px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(140,80,180,0.55); }
+/* ── Arrows ── */
+.jvm-arrow { stroke-width: 1.5; stroke-linecap: round; }
+.jvm-arrow--teal { stroke: rgba(42,111,107,0.4); }
+.jvm-arrow--orange { stroke: rgba(210,100,42,0.4); }
+.jvm-arrow--purple { stroke: rgba(140,80,180,0.4); }
+.jvm-arrow-g { animation: jvmFadeIn 0.5s ease-out both; }
+.jvm-arrow-label {
+  font-size: 9px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
 
-/* GC */
-.jvm-gc-heap { fill: rgba(0,0,0,0.015); stroke: rgba(0,0,0,0.08); stroke-width: 0.8; }
-.jvm-gc-node { stroke-width: 1; transition: fill 0.4s, stroke 0.4s, opacity 0.4s; }
-.jvm-gc-node--alive { fill: rgba(56,142,60,0.07); stroke: rgba(56,142,60,0.28); }
+/* ── Stack ── */
+.jvm-stack-bg {
+  fill: rgba(76,120,168,0.02);
+  stroke: rgba(76,120,168,0.12);
+  stroke-width: 1;
+}
+.jvm-stack-label {
+  font-size: 9px;
+  fill: rgba(0,0,0,0.2);
+  font-family: system-ui, sans-serif;
+}
+.jvm-frame {
+  fill: rgba(76,120,168,0.05);
+  stroke: rgba(76,120,168,0.2);
+  stroke-width: 1;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.jvm-frame--top {
+  fill: rgba(76,120,168,0.1);
+  stroke: rgba(76,120,168,0.45);
+  animation: jvmFramePulse 2.4s ease-in-out infinite;
+}
+.jvm-frame-name {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(76,120,168,0.7);
+}
+.jvm-frame-vars {
+  text-anchor: end;
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.25);
+}
+.jvm-pop-label {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 500;
+  fill: rgba(210,100,42,0.6);
+}
+
+/* ── Metaspace ── */
+.jvm-meta-loader {
+  fill: rgba(140,80,180,0.05);
+  stroke: rgba(140,80,180,0.25);
+  stroke-width: 1;
+}
+.jvm-meta-loader-text {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 600;
+  fill: rgba(140,80,180,0.7);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.jvm-meta-loader-sub {
+  text-anchor: middle;
+  font-size: 9px;
+  fill: rgba(140,80,180,0.4);
+}
+.jvm-meta-card {
+  fill: rgba(140,80,180,0.04);
+  stroke: rgba(140,80,180,0.15);
+  stroke-width: 1;
+  animation: jvmMetaFade 3s ease-in-out infinite;
+  animation-delay: calc(var(--meta-i, 0) * 0.4s);
+}
+.jvm-meta-name {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(140,80,180,0.6);
+}
+.jvm-meta-detail {
+  text-anchor: end;
+  font-size: 9px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.2);
+}
+
+/* ── GC ── */
+.jvm-gc-heap {
+  fill: rgba(0,0,0,0.015);
+  stroke: rgba(0,0,0,0.1);
+  stroke-width: 1;
+}
+.jvm-gc-heap-label {
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: 500;
+  fill: rgba(0,0,0,0.15);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.jvm-gc-roots-box {
+  fill: rgba(56,142,60,0.06);
+  stroke: rgba(56,142,60,0.25);
+  stroke-width: 1;
+}
+.jvm-gc-roots-text {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 600;
+  fill: rgba(56,142,60,0.7);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.jvm-gc-root-line {
+  stroke: rgba(56,142,60,0.3);
+  stroke-width: 1;
+  animation: jvmGcTrace 2s ease-in-out infinite;
+}
+.jvm-gc-ref-line {
+  stroke: rgba(56,142,60,0.2);
+  stroke-width: 1;
+}
+.jvm-gc-node {
+  stroke-width: 1.5;
+  transition: fill 0.4s, stroke 0.4s, opacity 0.6s;
+}
+.jvm-gc-node--alive { fill: rgba(56,142,60,0.07); stroke: rgba(56,142,60,0.3); }
 .jvm-gc-node--dead { fill: rgba(180,60,60,0.05); stroke: rgba(180,60,60,0.2); stroke-dasharray: 4 2; }
 .jvm-gc-node--marking { animation: jvmMarkPulse 1.6s ease-in-out infinite; }
-.jvm-gc-node--swept { opacity: 0.12; }
-.jvm-gc-text { text-anchor: middle; dominant-baseline: central; font-size: 10px; font-weight: 500; fill: rgba(0,0,0,0.4); }
-.jvm-gc-text--swept { fill: rgba(0,0,0,0.12); text-decoration: line-through; }
-.jvm-gc-roots { font-size: 8px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(56,142,60,0.55); text-anchor: middle; }
-.jvm-gc-bar { fill: rgba(210,100,42,0.45); }
-
-/* Overview */
-.jvm-ov-region { fill: rgba(255,255,255,0.85); stroke: var(--ov-c); stroke-width: 0.8; stroke-opacity: 0.28; animation: jvmOvPulse 2.8s ease-in-out infinite; }
-.jvm-ov-label { font-size: 9px; font-weight: 500; }
-.jvm-ov-sub { font-size: 7.5px; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(0,0,0,0.25); }
-.jvm-ov-group { text-anchor: middle; font-size: 8px; font-weight: 500; fill: rgba(0,0,0,0.25); letter-spacing: 0.05em; }
-.jvm-ov-hint { font-size: 7px; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(42,111,107,0.35); }
-.jvm-ov-footer { text-anchor: middle; font-size: 8px; fill: rgba(0,0,0,0.2); }
-
-/* State panel */
-.jvm-ds { padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,0.8); display: flex; align-items: flex-start; gap: 10px; }
-.jvm-ds__label { font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
-.jvm-ds--heap .jvm-ds__label { background: rgba(42,111,107,0.08); color: rgba(42,111,107,0.75); }
-.jvm-ds--stack .jvm-ds__label { background: rgba(42,111,107,0.08); color: rgba(42,111,107,0.75); }
-.jvm-ds--meta .jvm-ds__label { background: rgba(140,80,180,0.08); color: rgba(140,80,180,0.75); }
-.jvm-ds--gc .jvm-ds__label { background: rgba(210,100,42,0.08); color: rgba(210,100,42,0.75); }
-.jvm-ds__items { display: flex; flex-wrap: wrap; gap: 6px; }
-.jvm-ds__step { font-size: 10px; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); background: #fff; opacity: 0.3; transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s; }
-.jvm-ds__step--past { opacity: 0.5; }
-.jvm-ds--heap .jvm-ds__step--active { opacity: 1; background: rgba(42,111,107,0.06); border-color: rgba(42,111,107,0.22); color: rgba(42,111,107,0.8); }
-.jvm-ds--stack .jvm-ds__step--active { opacity: 1; background: rgba(42,111,107,0.06); border-color: rgba(42,111,107,0.22); color: rgba(42,111,107,0.8); }
-.jvm-ds--meta .jvm-ds__step--active { opacity: 1; background: rgba(140,80,180,0.06); border-color: rgba(140,80,180,0.22); color: rgba(140,80,180,0.8); }
-.jvm-ds--gc .jvm-ds__step--active { opacity: 1; background: rgba(210,100,42,0.06); border-color: rgba(210,100,42,0.22); color: rgba(210,100,42,0.8); }
-
-/* Keyframes */
-@keyframes jvmOvPulse {
-  0%, 100% { stroke-opacity: 0.28; filter: none; }
-  50% { stroke-opacity: 0.45; filter: drop-shadow(0 0 3px rgba(0,0,0,0.04)); }
+.jvm-gc-node--swept { opacity: 0.1; }
+.jvm-gc-label {
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-size: 12px;
+  font-weight: 600;
+  fill: rgba(0,0,0,0.4);
 }
-@keyframes jvmObjPulse {
-  0%, 100% { filter: none; }
-  50% { filter: drop-shadow(0 0 3px rgba(42,111,107,0.2)); }
+.jvm-gc-label--swept { fill: rgba(0,0,0,0.1); text-decoration: line-through; }
+.jvm-gc-sweep-bar {
+  fill: rgba(210,100,42,0.5);
+  animation: jvmSweep 2.5s ease-in-out infinite;
+  transform-origin: left center;
+}
+.jvm-gc-sweep-text {
+  text-anchor: middle;
+  font-size: 10px;
+  fill: rgba(0,0,0,0.25);
+}
+
+/* ── Phase bar ── */
+.jvm-phase-bar {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line, rgba(0,0,0,0.08));
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.jvm-phase-bar__tag {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--phase-c) 8%, transparent);
+  color: var(--phase-c);
+}
+.jvm-phase-bar__steps { display: flex; flex-wrap: wrap; gap: 6px; }
+.jvm-phase-bar__step {
+  font-size: 11px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--line, rgba(0,0,0,0.08));
+  background: #fff;
+  opacity: 0.3;
+  transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s;
+}
+.jvm-phase-bar__step.is-past { opacity: 0.55; }
+.jvm-phase-bar__step.is-active {
+  opacity: 1;
+  background: color-mix(in srgb, var(--phase-c) 6%, transparent);
+  border-color: color-mix(in srgb, var(--phase-c) 25%, transparent);
+  color: var(--phase-c);
+}
+
+/* ── Keyframes ── */
+@keyframes jvmBoxPulse {
+  0%, 100% { stroke-opacity: 0.3; filter: none; }
+  50% { stroke-opacity: 0.5; filter: drop-shadow(0 0 4px rgba(0,0,0,0.04)); }
+}
+@keyframes jvmObjEnter {
+  0%, 100% { opacity: 0.5; filter: none; }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px rgba(42,111,107,0.25)); }
+}
+@keyframes jvmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 @keyframes jvmFramePulse {
-  0%, 100% { stroke: rgba(42,111,107,0.3); }
-  50% { stroke: rgba(42,111,107,0.6); filter: drop-shadow(0 0 4px rgba(42,111,107,0.15)); }
+  0%, 100% { stroke: rgba(76,120,168,0.3); }
+  50% { stroke: rgba(76,120,168,0.65); filter: drop-shadow(0 0 5px rgba(76,120,168,0.15)); }
 }
 @keyframes jvmMetaFade {
   0%, 100% { opacity: 0.5; }
@@ -94,15 +318,27 @@
 }
 @keyframes jvmMarkPulse {
   0%, 100% { stroke: rgba(56,142,60,0.2); fill: rgba(56,142,60,0.04); }
-  50% { stroke: rgba(56,142,60,0.55); fill: rgba(56,142,60,0.12); filter: drop-shadow(0 0 4px rgba(56,142,60,0.2)); }
+  50% { stroke: rgba(56,142,60,0.6); fill: rgba(56,142,60,0.14); filter: drop-shadow(0 0 6px rgba(56,142,60,0.25)); }
+}
+@keyframes jvmGcTrace {
+  0%, 100% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 0.7; }
+}
+@keyframes jvmSweep {
+  0% { transform: scaleX(0); }
+  50% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
 }
 
+/* ── Responsive ── */
 @media (max-width: 640px) {
-  .jvm-title { font-size: 8px; }
-  .jvm-obj-text { font-size: 6.5px; }
-  .jvm-frame-vars { display: none; }
-  .jvm-ds__step { font-size: 8.5px; padding: 2px 6px; }
+  .jvm-heading { font-size: 11px; }
   .jvm-ov-sub { display: none; }
   .jvm-ov-hint { display: none; }
-  .jvm-ov-footer { display: none; }
+  .jvm-hint-footer { display: none; }
+  .jvm-size-hint { display: none; }
+  .jvm-frame-vars { display: none; }
+  .jvm-meta-detail { display: none; }
+  .jvm-stack-label { display: none; }
+  .jvm-phase-bar__step { font-size: 9px; padding: 2px 7px; }
 }
