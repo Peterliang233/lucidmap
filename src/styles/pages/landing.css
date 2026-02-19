@@ -178,7 +178,7 @@
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    rgba(42, 111, 107, 0.12) 30deg,
+    rgba(210, 100, 42, 0.12) 30deg,
     transparent 60deg
   );
   animation: radarSweep 6s linear infinite;
@@ -233,7 +233,7 @@
 }
 
 .hero-map__link-line {
-  stroke: rgba(42, 111, 107, 0.1);
+  stroke: rgba(210, 100, 42, 0.1);
   stroke-width: 0.3;
   stroke-dasharray: 2 3;
   animation: linkPulse 4s ease-in-out infinite;
@@ -241,7 +241,7 @@
 
 .hero-map__link-line:nth-child(odd) {
   animation-delay: 0.5s;
-  stroke: rgba(210, 100, 42, 0.08);
+  stroke: rgba(42, 111, 107, 0.08);
 }
 
 /* 核心光晕 */
@@ -287,9 +287,9 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(42, 111, 107, 0.3) 30%,
-    rgba(42, 111, 107, 0.5) 50%,
-    rgba(42, 111, 107, 0.3) 70%,
+    rgba(210, 100, 42, 0.3) 30%,
+    rgba(210, 100, 42, 0.5) 50%,
+    rgba(210, 100, 42, 0.3) 70%,
     transparent 100%
   );
   z-index: 5;
@@ -315,7 +315,7 @@
   gap: 6px;
   text-align: center;
   z-index: 3;
-  box-shadow: 0 14px 30px rgba(31, 28, 24, 0.15), 0 0 40px rgba(42, 111, 107, 0.08);
+  box-shadow: 0 14px 30px rgba(31, 28, 24, 0.15);
   overflow: hidden;
 }
 
@@ -383,7 +383,7 @@
   backdrop-filter: blur(6px);
   font-size: 0.72rem;
   color: var(--ink);
-  box-shadow: 0 10px 20px rgba(31, 28, 24, 0.08), 0 0 12px rgba(42, 111, 107, 0.06);
+  box-shadow: 0 10px 20px rgba(31, 28, 24, 0.08);
   animation: satelliteFloat 5.4s ease-in-out infinite;
   animation-delay: var(--delay, 0s);
   display: flex;
@@ -392,8 +392,8 @@
 }
 
 .hero-map__satellite:hover {
-  border-color: var(--accent-2);
-  box-shadow: 0 10px 24px rgba(31, 28, 24, 0.12), 0 0 16px rgba(42, 111, 107, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px rgba(31, 28, 24, 0.12);
 }
 
 .hero-map__legend {
@@ -587,7 +587,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(42, 111, 107, 0.1), transparent 70%);
+  background: radial-gradient(circle, rgba(210, 100, 42, 0.1), transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -596,7 +596,7 @@
 .mission__card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(31, 28, 24, 0.1);
-  border-color: rgba(42, 111, 107, 0.25);
+  border-color: rgba(210, 100, 42, 0.25);
 }
 
 .mission__card:hover::before {

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 
+/* ── 默认主题（橙 + 青） ── */
 :root {
   color-scheme: light;
   --bg: #f4efe7;
@@ -13,6 +14,19 @@
   --shadow: 0 18px 50px rgba(31, 28, 24, 0.12);
 }
 
+/* ── 春节主题（红 + 金） ── */
+.cny-theme {
+  --bg: #fdf5f0;
+  --bg-deep: #f8ebe0;
+  --ink: #2b1810;
+  --ink-soft: #6b4a3a;
+  --accent: #c41a1a;
+  --accent-2: #b8860b;
+  --card: #fffaf5;
+  --line: rgba(180, 40, 40, 0.12);
+  --shadow: 0 18px 50px rgba(120, 20, 20, 0.1);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -24,6 +38,10 @@ body {
   color: var(--ink);
   background: radial-gradient(circle at top left, #f8f1e7 0%, #f1e6d8 35%, #efe0cf 60%, #f5ede3 100%);
   min-height: 100vh;
+}
+
+html.cny-theme body {
+  background: radial-gradient(circle at top left, #fef2ea 0%, #fce8da 35%, #f8ddd0 60%, #fdf0e8 100%);
 }
 
 a {

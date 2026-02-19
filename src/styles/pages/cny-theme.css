@@ -1,0 +1,311 @@
+/* ── 春节主题：Landing 页面颜色覆盖 ── */
+.cny-theme .hero-map {
+  background: radial-gradient(circle at 30% 18%, rgba(196, 26, 26, 0.12), transparent 55%),
+    radial-gradient(circle at 70% 82%, rgba(184, 134, 11, 0.14), transparent 55%),
+    rgba(255, 255, 255, 0.7);
+}
+
+.cny-theme .hero-map__backdrop {
+  background: linear-gradient(135deg, rgba(196, 26, 26, 0.08), rgba(184, 134, 11, 0.12));
+}
+
+.cny-theme .hero-map__arc {
+  border-color: rgba(196, 26, 26, 0.25);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.cny-theme .hero-map__arc--b {
+  border-color: rgba(184, 134, 11, 0.28);
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+.cny-theme .hero-map__arc--c {
+  border-color: rgba(196, 26, 26, 0.15);
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.cny-theme .hero-map__pulse {
+  border-color: rgba(196, 26, 26, 0.2);
+}
+
+.cny-theme .hero-map__pulse--b {
+  border-color: rgba(184, 134, 11, 0.15);
+}
+
+.cny-theme .hero-map__radar::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(196, 26, 26, 0.12) 30deg,
+    transparent 60deg
+  );
+}
+
+.cny-theme .orbit-dot {
+  box-shadow: 0 0 8px rgba(184, 134, 11, 0.6);
+}
+
+.cny-theme .orbit-dot--2 {
+  box-shadow: 0 0 8px rgba(196, 26, 26, 0.6);
+}
+
+.cny-theme .hero-map__link-line {
+  stroke: rgba(196, 26, 26, 0.1);
+}
+
+.cny-theme .hero-map__link-line:nth-child(odd) {
+  stroke: rgba(184, 134, 11, 0.08);
+}
+
+.cny-theme .hero-map__core-glow {
+  background: radial-gradient(
+    circle,
+    rgba(196, 26, 26, 0.1) 0%,
+    rgba(184, 134, 11, 0.08) 40%,
+    transparent 70%
+  );
+}
+
+.cny-theme .hero-map__sat-dot {
+  box-shadow: 0 0 6px rgba(184, 134, 11, 0.5);
+}
+
+.cny-theme .hero-map__satellite:nth-child(odd) .hero-map__sat-dot {
+  box-shadow: 0 0 6px rgba(196, 26, 26, 0.5);
+}
+
+.cny-theme .hero-map__scanline {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(196, 26, 26, 0.3) 30%,
+    rgba(196, 26, 26, 0.5) 50%,
+    rgba(196, 26, 26, 0.3) 70%,
+    transparent 100%
+  );
+}
+
+.cny-theme .hero-map__core {
+  box-shadow: 0 14px 30px rgba(43, 24, 16, 0.15), 0 0 40px rgba(196, 26, 26, 0.08);
+}
+
+.cny-theme .hero-map__stream {
+  background: linear-gradient(180deg, rgba(196, 26, 26, 0.08), rgba(196, 26, 26, 0.35), rgba(184, 134, 11, 0.2));
+}
+
+.cny-theme .hero-map__stream::after {
+  background: radial-gradient(circle, rgba(196, 26, 26, 0.9) 0%, rgba(196, 26, 26, 0.1) 70%);
+  box-shadow: 0 0 12px rgba(196, 26, 26, 0.4);
+}
+
+.cny-theme .hero-map__satellite {
+  box-shadow: 0 10px 20px rgba(43, 24, 16, 0.08), 0 0 12px rgba(196, 26, 26, 0.06);
+}
+
+.cny-theme .hero-map__satellite:hover {
+  box-shadow: 0 10px 24px rgba(43, 24, 16, 0.12), 0 0 16px rgba(196, 26, 26, 0.15);
+}
+
+.cny-theme .mission__card::before {
+  background: radial-gradient(circle, rgba(196, 26, 26, 0.1), transparent 70%);
+}
+
+.cny-theme .mission__card:hover {
+  border-color: rgba(196, 26, 26, 0.25);
+}
+
+/* ── 春节装饰（灯笼 / 烟花 / 爆竹） ── */
+.cny-decor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* 灯笼 */
+.cny-lantern {
+  position: absolute;
+  top: -8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: cnyLanternSway 4s ease-in-out infinite;
+  transform-origin: top center;
+}
+.cny-lantern--l { left: 1%; animation-delay: 0s; }
+.cny-lantern--r { right: 1%; animation-delay: 0.8s; }
+
+.cny-lantern__string {
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(180deg, #8b4513, #c41a1a);
+  border-radius: 1px;
+}
+
+.cny-lantern__body {
+  position: relative;
+  width: 48px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 40% 35%, #ff4444, #c41a1a 50%, #8b1a1a);
+  border: 1.5px solid rgba(232, 200, 64, 0.5);
+  box-shadow: 0 0 20px rgba(196, 26, 26, 0.4), 0 0 40px rgba(196, 26, 26, 0.15), inset 0 -8px 16px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cny-lantern__body::before,
+.cny-lantern__body::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 6px;
+  background: linear-gradient(90deg, #d4a017, #e8c840, #d4a017);
+  border-radius: 3px;
+}
+.cny-lantern__body::before { top: -1px; }
+.cny-lantern__body::after { bottom: -1px; }
+
+.cny-lantern__glow {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 50, 0.15), transparent 70%);
+  animation: cnyGlow 2.4s ease-in-out infinite;
+}
+
+.cny-lantern__text {
+  font-family: "ZCOOL XiaoWei", serif;
+  font-size: 20px;
+  color: #e8c840;
+  text-shadow: 0 0 6px rgba(232, 200, 64, 0.5);
+  z-index: 1;
+}
+
+.cny-lantern__tassel {
+  width: 2px;
+  height: 18px;
+  background: linear-gradient(180deg, #e8c840, #c41a1a);
+  border-radius: 0 0 2px 2px;
+  position: relative;
+}
+.cny-lantern__tassel::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #e8c840, #d4a017);
+  border-radius: 50%;
+}
+
+/* 烟花 */
+.cny-firework {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  overflow: visible;
+  animation: cnyFireworkFull 5s ease-out infinite;
+}
+.cny-firework--1 { top: 8%; left: 18%; }
+.cny-firework--2 { top: 5%; right: 22%; animation-delay: 1.8s; animation-duration: 5.5s; }
+.cny-firework--3 { top: 12%; left: 50%; animation-delay: 3.5s; animation-duration: 6s; }
+
+/* 上升尾迹 */
+.cny-firework__trail {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 2px;
+  height: 0;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, transparent, #ffcc00);
+  border-radius: 1px;
+  animation: cnyTrail 5s ease-out infinite;
+}
+.cny-firework--2 .cny-firework__trail { animation-delay: 1.8s; animation-duration: 5.5s; }
+.cny-firework--3 .cny-firework__trail { animation-delay: 3.5s; animation-duration: 6s; }
+
+/* 绽放部分默认隐藏 */
+.cny-firework__burst {
+  opacity: 0;
+  transform: scale(0);
+  animation: cnyBurst 5s ease-out infinite;
+}
+.cny-firework--2 .cny-firework__burst { animation-delay: 1.8s; animation-duration: 5.5s; }
+.cny-firework--3 .cny-firework__burst { animation-delay: 3.5s; animation-duration: 6s; }
+
+/* 爆竹 */
+.cny-firecracker {
+  position: absolute;
+  right: 3%;
+  top: 60px;
+  width: 28px;
+  height: 90px;
+  opacity: 0.6;
+  animation: cnyLanternSway 5s ease-in-out infinite 0.5s;
+  transform-origin: top center;
+}
+
+/* ── 春节动画 ── */
+@keyframes cnyLanternSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes cnyGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes cnyFireworkFull {
+  0% { transform: translateY(120px); opacity: 1; }
+  25% { transform: translateY(0); opacity: 1; }
+  26% { transform: translateY(0); opacity: 1; }
+  80% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+@keyframes cnyTrail {
+  0% { height: 0; opacity: 0; }
+  5% { height: 40px; opacity: 0.8; }
+  24% { height: 60px; opacity: 0.6; }
+  26% { height: 0; opacity: 0; }
+  100% { height: 0; opacity: 0; }
+}
+
+@keyframes cnyBurst {
+  0%, 25% { transform: scale(0); opacity: 0; }
+  30% { transform: scale(0.6); opacity: 1; filter: drop-shadow(0 0 8px rgba(255,68,68,0.6)); }
+  45% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 4px rgba(255,68,68,0.3)); }
+  70% { transform: scale(1.3); opacity: 0.4; filter: none; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* 响应式 */
+@media (max-width: 720px) {
+  .cny-lantern__body { width: 36px; height: 42px; }
+  .cny-lantern__body::before, .cny-lantern__body::after { width: 24px; height: 5px; }
+  .cny-lantern__text { font-size: 16px; }
+  .cny-lantern__string { height: 16px; }
+  .cny-lantern__tassel { height: 12px; }
+  .cny-firecracker { width: 20px; height: 65px; }
+  .cny-firework--1, .cny-firework--2, .cny-firework--3 { width: 40px; height: 40px; }
+}
+
+@media (max-width: 480px) {
+  .cny-lantern__body { width: 30px; height: 36px; }
+  .cny-lantern__text { font-size: 13px; }
+  .cny-firecracker { display: none; }
+}

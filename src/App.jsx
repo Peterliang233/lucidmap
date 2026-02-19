@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
+import { CNY_THEME_ENABLED } from "./config/theme.js";
 import LandingPage from "./pages/Landing.jsx";
 import HomePage from "./pages/Home.jsx";
 import BPlusTreePage from "./pages/BPlusTree.jsx";
@@ -42,6 +44,14 @@ import AiAgentSkill from "./pages/AiAgentSkill.jsx";
 import AiRag from "./pages/AiRag.jsx";
 
 export default function App() {
+  useEffect(() => {
+    if (CNY_THEME_ENABLED) {
+      document.documentElement.classList.add("cny-theme");
+    } else {
+      document.documentElement.classList.remove("cny-theme");
+    }
+  }, []);
+
   return (
     <HashRouter>
       <Routes>
