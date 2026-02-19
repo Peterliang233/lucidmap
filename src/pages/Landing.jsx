@@ -37,13 +37,6 @@ const heroStreams = [
 ];
 
 export default function LandingPage() {
-  const scrollToMission = () => {
-    const target = document.getElementById("mission");
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   return (
     <Layout>
       <section className="landing">
@@ -58,9 +51,6 @@ export default function LandingPage() {
               <Link className="landing__primary" to="/map">
                 进入知识地图
               </Link>
-              <button className="landing__ghost" type="button" onClick={scrollToMission}>
-                了解宗旨
-              </button>
             </div>
           </div>
 

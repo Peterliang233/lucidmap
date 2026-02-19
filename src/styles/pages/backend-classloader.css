@@ -1,0 +1,65 @@
+/* ── ClassLoader diagram ── */
+.cl-diagram { width: min(100%, 780px); margin: 0 auto; }
+.cl-scene { display: grid; gap: 14px; }
+.cl-svg { width: 100%; height: auto; display: block; }
+
+.cl-title { text-anchor: middle; font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(0,0,0,0.3); }
+
+/* Loader boxes */
+.cl-loader { fill: rgba(255,255,255,0.85); stroke: var(--cl-c); stroke-width: 0.8; stroke-opacity: 0.25; transition: stroke-opacity 0.4s, fill 0.4s; }
+.cl-loader--found { stroke-opacity: 0.6; fill: rgba(42,111,107,0.04); animation: clFoundPulse 1.8s ease-in-out infinite; }
+.cl-loader__name { text-anchor: middle; font-size: 10px; font-weight: 500; }
+.cl-loader__sub { text-anchor: middle; font-size: 7.5px; fill: rgba(0,0,0,0.25); font-family: "SF Mono", "Fira Code", monospace; }
+
+/* Delegation arrows */
+.cl-arrow { stroke: rgba(0,0,0,0.18); stroke-width: 1; }
+.cl-arrow--up { stroke: rgba(42,111,107,0.35); }
+.cl-arrow--down { stroke: rgba(210,100,42,0.35); }
+.cl-arrow-label { font-size: 8px; font-weight: 500; fill: rgba(0,0,0,0.28); }
+.cl-packet { filter: drop-shadow(0 0 4px currentColor); }
+
+/* Found / not found marks */
+.cl-notfound { font-size: 13px; fill: rgba(180,60,60,0.45); font-weight: 500; }
+.cl-found { font-size: 13px; fill: rgba(56,142,60,0.6); font-weight: 500; }
+.cl-target { text-anchor: middle; font-size: 9px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(42,111,107,0.55); }
+
+/* Lifecycle phase boxes */
+.cl-phase { fill: rgba(0,0,0,0.015); stroke: rgba(0,0,0,0.08); stroke-width: 0.8; transition: fill 0.3s, stroke 0.3s; }
+.cl-phase--active { fill: rgba(42,111,107,0.06); stroke: var(--cl-pc); stroke-width: 1; animation: clPhasePulse 2.2s ease-in-out infinite; }
+.cl-phase--past { fill: rgba(0,0,0,0.02); stroke: rgba(0,0,0,0.14); }
+.cl-phase__label { text-anchor: middle; font-size: 8px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; transition: fill 0.3s; }
+.cl-bracket-label { text-anchor: middle; font-size: 7.5px; font-weight: 500; fill: rgba(76,120,168,0.45); }
+
+/* Detail area */
+.cl-detail__bg { fill: rgba(0,0,0,0.015); stroke: rgba(0,0,0,0.06); stroke-width: 0.8; }
+.cl-detail__title { text-anchor: middle; font-size: 10px; font-weight: 500; }
+.cl-detail__line { text-anchor: middle; font-size: 8.5px; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(0,0,0,0.4); }
+
+/* State panel */
+.cl-ds { padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,0.8); display: flex; align-items: flex-start; gap: 10px; }
+.cl-ds__label { font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+.cl-ds--delegate .cl-ds__label { background: rgba(42,111,107,0.08); color: rgba(42,111,107,0.75); }
+.cl-ds--lifecycle .cl-ds__label { background: rgba(76,120,168,0.08); color: rgba(76,120,168,0.75); }
+.cl-ds__items { display: flex; flex-wrap: wrap; gap: 6px; }
+.cl-ds__step { font-size: 10px; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); background: #fff; opacity: 0.3; transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s; }
+.cl-ds__step--past { opacity: 0.5; }
+.cl-ds--delegate .cl-ds__step--active { opacity: 1; background: rgba(42,111,107,0.06); border-color: rgba(42,111,107,0.22); color: rgba(42,111,107,0.8); }
+.cl-ds--lifecycle .cl-ds__step--active { opacity: 1; background: rgba(76,120,168,0.06); border-color: rgba(76,120,168,0.22); color: rgba(76,120,168,0.8); }
+
+/* Keyframes */
+@keyframes clFoundPulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 5px rgba(42,111,107,0.2)); }
+}
+@keyframes clPhasePulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 4px rgba(42,111,107,0.15)); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .cl-title { font-size: 8px; }
+  .cl-loader__sub { display: none; }
+  .cl-detail__line { font-size: 7.5px; }
+  .cl-ds__step { font-size: 8.5px; padding: 2px 6px; }
+}

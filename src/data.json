@@ -224,6 +224,15 @@
               "tags": [
                 "基础"
               ]
+            },
+            {
+              "title": "类加载机制",
+              "desc": "双亲委派模型与类的生命周期",
+              "link": "/topics/backend/classloader",
+              "tags": [
+                "高频",
+                "JVM"
+              ]
             }
           ]
         },

@@ -1,32 +1,32 @@
 .cache-diagram { width: min(100%, 780px); margin: 0 auto; }
 .cc-scene { display: grid; gap: 14px; }
 .cc-svg { width: 100%; height: auto; display: block; }
-.cc-title { text-anchor: middle; font-size: 11px; font-weight: 700; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(0,0,0,0.4); }
+.cc-title { text-anchor: middle; font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; fill: rgba(0,0,0,0.3); }
 
 /* Nodes */
-.cc-node { stroke-width: 1.5; }
-.cc-node-text { text-anchor: middle; font-size: 13px; font-weight: 700; font-family: "SF Mono", "Fira Code", monospace; }
+.cc-node { stroke-width: 1; }
+.cc-node-text { text-anchor: middle; font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; }
 
 /* Arrows */
-.cc-arrow { stroke-width: 1.5; }
-.cc-arrow--dim { opacity: 0.4; }
-.cc-arrow-label { text-anchor: middle; font-size: 8px; font-weight: 600; font-family: "SF Mono", "Fira Code", monospace; }
+.cc-arrow { stroke-width: 1; }
+.cc-arrow--dim { opacity: 0.35; }
+.cc-arrow-label { text-anchor: middle; font-size: 7.5px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; }
 
 /* State panel */
 .cc-ds { padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,0.8); display: flex; align-items: flex-start; gap: 10px; }
-.cc-ds__label { font-size: 11px; font-weight: 700; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
-.cc-ds--read .cc-ds__label { background: rgba(42,111,107,0.1); color: rgba(42,111,107,0.9); }
-.cc-ds--write .cc-ds__label { background: rgba(210,100,42,0.1); color: rgba(210,100,42,0.9); }
-.cc-ds--double .cc-ds__label { background: rgba(140,80,180,0.1); color: rgba(140,80,180,0.9); }
+.cc-ds__label { font-size: 10px; font-weight: 500; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+.cc-ds--read .cc-ds__label { background: rgba(42,111,107,0.08); color: rgba(42,111,107,0.75); }
+.cc-ds--write .cc-ds__label { background: rgba(210,100,42,0.08); color: rgba(210,100,42,0.75); }
+.cc-ds--double .cc-ds__label { background: rgba(140,80,180,0.08); color: rgba(140,80,180,0.75); }
 .cc-ds__items { display: flex; flex-wrap: wrap; gap: 6px; }
-.cc-ds__step { font-size: 11px; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); background: #fff; opacity: 0.35; transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s; }
-.cc-ds__step--past { opacity: 0.55; }
-.cc-ds--read .cc-ds__step--active { opacity: 1; background: rgba(42,111,107,0.08); border-color: rgba(42,111,107,0.3); color: rgba(42,111,107,0.9); }
-.cc-ds--write .cc-ds__step--active { opacity: 1; background: rgba(210,100,42,0.08); border-color: rgba(210,100,42,0.3); color: rgba(210,100,42,0.9); }
-.cc-ds--double .cc-ds__step--active { opacity: 1; background: rgba(140,80,180,0.08); border-color: rgba(140,80,180,0.3); color: rgba(140,80,180,0.9); }
+.cc-ds__step { font-size: 10px; font-family: "SF Mono", "Fira Code", monospace; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); background: #fff; opacity: 0.3; transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s; }
+.cc-ds__step--past { opacity: 0.5; }
+.cc-ds--read .cc-ds__step--active { opacity: 1; background: rgba(42,111,107,0.06); border-color: rgba(42,111,107,0.22); color: rgba(42,111,107,0.8); }
+.cc-ds--write .cc-ds__step--active { opacity: 1; background: rgba(210,100,42,0.06); border-color: rgba(210,100,42,0.22); color: rgba(210,100,42,0.8); }
+.cc-ds--double .cc-ds__step--active { opacity: 1; background: rgba(140,80,180,0.06); border-color: rgba(140,80,180,0.22); color: rgba(140,80,180,0.8); }
 
 @media (max-width: 640px) {
-  .cc-title { font-size: 9px; }
-  .cc-node-text { font-size: 10px; }
-  .cc-ds__step { font-size: 9px; padding: 2px 6px; }
+  .cc-title { font-size: 8px; }
+  .cc-node-text { font-size: 8.5px; }
+  .cc-ds__step { font-size: 8.5px; padding: 2px 6px; }
 }

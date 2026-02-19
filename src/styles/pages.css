@@ -15,6 +15,7 @@
 @import "./pages/backend-collections.css";
 @import "./pages/backend-rate-limit.css";
 @import "./pages/backend-cache-consistency.css";
+@import "./pages/backend-classloader.css";
 @import "./pages/db-acid.css";
 @import "./pages/db-isolation.css";
 @import "./pages/db-sql-tuning.css";

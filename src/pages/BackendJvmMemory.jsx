@@ -2,6 +2,12 @@ import TopicShell from "../components/TopicShell.jsx";
 
 const steps = [
   {
+    id: "overview", title: "JVM 内存全景",
+    description: "JVM 运行时内存分为线程共享区和线程私有区。",
+    bullets: ["共享：堆（对象实例）、元空间（类元数据）", "私有：虚拟机栈、程序计数器、本地方法栈", "理解全局布局是排查 OOM 的基础"],
+    active: "overview", phase: 0,
+  },
+  {
     id: "heap-alloc", title: "堆：对象分配到 Eden",
     description: "new 出来的对象分配在 Eden 区，Eden 满时触发 Minor GC。",
     bullets: ["new Order() → Eden", "Eden 满 → Minor GC", "复制算法：存活对象复制到 Survivor"],
@@ -100,6 +106,58 @@ export default function BackendJvmMemory() {
       renderDiagram={(step) => {
         const mode = step.active;
         const phase = step.phase;
+
+        if (mode === "overview") {
+          const regions = [
+            { label: "Heap 堆", sub: "Eden / S0 / S1 / Old", x: 20, y: 38, w: 200, h: 60, color: "#2a6f6b", shared: true },
+            { label: "Metaspace", sub: "类元数据 / 常量池", x: 20, y: 108, w: 200, h: 44, color: "#8c50b4", shared: true },
+            { label: "VM Stack", sub: "栈帧 / 局部变量", x: 232, y: 38, w: 90, h: 44, color: "#4c78a8", shared: false },
+            { label: "PC Register", sub: "程序计数器", x: 232, y: 92, w: 90, h: 30, color: "#4c78a8", shared: false },
+            { label: "Native Stack", sub: "本地方法栈", x: 232, y: 130, w: 90, h: 30, color: "#4c78a8", shared: false },
+          ];
+          return (
+            <div className="jvm-scene">
+              <svg className="jvm-svg" viewBox="0 0 340 190" preserveAspectRatio="xMidYMid meet">
+                <text x={170} y={16} className="jvm-title">JVM 运行时内存结构</text>
+
+                {/* Shared / Private labels */}
+                <text x={120} y={32} className="jvm-ov-group">线程共享</text>
+                <text x={277} y={32} className="jvm-ov-group">线程私有</text>
+
+                {/* Divider */}
+                <line x1={226} y1={36} x2={226} y2={165} stroke="rgba(0,0,0,0.08)" strokeWidth={1} strokeDasharray="4 3" />
+
+                {regions.map((r, i) => (
+                  <g key={i}>
+                    <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={8}
+                      className="jvm-ov-region"
+                      style={{ "--ov-c": r.color }}
+                    />
+                    <text x={r.x + 8} y={r.y + 16} className="jvm-ov-label" fill={r.color}>{r.label}</text>
+                    <text x={r.x + 8} y={r.y + 30} className="jvm-ov-sub">{r.sub}</text>
+                  </g>
+                ))}
+
+                {/* Heap internal structure hint */}
+                <g opacity={0.5}>
+                  <line x1={60} y1={58} x2={60} y2={90} stroke="rgba(42,111,107,0.3)" strokeWidth={0.8} strokeDasharray="3 2" />
+                  <line x1={120} y1={58} x2={120} y2={90} stroke="rgba(42,111,107,0.3)" strokeWidth={0.8} strokeDasharray="3 2" />
+                  <text x={40} y={86} className="jvm-ov-hint">Eden</text>
+                  <text x={88} y={86} className="jvm-ov-hint">S0/S1</text>
+                  <text x={155} y={86} className="jvm-ov-hint">Old</text>
+                </g>
+
+                <text x={170} y={180} className="jvm-ov-footer">点击下一步深入各区域 →</text>
+              </svg>
+              <div className="jvm-ds jvm-ds--heap">
+                <span className="jvm-ds__label">总览</span>
+                <div className="jvm-ds__items">
+                  <span className="jvm-ds__step jvm-ds__step--active">JVM 内存全景</span>
+                </div>
+              </div>
+            </div>
+          );
+        }
 
         if (mode === "heap") {
           const objs = heapObjs[phase];
