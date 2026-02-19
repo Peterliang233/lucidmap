@@ -60,11 +60,11 @@ const steps = [
 // Heap SVG layout
 const heapObjs = [
   // phase 0: all in Eden
-  [{ l: "Order", x: 60, y: 68 }, { l: "Item", x: 130, y: 62 }, { l: "User", x: 95, y: 82 }],
+  [{ l: "Order", x: 52, y: 52 }, { l: "Item", x: 148, y: 52 }, { l: "User", x: 100, y: 80 }],
   // phase 1: GC moved to S0
-  [{ l: "New", x: 60, y: 68 }, { l: "Order", x: 218, y: 62 }, { l: "User", x: 218, y: 82 }],
+  [{ l: "New", x: 60, y: 68 }, { l: "Order", x: 222, y: 56 }, { l: "User", x: 222, y: 80 }],
   // phase 2: promoted to Old
-  [{ l: "New", x: 60, y: 68 }, { l: "Order", x: 290, y: 62 }, { l: "User", x: 80, y: 138 }, { l: "History", x: 200, y: 138 }],
+  [{ l: "New", x: 60, y: 68 }, { l: "Order", x: 298, y: 65 }, { l: "User", x: 80, y: 138 }, { l: "History", x: 200, y: 138 }],
 ];
 
 // Stack frames
@@ -112,8 +112,8 @@ export default function BackendJvmMemory() {
             { label: "Heap 堆", sub: "Eden / S0 / S1 / Old", x: 20, y: 38, w: 200, h: 60, color: "#2a6f6b", shared: true },
             { label: "Metaspace", sub: "类元数据 / 常量池", x: 20, y: 108, w: 200, h: 44, color: "#8c50b4", shared: true },
             { label: "VM Stack", sub: "栈帧 / 局部变量", x: 232, y: 38, w: 90, h: 44, color: "#4c78a8", shared: false },
-            { label: "PC Register", sub: "程序计数器", x: 232, y: 92, w: 90, h: 30, color: "#4c78a8", shared: false },
-            { label: "Native Stack", sub: "本地方法栈", x: 232, y: 130, w: 90, h: 30, color: "#4c78a8", shared: false },
+            { label: "PC Register", sub: "程序计数器", x: 232, y: 92, w: 90, h: 34, color: "#4c78a8", shared: false },
+            { label: "Native Stack", sub: "本地方法栈", x: 232, y: 134, w: 90, h: 34, color: "#4c78a8", shared: false },
           ];
           return (
             <div className="jvm-scene">
@@ -127,16 +127,20 @@ export default function BackendJvmMemory() {
                 {/* Divider */}
                 <line x1={226} y1={36} x2={226} y2={165} stroke="rgba(0,0,0,0.08)" strokeWidth={1} strokeDasharray="4 3" />
 
-                {regions.map((r, i) => (
-                  <g key={i}>
-                    <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={8}
-                      className="jvm-ov-region"
-                      style={{ "--ov-c": r.color }}
-                    />
-                    <text x={r.x + 8} y={r.y + 16} className="jvm-ov-label" fill={r.color}>{r.label}</text>
-                    <text x={r.x + 8} y={r.y + 30} className="jvm-ov-sub">{r.sub}</text>
-                  </g>
-                ))}
+                {regions.map((r, i) => {
+                  const cx = r.x + r.w / 2;
+                  const hasSub = r.h >= 34;
+                  return (
+                    <g key={i}>
+                      <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={8}
+                        className="jvm-ov-region"
+                        style={{ "--ov-c": r.color }}
+                      />
+                      <text x={cx} y={hasSub ? r.y + 16 : r.y + r.h / 2 + 1} textAnchor="middle" className="jvm-ov-label" fill={r.color}>{r.label}</text>
+                      {hasSub && <text x={cx} y={r.y + 30} textAnchor="middle" className="jvm-ov-sub">{r.sub}</text>}
+                    </g>
+                  );
+                })}
 
                 {/* Heap internal structure hint */}
                 <g opacity={0.5}>

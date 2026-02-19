@@ -1,0 +1,243 @@
+/* ── Sorting Algorithms ── */
+.sort-diagram { width: min(100%, 780px); margin: 0 auto; }
+.sort-scene { display: grid; gap: 14px; }
+.sort-svg { width: 100%; height: auto; display: block; }
+
+.sort-title {
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.3);
+}
+
+/* ── Bars ── */
+.sort-bar {
+  stroke-width: 1;
+  rx: 4;
+  transition: fill 0.4s, stroke 0.4s, filter 0.4s;
+}
+
+.sort-bar--comparing {
+  animation: sortComparePulse 1.6s ease-in-out infinite;
+}
+
+.sort-bar--sorted {
+  animation: sortSortedGlow 2.4s ease-in-out infinite;
+}
+
+.sort-bar--pivot {
+  animation: sortPivotPulse 1.8s ease-in-out infinite;
+}
+
+.sort-bar--swap {
+  animation: sortSwapPulse 1.4s ease-in-out infinite;
+}
+
+.sort-bar--left {
+  animation: sortLeftPulse 2.2s ease-in-out infinite;
+  animation-delay: calc(var(--bar-i, 0) * 0.15s);
+}
+
+.sort-bar--right {
+  animation: sortRightPulse 2.2s ease-in-out infinite;
+  animation-delay: calc(var(--bar-i, 0) * 0.15s);
+}
+
+.sort-bar__val {
+  text-anchor: middle;
+  font-size: 9px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.4);
+}
+
+.sort-bar__tag {
+  text-anchor: middle;
+  font-size: 7px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+.sort-bar__tag--pivot { fill: rgba(180,60,60,0.7); }
+.sort-bar__tag--cmp { fill: rgba(210,100,42,0.7); }
+
+/* ── Heap tree overlay ── */
+.sort-heap-node {
+  fill: rgba(140,80,180,0.08);
+  stroke: rgba(140,80,180,0.3);
+  stroke-width: 0.8;
+  animation: sortHeapNodePulse 2.6s ease-in-out infinite;
+  animation-delay: calc(var(--bar-i, 0) * 0.12s);
+}
+
+.sort-heap-text {
+  text-anchor: middle;
+  font-size: 8px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(140,80,180,0.7);
+}
+
+/* ── Code panel ── */
+.sort-code {
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,0.02);
+  overflow: hidden;
+}
+
+.sort-code__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,0.6);
+}
+
+.sort-code__lang {
+  font-size: 9px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.05);
+  color: rgba(0,0,0,0.45);
+}
+
+.sort-code__algo {
+  font-size: 9px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+.sort-code__pre {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 10px;
+  line-height: 1.6;
+  font-family: "SF Mono", "Fira Code", monospace;
+  color: rgba(0,0,0,0.55);
+  overflow-x: auto;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── State panel ── */
+.sort-ds {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.sort-ds__label {
+  font-size: 10px;
+  font-weight: 500;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sort-ds--bubble .sort-ds__label { background: rgba(42,111,107,0.08); color: rgba(42,111,107,0.75); }
+.sort-ds--merge .sort-ds__label  { background: rgba(76,120,168,0.08); color: rgba(76,120,168,0.75); }
+.sort-ds--quick .sort-ds__label  { background: rgba(210,100,42,0.08); color: rgba(210,100,42,0.75); }
+.sort-ds--heap .sort-ds__label   { background: rgba(140,80,180,0.08); color: rgba(140,80,180,0.75); }
+
+.sort-ds__items { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.sort-ds__step {
+  font-size: 10px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  opacity: 0.3;
+  transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.sort-ds__step--past { opacity: 0.5; }
+
+.sort-ds--bubble .sort-ds__step--active { opacity: 1; background: rgba(42,111,107,0.06); border-color: rgba(42,111,107,0.22); color: rgba(42,111,107,0.8); }
+.sort-ds--merge .sort-ds__step--active  { opacity: 1; background: rgba(76,120,168,0.06); border-color: rgba(76,120,168,0.22); color: rgba(76,120,168,0.8); }
+.sort-ds--quick .sort-ds__step--active  { opacity: 1; background: rgba(210,100,42,0.06); border-color: rgba(210,100,42,0.22); color: rgba(210,100,42,0.8); }
+.sort-ds--heap .sort-ds__step--active   { opacity: 1; background: rgba(140,80,180,0.06); border-color: rgba(140,80,180,0.22); color: rgba(140,80,180,0.8); }
+
+/* ── Legend ── */
+.sort-legend {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sort-legend__item {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.sort-legend__item--cmp    { border-color: rgba(210,100,42,0.3); color: rgba(210,100,42,0.8); background: rgba(210,100,42,0.04); }
+.sort-legend__item--sorted { border-color: rgba(56,142,60,0.3);  color: rgba(56,142,60,0.8);  background: rgba(56,142,60,0.04); }
+.sort-legend__item--pivot  { border-color: rgba(180,60,60,0.3);  color: rgba(180,60,60,0.8);  background: rgba(180,60,60,0.04); }
+.sort-legend__item--left   { border-color: rgba(42,111,107,0.3); color: rgba(42,111,107,0.8); background: rgba(42,111,107,0.04); }
+.sort-legend__item--right,
+.sort-legend__item--gt     { border-color: rgba(210,100,42,0.3); color: rgba(210,100,42,0.8); background: rgba(210,100,42,0.04); }
+.sort-legend__item--heap   { border-color: rgba(140,80,180,0.3); color: rgba(140,80,180,0.8); background: rgba(140,80,180,0.04); }
+.sort-legend__item--swap   { border-color: rgba(210,100,42,0.3); color: rgba(210,100,42,0.8); background: rgba(210,100,42,0.04); }
+
+/* ── Keyframes ── */
+@keyframes sortComparePulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 4px rgba(210,100,42,0.3)); }
+}
+
+@keyframes sortSortedGlow {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 3px rgba(56,142,60,0.2)); }
+}
+
+@keyframes sortPivotPulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 5px rgba(180,60,60,0.25)); }
+}
+
+@keyframes sortSwapPulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 4px rgba(210,100,42,0.3)); }
+}
+
+@keyframes sortLeftPulse {
+  0%, 100% { filter: none; opacity: 0.85; }
+  50% { filter: drop-shadow(0 0 3px rgba(42,111,107,0.2)); opacity: 1; }
+}
+
+@keyframes sortRightPulse {
+  0%, 100% { filter: none; opacity: 0.85; }
+  50% { filter: drop-shadow(0 0 3px rgba(140,80,180,0.2)); opacity: 1; }
+}
+
+@keyframes sortHeapNodePulse {
+  0%, 100% { stroke: rgba(140,80,180,0.25); fill: rgba(140,80,180,0.06); }
+  50% { stroke: rgba(140,80,180,0.5); fill: rgba(140,80,180,0.12); filter: drop-shadow(0 0 3px rgba(140,80,180,0.15)); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .sort-title { font-size: 8px; }
+  .sort-bar__val { font-size: 7.5px; }
+  .sort-bar__tag { display: none; }
+  .sort-code__pre { font-size: 8.5px; padding: 8px 10px; }
+  .sort-ds__step { font-size: 8.5px; padding: 2px 6px; }
+  .sort-legend__item { font-size: 9px; padding: 2px 8px; }
+  .sort-heap-tree { display: none; }
+}

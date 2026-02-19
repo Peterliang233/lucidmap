@@ -22,6 +22,7 @@ import AlgoStructures from "./pages/AlgoStructures.jsx";
 import AlgoGraphSearch from "./pages/AlgoGraphSearch.jsx";
 import AlgoTwoPointers from "./pages/AlgoTwoPointers.jsx";
 import AlgoDynamicProgramming from "./pages/AlgoDynamicProgramming.jsx";
+import AlgoSorting from "./pages/AlgoSorting.jsx";
 import RedisDataTypes from "./pages/RedisDataTypes.jsx";
 import RedisPersistence from "./pages/RedisPersistence.jsx";
 import RedisReplication from "./pages/RedisReplication.jsx";
@@ -66,6 +67,7 @@ export default function App() {
         <Route path="/topics/algorithms/graph-search" element={<AlgoGraphSearch />} />
         <Route path="/topics/algorithms/two-pointers" element={<AlgoTwoPointers />} />
         <Route path="/topics/algorithms/dp" element={<AlgoDynamicProgramming />} />
+        <Route path="/topics/algorithms/sorting" element={<AlgoSorting />} />
         <Route path="/topics/redis/data-types" element={<RedisDataTypes />} />
         <Route path="/topics/redis/persistence" element={<RedisPersistence />} />
         <Route path="/topics/redis/replication" element={<RedisReplication />} />
