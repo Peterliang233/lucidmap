@@ -38,6 +38,7 @@ import MqKafkaElection from "./pages/MqKafkaElection.jsx";
 import MqRocketCore from "./pages/MqRocketCore.jsx";
 import MqRocketFeatures from "./pages/MqRocketFeatures.jsx";
 import AiAgent from "./pages/AiAgent.jsx";
+import AiReact from "./pages/AiReact.jsx";
 import AiMcp from "./pages/AiMcp.jsx";
 import AiFunctionCall from "./pages/AiFunctionCall.jsx";
 import AiA2A from "./pages/AiA2A.jsx";
@@ -93,6 +94,7 @@ export default function App() {
         <Route path="/topics/mq/rocketmq-core" element={<MqRocketCore />} />
         <Route path="/topics/mq/rocketmq-features" element={<MqRocketFeatures />} />
         <Route path="/topics/ai/agent" element={<AiAgent />} />
+        <Route path="/topics/ai/react" element={<AiReact />} />
         <Route path="/topics/ai/mcp" element={<AiMcp />} />
         <Route path="/topics/ai/function-call" element={<AiFunctionCall />} />
         <Route path="/topics/ai/a2a" element={<AiA2A />} />

@@ -236,9 +236,23 @@
   opacity: 0.6;
 }
 
+.mq-kafka-storage .index-note {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  opacity: 0.6;
+}
+
 .mq-kafka-storage .index-table {
   display: grid;
   gap: 6px;
+}
+
+.mq-kafka-storage .index-row--header {
+  font-weight: 600;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  background: rgba(42, 111, 107, 0.06);
+  border-color: rgba(42, 111, 107, 0.15);
 }
 
 .mq-kafka-storage .index-row {
@@ -363,16 +377,62 @@
   animation: frameFlow 1.6s ease infinite;
 }
 
-.mq-kafka-storage .kafka-store.mode--read .example-row {
+.mq-kafka-storage .kafka-store.mode--read .example-row,
+.mq-kafka-storage .kafka-store.mode--index .example-row,
+.mq-kafka-storage .kafka-store.mode--scan .example-row {
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.mq-kafka-storage .example-row.is-highlight {
   animation: kafkaExample 2.4s ease infinite;
 }
 
-.mq-kafka-storage .kafka-store.mode--read .example-row:nth-child(2) {
-  animation-delay: 0.4s;
+.mq-kafka-storage .kafka-store.mode--read .kafka-store__example,
+.mq-kafka-storage .kafka-store.mode--index .kafka-store__example,
+.mq-kafka-storage .kafka-store.mode--scan .kafka-store__example {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.12);
 }
 
-.mq-kafka-storage .kafka-store.mode--read .example-row:nth-child(3) {
-  animation-delay: 0.8s;
+.mq-kafka-storage .kafka-store.mode--index .index-card {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-storage .kafka-store.mode--index .index-row {
+  animation: flow 1.6s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--scan .log-card {
+  border-color: var(--accent);
+  box-shadow: 0 12px 24px rgba(210, 100, 42, 0.12);
+}
+
+.mq-kafka-storage .kafka-store.mode--scan .cache-card {
+  border-color: rgba(42, 111, 107, 0.5);
+  box-shadow: 0 12px 24px rgba(42, 111, 107, 0.1);
+}
+
+.mq-kafka-storage .kafka-store.mode--scan .log-seg.is-active {
+  animation: kafkaExample 2.4s ease infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--scan .cache-line::before {
+  opacity: 1;
+  animation: kafkaStream 2.4s linear infinite;
+}
+
+.mq-kafka-storage .kafka-store.mode--read .store-line--read,
+.mq-kafka-storage .kafka-store.mode--index .store-line--read,
+.mq-kafka-storage .kafka-store.mode--scan .store-line--read {
+  background: rgba(42, 111, 107, 0.5);
+}
+
+.mq-kafka-storage .kafka-store.mode--read .store-line--read::before,
+.mq-kafka-storage .kafka-store.mode--index .store-line--read::before,
+.mq-kafka-storage .kafka-store.mode--scan .store-line--read::before {
+  opacity: 1;
+  animation: kafkaStream 2.4s linear infinite;
 }
 
 .mq-kafka-storage .kafka-store.mode--append .store-line--write,

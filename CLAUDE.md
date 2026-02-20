@@ -104,3 +104,18 @@ Animations are the core value of this project. Every topic page must have a mean
 - **No hover-only triggers**: mobile must be fully operable.
 - **Avoid `position: absolute`** layouts that prevent height from expanding and cause overlap with sections below.
 - Scope new keyframes to the diagram class. Reuse existing patterns (`flow`, `frameFlow`, pulses) from shared CSS files.
+
+### SVG Layout & Alignment Rules
+
+All SVG-based diagram scenes must follow these rules to ensure centered, non-overlapping, well-coordinated layouts:
+
+- **Centered container**: every diagram wrapper must use `width: min(100%, 780px); margin: 0 auto;` to center within the page.
+- **All content within viewBox**: every SVG element (rect, text, circle, line) must fit entirely within the declared `viewBox`. Never place elements that extend beyond the viewBox boundaries — they will be clipped and invisible.
+- **Margin from edges**: keep at least 20px padding from viewBox edges. For example, in a `viewBox="0 0 600 280"`, the rightmost element should not exceed x=580, and the bottommost should not exceed y=260.
+- **Text sizing**: titles 12–13px, labels 10–11px, sub-labels 9px, hints 8–9px. Never use excessively large or small font sizes.
+- **No overlapping elements**: verify that rects, texts, and circles do not overlap each other. When elements are stacked vertically, ensure sufficient gap (at least 8px between bounding boxes). When placed side by side, ensure no horizontal overlap.
+- **Arrow coordinates**: use explicit x1/y1/x2/y2 values for arrows rather than computing from element centers with offsets that may go wrong. Verify arrow start/end points visually make sense (e.g., a downward arrow should have y2 > y1).
+- **viewBox height must accommodate all content**: if the scene has elements down to y=220 plus text at y=245, the viewBox height must be at least 260. Always add ~20px below the lowest element.
+- **Consistent spacing**: use uniform gaps between repeated elements (e.g., cache rows, timeline nodes, flow boxes). Calculate positions arithmetically rather than hardcoding arbitrary values.
+- **Responsive hiding**: on small screens (≤640px), hide secondary labels (sub-text, hints, annotations) via `display: none` to prevent cramped layouts, but never hide primary content.
+- **`preserveAspectRatio="xMidYMid meet"`**: always set this on SVG elements to ensure centered scaling without distortion.

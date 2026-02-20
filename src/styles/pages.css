@@ -40,6 +40,7 @@
 @import "./pages/redis-eviction.css";
 @import "./pages/ai-a2a.css";
 @import "./pages/ai-agent.css";
+@import "./pages/ai-react.css";
 @import "./pages/ai-agent-skill.css";
 @import "./pages/ai-function-call.css";
 @import "./pages/ai-mcp.css";

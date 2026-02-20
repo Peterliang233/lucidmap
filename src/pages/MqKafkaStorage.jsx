@@ -31,10 +31,24 @@ const steps = [
   },
   {
     id: "read",
-    title: "5. 读取示例",
-    description: "以 offset 为入口，定位段文件并读出消息。",
-    bullets: ["offset → 段索引", "position → 日志位置", "页缓存/磁盘读取"],
+    title: "5. 消费定位：Partition → Segment",
+    description: "消费者根据 offset 先定位到 Partition，再通过段文件名二分查找定位到具体的 .log 段。",
+    bullets: ["Consumer 提交 offset 到目标 Partition", "段文件名即 baseOffset，二分查找", "定位到包含目标 offset 的 .log 文件"],
     active: "read",
+  },
+  {
+    id: "index",
+    title: "6. 稀疏索引定位物理位置",
+    description: "在 .index 稀疏索引中查找不大于目标 offset 的最大条目，获取物理位置。",
+    bullets: [".index 是稀疏索引，非每条消息都有", "二分查找 ≤ targetOffset 的最大条目", "得到对应的物理文件偏移量 position"],
+    active: "index",
+  },
+  {
+    id: "scan",
+    title: "7. 顺序扫描读取消息",
+    description: "从索引定位的物理位置开始，在 .log 文件中顺序遍历，找到目标 offset 的消息。",
+    bullets: ["从 position 开始顺序读取 .log", "逐条比对 offset 直到命中目标", "Page Cache 加速，零拷贝返回给消费者"],
+    active: "scan",
   },
 ];
 
@@ -46,8 +60,8 @@ const principles = [
   },
   {
     title: "索引与定位",
-    detail: "offset → position，快速定位消息。",
-    points: ["稀疏索引 + 二分查找", "定位到 segment 再偏移", "减少读取范围"],
+    detail: "Partition → Segment → 稀疏索引 → 顺序扫描，四步定位消息。",
+    points: ["段文件名二分查找定位 .log", ".index 稀疏索引定位物理位置", "从 position 顺序遍历找到目标消息"],
   },
   {
     title: "零拷贝读路径",
@@ -69,7 +83,7 @@ export default function MqKafkaStorage() {
       ]}
       principles={principles}
       principlesIntro="从存储组织、定位路径与零拷贝解释 Kafka 高吞吐来源。"
-      flow={["追加写入分区日志", "段索引定位", "页缓存直传", "批量压缩提升吞吐", "读取示例路径"]}
+      flow={["追加写入分区日志", "段索引定位", "页缓存直传", "批量压缩提升吞吐", "Partition → Segment → .index → 顺序扫描"]}
       diagramClass="mq-kafka-storage"
       renderDiagram={(step) => (
         <div className={`kafka-store mode--${step.active}`}>
@@ -113,21 +127,30 @@ export default function MqKafkaStorage() {
 
             <div className="store-card index-card">
               <div className="card-title">
-                <span>Segment Index</span>
-                <span className="card-tag">offset → pos</span>
+                <span>.index 稀疏索引</span>
+                <span className="card-tag">sparse index</span>
               </div>
+              <div className="index-note">每隔 N 条记录一个索引条目</div>
               <div className="index-table">
+                <div className="index-row index-row--header">
+                  <span>offset</span>
+                  <span>position</span>
+                </div>
                 <div className="index-row">
-                  <span>12000</span>
+                  <span>8000</span>
                   <span>0</span>
                 </div>
                 <div className="index-row">
-                  <span>12036</span>
+                  <span>8036</span>
                   <span>512</span>
                 </div>
                 <div className="index-row">
-                  <span>12110</span>
+                  <span>8120</span>
                   <span>2048</span>
+                </div>
+                <div className="index-row">
+                  <span>8250</span>
+                  <span>4096</span>
                 </div>
               </div>
             </div>
@@ -160,22 +183,32 @@ export default function MqKafkaStorage() {
           </div>
 
           <div className="kafka-store__example">
-            <div className="example-title">读取一条消息示例</div>
+            <div className="example-title">消费 offset=12110 的完整定位流程</div>
             <div className="example-rows">
-              <div className="example-row">
+              <div className={`example-row ${step.active === "read" ? "is-highlight" : ""}`}>
                 <span className="example-step">1</span>
-                <span>offset=12110</span>
-                <span className="example-arrow">命中 segment 0000016000</span>
+                <span>定位 Partition-0</span>
+                <span className="example-arrow">Consumer 指定 offset → Partition</span>
               </div>
-              <div className="example-row">
+              <div className={`example-row ${step.active === "read" ? "is-highlight" : ""}`}>
                 <span className="example-step">2</span>
-                <span>index → position=2048</span>
-                <span className="example-arrow">定位日志位置</span>
+                <span>二分查找段文件</span>
+                <span className="example-arrow">baseOffset ≤ 12110 → 0000008000.log</span>
               </div>
-              <div className="example-row">
+              <div className={`example-row ${step.active === "index" ? "is-highlight" : ""}`}>
                 <span className="example-step">3</span>
-                <span>page cache → socket</span>
-                <span className="example-arrow">零拷贝返回</span>
+                <span>查 .index 稀疏索引</span>
+                <span className="example-arrow">≤ 12110 最大条目: 8120 → pos 2048</span>
+              </div>
+              <div className={`example-row ${step.active === "scan" ? "is-highlight" : ""}`}>
+                <span className="example-step">4</span>
+                <span>从 pos=2048 顺序扫描 .log</span>
+                <span className="example-arrow">逐条遍历直到 offset=12110</span>
+              </div>
+              <div className={`example-row ${step.active === "scan" ? "is-highlight" : ""}`}>
+                <span className="example-step">5</span>
+                <span>Page Cache → 零拷贝返回</span>
+                <span className="example-arrow">sendfile 直传 Consumer</span>
               </div>
             </div>
           </div>

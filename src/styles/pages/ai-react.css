@@ -1,0 +1,265 @@
+/* ── ReAct Framework ── */
+.react-diagram { width: min(100%, 780px); margin: 0 auto; }
+.react-scene { display: flex; flex-direction: column; gap: 10px; }
+.react-svg { width: 100%; height: auto; display: block; }
+
+/* ── Progress bar ── */
+.react-progress {
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+.react-progress__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(76,120,168,0.8), rgba(210,100,42,0.8), rgba(56,142,60,0.8));
+  transition: width 0.5s ease;
+}
+
+/* ── Text styles ── */
+.react-heading {
+  text-anchor: middle;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--ink-soft, #555);
+  font-family: system-ui, sans-serif;
+}
+.react-hint {
+  text-anchor: middle;
+  font-size: 10px;
+  fill: rgba(0,0,0,0.25);
+}
+
+/* ── Overview nodes ── */
+.react-llm-box {
+  fill: rgba(210,100,42,0.04);
+  stroke: rgba(210,100,42,0.3);
+  stroke-width: 1.5;
+  animation: reactLlmPulse 3s ease-in-out infinite;
+}
+.react-llm-label {
+  text-anchor: middle;
+  font-size: 14px;
+  font-weight: 700;
+  fill: rgba(210,100,42,0.7);
+}
+.react-llm-sub {
+  text-anchor: middle;
+  font-size: 9px;
+  fill: rgba(0,0,0,0.25);
+}
+.react-node {
+  fill: rgba(255,255,255,0.9);
+  stroke-width: 1;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.04));
+}
+.react-node--thought { stroke: rgba(76,120,168,0.3); }
+.react-node--action { stroke: rgba(210,100,42,0.3); }
+.react-node--obs { stroke: rgba(56,142,60,0.3); }
+.react-node--answer { stroke: rgba(140,80,180,0.3); fill: rgba(140,80,180,0.04); }
+.react-node-label {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.react-arrow {
+  stroke: rgba(76,120,168,0.3);
+  stroke-width: 1.5;
+}
+.react-arrow--return { stroke: rgba(56,142,60,0.3); }
+.react-arrow--answer { stroke: rgba(140,80,180,0.3); }
+
+/* ── Loop scene ── */
+.react-loop-arrow {
+  stroke: rgba(0,0,0,0.08);
+  stroke-width: 1.5;
+  transition: stroke 0.4s;
+}
+.react-loop-arrow--active {
+  stroke: rgba(210,100,42,0.4);
+  stroke-dasharray: 6 4;
+  animation: reactDash 1.2s linear infinite;
+}
+.react-loop-box {
+  fill: rgba(255,255,255,0.9);
+  stroke: var(--loop-c);
+  stroke-width: 1;
+  stroke-opacity: 0.3;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.04));
+  transition: stroke-opacity 0.4s, filter 0.4s;
+}
+.react-loop-node--active .react-loop-box {
+  stroke-opacity: 0.7;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));
+  animation: reactNodePulse 2.5s ease-in-out infinite;
+}
+.react-loop-node--past .react-loop-box {
+  opacity: 0.5;
+}
+.react-loop-label {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.react-loop-sub {
+  text-anchor: middle;
+  font-size: 9px;
+  fill: rgba(0,0,0,0.25);
+}
+.react-center-label {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 500;
+  fill: rgba(0,0,0,0.12);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+/* ── Answer scene ── */
+.react-context-box {
+  fill: rgba(76,120,168,0.03);
+  stroke: rgba(76,120,168,0.15);
+  stroke-width: 1;
+}
+.react-context-title {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 600;
+  fill: rgba(76,120,168,0.6);
+}
+.react-context-item {
+  font-size: 9px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.3);
+}
+.react-context-item--finish {
+  fill: rgba(140,80,180,0.6);
+  font-weight: 600;
+}
+.react-answer-box {
+  fill: rgba(140,80,180,0.04);
+  stroke: rgba(140,80,180,0.3);
+  stroke-width: 1.5;
+  animation: reactAnswerGlow 2.5s ease-in-out infinite;
+}
+.react-answer-label {
+  text-anchor: middle;
+  font-size: 13px;
+  font-weight: 700;
+  fill: rgba(140,80,180,0.7);
+}
+.react-answer-sub {
+  text-anchor: middle;
+  font-size: 9px;
+  fill: rgba(0,0,0,0.25);
+}
+
+/* ── Example scene ── */
+.react-col-header {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+.react-round-num {
+  font-size: 9px;
+  font-weight: 600;
+  fill: rgba(0,0,0,0.2);
+}
+.react-example-row {
+  animation: reactFadeIn 0.5s ease-out both;
+  animation-delay: var(--ex-delay, 0s);
+}
+.react-ex-box {
+  fill: rgba(255,255,255,0.9);
+  stroke-width: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.03));
+}
+.react-ex-box--thought { stroke: rgba(76,120,168,0.25); }
+.react-ex-box--action { stroke: rgba(210,100,42,0.25); }
+.react-ex-box--obs { stroke: rgba(56,142,60,0.25); }
+.react-ex-text {
+  text-anchor: middle;
+  font-size: 9px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  fill: rgba(0,0,0,0.45);
+}
+.react-ex-arrow {
+  stroke: rgba(0,0,0,0.12);
+  stroke-width: 1;
+}
+
+/* ── Phase bar ── */
+.react-phase-bar {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line, rgba(0,0,0,0.08));
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.react-phase-bar__tag {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--phase-c) 8%, transparent);
+  color: var(--phase-c);
+}
+.react-phase-bar__steps { display: flex; flex-wrap: wrap; gap: 6px; }
+.react-phase-bar__step {
+  font-size: 11px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--line, rgba(0,0,0,0.08));
+  background: #fff;
+  opacity: 0.3;
+  transition: opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s;
+}
+.react-phase-bar__step.is-past { opacity: 0.55; }
+.react-phase-bar__step.is-active {
+  opacity: 1;
+  background: color-mix(in srgb, var(--phase-c) 6%, transparent);
+  border-color: color-mix(in srgb, var(--phase-c) 25%, transparent);
+  color: var(--phase-c);
+}
+
+/* ── Keyframes ── */
+@keyframes reactLlmPulse {
+  0%, 100% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 0.6; filter: drop-shadow(0 0 8px rgba(210,100,42,0.1)); }
+}
+@keyframes reactNodePulse {
+  0%, 100% { stroke-opacity: 0.5; }
+  50% { stroke-opacity: 0.9; filter: drop-shadow(0 0 6px rgba(0,0,0,0.06)); }
+}
+@keyframes reactDash {
+  to { stroke-dashoffset: -20; }
+}
+@keyframes reactFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes reactAnswerGlow {
+  0%, 100% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 0.6; filter: drop-shadow(0 0 8px rgba(140,80,180,0.12)); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .react-heading { font-size: 11px; }
+  .react-llm-sub { display: none; }
+  .react-loop-sub { display: none; }
+  .react-context-item { font-size: 8px; }
+  .react-ex-text { font-size: 8px; }
+  .react-round-num { display: none; }
+  .react-answer-sub { display: none; }
+  .react-phase-bar__step { font-size: 9px; padding: 2px 7px; }
+}
