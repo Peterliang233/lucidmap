@@ -45,6 +45,7 @@ import AiA2A from "./pages/AiA2A.jsx";
 import AiAgentSkill from "./pages/AiAgentSkill.jsx";
 import AiRag from "./pages/AiRag.jsx";
 import AiMultiAgent from "./pages/AiMultiAgent.jsx";
+import AiTransformer from "./pages/AiTransformer.jsx";
 
 export default function App() {
   useEffect(() => {
@@ -102,6 +103,7 @@ export default function App() {
         <Route path="/topics/ai/agent-skill" element={<AiAgentSkill />} />
         <Route path="/topics/ai/rag" element={<AiRag />} />
         <Route path="/topics/ai/multi-agent" element={<AiMultiAgent />} />
+        <Route path="/topics/ai/transformer" element={<AiTransformer />} />
       </Routes>
     </HashRouter>
   );

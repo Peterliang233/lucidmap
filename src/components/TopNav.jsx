@@ -39,19 +39,37 @@ export default function TopNav() {
     setActiveSection((prev) => (prev === id ? null : id));
   };
 
+  /* Close dropdown on outside click */
+  useEffect(() => {
+    if (!activeSection) return;
+    const handleClick = (e) => {
+      const moduleEl = moduleRefs.current[activeSection];
+      if (moduleEl && !moduleEl.contains(e.target)) {
+        setActiveSection(null);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [activeSection]);
+
   useLayoutEffect(() => {
     if (!activeSection) return;
     const moduleEl = moduleRefs.current[activeSection];
     if (!moduleEl) return;
-    const dropdown = moduleEl.querySelector(".top-nav__dropdown");
-    if (!dropdown) return;
+    const trigger = moduleEl.querySelector(".top-nav__trigger");
+    if (!trigger) return;
 
-    const rect = dropdown.getBoundingClientRect();
+    const triggerRect = trigger.getBoundingClientRect();
+    const dropdownWidth = 360;
     const margin = 16;
-    let align = "center";
+    const vw = window.innerWidth;
 
-    if (rect.right > window.innerWidth - margin) align = "right";
-    if (rect.left < margin) align = "left";
+    let align = "center";
+    const centerLeft = triggerRect.left + triggerRect.width / 2 - dropdownWidth / 2;
+    const centerRight = centerLeft + dropdownWidth;
+
+    if (centerRight > vw - margin) align = "right";
+    if (centerLeft < margin) align = "left";
 
     setDropdownAlign((prev) => (prev[activeSection] === align ? prev : { ...prev, [activeSection]: align }));
   }, [activeSection, menuOpen]);

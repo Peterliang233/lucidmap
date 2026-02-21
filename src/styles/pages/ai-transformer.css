@@ -1,0 +1,571 @@
+/* ── Transformer 原理 ── */
+
+/* Scene wrapper */
+.tfm-scene {
+  width: min(100%, 780px);
+  margin: 0 auto;
+}
+
+/* Progress bar */
+.tfm-progress {
+  height: 3px;
+  background: var(--line);
+  border-radius: 2px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.tfm-progress__fill {
+  height: 100%;
+  background: var(--accent-2);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* SVG base */
+.tfm-svg {
+  width: 100%;
+  display: block;
+}
+
+/* Text styles */
+.tfm-heading {
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.tfm-sub-heading {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.tfm-hint {
+  font-size: 9px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.tfm-side-note {
+  font-size: 9px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  font-weight: 500;
+}
+
+/* Arrows */
+.tfm-arrow {
+  stroke: var(--ink-soft);
+  stroke-width: 1.2;
+  opacity: 0.5;
+}
+.tfm-arrow-sm {
+  stroke: var(--ink-soft);
+  stroke-width: 1;
+  opacity: 0.4;
+}
+.tfm-arrow-label {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.tfm-arrow--cross {
+  stroke: #4c78a8;
+  stroke-dasharray: 5 3;
+  animation: tfmDash 1.5s linear infinite;
+}
+
+/* ── Overview Scene ── */
+.tfm-stack-box {
+  fill: var(--bg-deep);
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.tfm-stack-box--enc { stroke: rgba(76, 120, 168, 0.4); }
+.tfm-stack-box--dec { stroke: rgba(210, 100, 42, 0.4); }
+.tfm-stack-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+.tfm-layer-box {
+  fill: var(--card);
+  stroke: var(--line);
+  stroke-width: 1;
+  opacity: 0;
+  animation: tfmFadeIn 0.4s ease forwards;
+  animation-delay: var(--tf-delay, 0s);
+}
+.tfm-layer-box--dec {
+  stroke: rgba(210, 100, 42, 0.3);
+}
+.tfm-layer-label {
+  font-size: 9px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-weight: 500;
+}
+.tfm-layer-label--sm {
+  font-size: 8px;
+}
+.tfm-io-label {
+  font-size: 9px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+
+/* ── Embedding Scene ── */
+.tfm-embed-g {
+  opacity: 0;
+  animation: tfmFadeIn 0.5s ease forwards;
+  animation-delay: var(--tf-delay, 0s);
+}
+.tfm-token-box {
+  fill: var(--card);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.tfm-token-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--accent);
+  text-anchor: middle;
+}
+.tfm-embed-box {
+  fill: var(--card);
+  stroke: #4c78a8;
+  stroke-width: 1;
+}
+.tfm-embed-label {
+  font-size: 8px;
+  fill: #4c78a8;
+  text-anchor: middle;
+}
+.tfm-pe-box {
+  fill: var(--card);
+  stroke: #2a6f6b;
+  stroke-width: 1;
+  stroke-dasharray: 3 2;
+}
+.tfm-pe-label {
+  font-size: 8px;
+  fill: #2a6f6b;
+  text-anchor: middle;
+}
+.tfm-plus {
+  font-size: 12px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-weight: 700;
+}
+.tfm-result-box {
+  fill: var(--card);
+  stroke: var(--accent-2);
+  stroke-width: 1.5;
+  animation: tfmPulse 2.5s ease-in-out infinite;
+}
+.tfm-result-label {
+  font-size: 10px;
+  fill: var(--accent-2);
+  text-anchor: middle;
+  font-weight: 600;
+}
+
+/* ── Attention Scene ── */
+.tfm-matrix-box {
+  fill: var(--bg-deep);
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.tfm-matrix-label {
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.tfm-matrix-sub {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.tfm-matrix-dim {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  font-family: monospace;
+}
+.tfm-qkv-g {
+  opacity: 0;
+  animation: tfmFadeIn 0.5s ease forwards;
+  animation-delay: var(--tf-delay, 0s);
+}
+.tfm-w-box {
+  fill: var(--card);
+  stroke: var(--tf-c, var(--line));
+  stroke-width: 1.5;
+}
+.tfm-w-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.tfm-w-dim {
+  font-size: 7px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  font-family: monospace;
+}
+.tfm-qkv-box {
+  fill: var(--card);
+  stroke: var(--tf-c, var(--line));
+  stroke-width: 2;
+  animation: tfmPulse 2s ease-in-out infinite;
+}
+.tfm-qkv-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+.tfm-qkv-dim {
+  font-size: 7px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  font-family: monospace;
+}
+.tfm-op {
+  font-size: 12px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-weight: 700;
+}
+.tfm-score-box {
+  fill: var(--bg-deep);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.tfm-score-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--accent);
+  text-anchor: middle;
+}
+.tfm-score-dim {
+  font-size: 7px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.tfm-softmax-box {
+  fill: var(--card);
+  stroke: #8c50b4;
+  stroke-width: 1.5;
+  animation: tfmPulse 2s ease-in-out infinite;
+}
+.tfm-softmax-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: #8c50b4;
+  text-anchor: middle;
+}
+
+/* Attention weight matrix */
+.tfm-attn-token {
+  font-size: 9px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-weight: 500;
+}
+.tfm-attn-cell {
+  fill: rgba(76, 120, 168, var(--tf-opacity, 0.2));
+  stroke: var(--line);
+  stroke-width: 0.5;
+}
+.tfm-attn-val {
+  font-size: 8px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-family: monospace;
+}
+
+/* ── Multi-Head Scene ── */
+.tfm-input-box {
+  fill: var(--card);
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.tfm-input-label {
+  font-size: 10px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-weight: 600;
+}
+.tfm-head-g {
+  opacity: 0;
+  animation: tfmFadeIn 0.4s ease forwards;
+  animation-delay: var(--tf-delay, 0s);
+}
+.tfm-head-box {
+  fill: var(--card);
+  stroke: var(--tf-c, var(--line));
+  stroke-width: 1.5;
+  animation: tfmPulse 2.5s ease-in-out infinite;
+}
+.tfm-head-label {
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.tfm-head-sub {
+  font-size: 7px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.tfm-concat-box {
+  fill: var(--bg-deep);
+  stroke: var(--accent-2);
+  stroke-width: 1.5;
+}
+.tfm-concat-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--accent-2);
+  text-anchor: middle;
+}
+.tfm-linear-box {
+  fill: var(--card);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.tfm-linear-label {
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--accent);
+  text-anchor: middle;
+}
+
+/* ── FFN Scene ── */
+.tfm-ffn-g {
+  opacity: 0;
+  animation: tfmFadeIn 0.5s ease forwards;
+  animation-delay: var(--tf-delay, 0s);
+}
+.tfm-ffn-box {
+  fill: var(--card);
+  stroke: var(--tf-c, var(--line));
+  stroke-width: 1.5;
+}
+.tfm-ffn-box--norm {
+  stroke-dasharray: 4 3;
+  opacity: 0.8;
+}
+.tfm-ffn-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.tfm-residual {
+  fill: none;
+  stroke: #388e3c;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  animation: tfmDash 1.5s linear infinite;
+}
+.tfm-res-label {
+  font-size: 14px;
+  font-weight: 700;
+  fill: #388e3c;
+  text-anchor: middle;
+}
+.tfm-note-box {
+  fill: var(--bg-deep);
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.tfm-note-title {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.tfm-note-text {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  font-family: monospace;
+}
+
+/* ── Decoder Scene ── */
+.tfm-dec-g {
+  opacity: 0;
+  animation: tfmFadeIn 0.4s ease forwards;
+  animation-delay: var(--tf-delay, 0s);
+}
+.tfm-dec-box {
+  fill: var(--card);
+  stroke: var(--tf-c, var(--line));
+  stroke-width: 1.5;
+}
+.tfm-dec-box--norm {
+  stroke-dasharray: 4 3;
+  opacity: 0.8;
+}
+.tfm-dec-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.tfm-enc-out {
+  font-size: 9px;
+  fill: #4c78a8;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+/* ── Output Scene ── */
+.tfm-dec-out-box {
+  fill: var(--card);
+  stroke: #d2642a;
+  stroke-width: 1.5;
+}
+.tfm-dec-out-label {
+  font-size: 9px;
+  font-weight: 600;
+  fill: #d2642a;
+  text-anchor: middle;
+}
+.tfm-linear-out-box {
+  fill: var(--card);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.tfm-linear-out-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--accent);
+  text-anchor: middle;
+}
+.tfm-softmax-out-box {
+  fill: var(--card);
+  stroke: #8c50b4;
+  stroke-width: 1.5;
+  animation: tfmPulse 2s ease-in-out infinite;
+}
+.tfm-softmax-out-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: #8c50b4;
+  text-anchor: middle;
+}
+.tfm-prob-g {
+  opacity: 0;
+  animation: tfmFadeIn 0.4s ease forwards;
+  animation-delay: var(--tf-delay, 0s);
+}
+.tfm-prob-token {
+  font-size: 9px;
+  fill: var(--ink);
+  text-anchor: end;
+  font-family: monospace;
+}
+.tfm-prob-bar {
+  fill: rgba(76, 120, 168, 0.3);
+  rx: 3;
+}
+.tfm-prob-bar--top {
+  fill: rgba(42, 111, 107, 0.6);
+  animation: tfmPulse 2s ease-in-out infinite;
+}
+.tfm-prob-val {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  font-family: monospace;
+}
+.tfm-selected-box {
+  fill: var(--card);
+  stroke: #2a6f6b;
+  stroke-width: 2;
+  animation: tfmGlow 2s ease-in-out infinite;
+}
+.tfm-selected-label {
+  font-size: 12px;
+  font-weight: 700;
+  fill: #2a6f6b;
+  text-anchor: middle;
+}
+.tfm-selected-sub {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+
+/* ── Phase bar ── */
+.tfm-phase-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: var(--bg-deep);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+.tfm-phase-bar__tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--phase-c, var(--accent-2));
+  white-space: nowrap;
+}
+.tfm-phase-bar__steps {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tfm-phase-bar__step {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  transition: all 0.3s ease;
+}
+.tfm-phase-bar__step.is-active {
+  background: var(--phase-c, var(--accent-2));
+  color: #fff;
+  border-color: var(--phase-c, var(--accent-2));
+}
+.tfm-phase-bar__step.is-past {
+  opacity: 0.5;
+}
+
+/* ── Keyframes ── */
+@keyframes tfmFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes tfmPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+@keyframes tfmDash {
+  to { stroke-dashoffset: -20; }
+}
+@keyframes tfmGlow {
+  0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+  50% { filter: drop-shadow(0 0 5px rgba(42, 111, 107, 0.4)); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .tfm-heading { font-size: 11px; }
+  .tfm-hint { display: none; }
+  .tfm-side-note { display: none; }
+  .tfm-note-box { display: none; }
+  .tfm-note-title { display: none; }
+  .tfm-note-text { display: none; }
+  .tfm-w-dim { display: none; }
+  .tfm-qkv-dim { display: none; }
+  .tfm-matrix-dim { display: none; }
+  .tfm-head-sub { display: none; }
+  .tfm-phase-bar { padding: 4px 8px; }
+  .tfm-phase-bar__step { font-size: 0.6rem; padding: 1px 6px; }
+}

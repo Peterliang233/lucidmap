@@ -474,6 +474,20 @@
               ]
             }
           ]
+        },
+        {
+          "title": "基础模型",
+          "items": [
+            {
+              "title": "Transformer 原理",
+              "desc": "Self-Attention 与 Encoder-Decoder 架构",
+              "link": "/topics/ai/transformer",
+              "tags": [
+                "高频",
+                "基础"
+              ]
+            }
+          ]
         }
       ]
     }
