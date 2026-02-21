@@ -1,14 +1,407 @@
-.ai-skill__grid {
-  display: grid;
-  gap: 14px;
-  position: relative;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.55fr);
+/* ── Agent Skill 体系 ── */
+
+/* Scene wrapper */
+.askill-scene {
+  width: min(100%, 780px);
+  margin: 0 auto;
 }
 
-.ai-skill .mcp-lifeline__title {
-  font-size: 0.85rem;
+/* Progress bar */
+.askill-progress {
+  height: 3px;
+  background: var(--line);
+  border-radius: 2px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.askill-progress__fill {
+  height: 100%;
+  background: var(--accent-2);
+  border-radius: 2px;
+  transition: width 0.4s ease;
 }
 
-.ai-skill .mcp-lifeline__meta {
-  font-size: 0.72rem;
+/* SVG base */
+.askill-svg {
+  width: 100%;
+  display: block;
+}
+
+/* Text styles */
+.askill-heading {
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.askill-hint {
+  font-size: 9px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.askill-center-label {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+  opacity: 0.5;
+}
+
+/* ── Overview Scene ── */
+.askill-skill-box {
+  fill: var(--card);
+  stroke: var(--sk-c, var(--line));
+  stroke-width: 1.5;
+  opacity: 0;
+  animation: askillFadeIn 0.5s ease forwards;
+  animation-delay: var(--sk-delay, 0s);
+}
+.askill-skill-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.askill-skill-sub {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.askill-skill-g {
+  opacity: 0;
+  animation: askillFadeIn 0.5s ease forwards;
+  animation-delay: var(--sk-delay, 0s);
+}
+
+.askill-registry-box {
+  fill: var(--card);
+  stroke: var(--accent-2);
+  stroke-width: 1.5;
+  animation: askillPulse 2.5s ease-in-out infinite;
+}
+.askill-registry-label {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--accent-2);
+  text-anchor: middle;
+}
+
+.askill-agent-box {
+  fill: var(--card);
+  stroke: #4c78a8;
+  stroke-width: 1.5;
+}
+.askill-agent-label {
+  font-size: 11px;
+  font-weight: 600;
+  fill: #4c78a8;
+  text-anchor: middle;
+}
+.askill-llm-box {
+  fill: var(--card);
+  stroke: #d2642a;
+  stroke-width: 1.5;
+}
+.askill-llm-label {
+  font-size: 11px;
+  font-weight: 600;
+  fill: #d2642a;
+  text-anchor: middle;
+}
+
+.askill-arrow {
+  stroke: var(--ink-soft);
+  stroke-width: 1.2;
+  opacity: 0.5;
+}
+.askill-arrow--discover {
+  stroke-dasharray: 4 3;
+  animation: askillDash 1.5s linear infinite;
+}
+
+/* ── Manifest Scene ── */
+.askill-manifest-box {
+  fill: var(--bg-deep);
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.askill-manifest-title {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.askill-field-g {
+  opacity: 0;
+  animation: askillFadeIn 0.4s ease forwards;
+  animation-delay: var(--sk-delay, 0s);
+}
+.askill-field-row {
+  fill: var(--card);
+  stroke: var(--sk-c, var(--line));
+  stroke-width: 1;
+  opacity: 0.8;
+}
+.askill-field-key {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: monospace;
+}
+.askill-field-val {
+  font-size: 9px;
+  fill: var(--ink-soft);
+  font-family: monospace;
+}
+
+/* ── Registry Scene ── */
+.askill-feat-g {
+  opacity: 0;
+  animation: askillFadeIn 0.5s ease forwards;
+  animation-delay: var(--sk-delay, 0s);
+}
+.askill-feat-box {
+  fill: var(--card);
+  stroke: var(--sk-c, var(--line));
+  stroke-width: 1.5;
+}
+.askill-feat-icon {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.askill-feat-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.askill-feat-sub {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+
+/* ── Invoke Scene ── */
+.askill-invoke-node {
+  opacity: 0.35;
+  transition: opacity 0.4s ease;
+}
+.askill-invoke-node.is-active {
+  opacity: 1;
+}
+.askill-invoke-box {
+  fill: var(--card);
+  stroke: var(--sk-c, var(--line));
+  stroke-width: 1.5;
+  transition: stroke-width 0.3s ease;
+}
+.askill-invoke-node.is-active .askill-invoke-box {
+  stroke-width: 2.5;
+  animation: askillPulse 2s ease-in-out infinite;
+}
+.askill-invoke-name {
+  font-size: 11px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.askill-invoke-sub {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.askill-invoke-arrow {
+  stroke: var(--accent-2);
+  stroke-width: 1.8;
+  stroke-dasharray: 6 4;
+  animation: askillDash 1.2s linear infinite;
+}
+.askill-invoke-arrow--return {
+  stroke: #388e3c;
+}
+.askill-invoke-label {
+  font-size: 9px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-weight: 500;
+}
+.askill-detail-box {
+  fill: var(--bg-deep);
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.askill-detail-text {
+  font-size: 9px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+
+/* ── Loop Scene ── */
+.askill-loop-arrow {
+  stroke: var(--ink-soft);
+  stroke-width: 1.5;
+  opacity: 0.4;
+  stroke-dasharray: 6 4;
+  animation: askillDash 1.5s linear infinite;
+}
+.askill-loop-node {
+  opacity: 0;
+  animation: askillFadeIn 0.5s ease forwards;
+  animation-delay: var(--sk-delay, 0s);
+}
+.askill-loop-box {
+  fill: var(--card);
+  stroke: var(--sk-c, var(--line));
+  stroke-width: 1.5;
+  animation: askillPulse 2.5s ease-in-out infinite;
+}
+.askill-loop-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.askill-loop-sub {
+  font-size: 8px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.askill-answer-box {
+  fill: var(--card);
+  stroke: #2a6f6b;
+  stroke-width: 1.5;
+  animation: askillAnswerGlow 2s ease-in-out infinite;
+}
+.askill-answer-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: #2a6f6b;
+  text-anchor: middle;
+}
+.askill-arrow--answer {
+  stroke: #2a6f6b;
+  opacity: 0.5;
+}
+
+/* ── Example Scene ── */
+.askill-ex-task {
+  fill: var(--bg-deep);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.askill-ex-task-label {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--accent);
+  text-anchor: middle;
+}
+.askill-ex-row {
+  opacity: 0;
+  animation: askillFadeIn 0.5s ease forwards;
+  animation-delay: var(--sk-delay, 0s);
+}
+.askill-ex-step {
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--ink-soft);
+}
+.askill-ex-box {
+  fill: var(--card);
+  stroke: var(--sk-c, var(--line));
+  stroke-width: 1.5;
+}
+.askill-ex-name {
+  font-size: 9px;
+  font-weight: 600;
+  text-anchor: middle;
+  font-family: monospace;
+}
+.askill-ex-desc-box {
+  fill: var(--bg-deep);
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.askill-ex-desc {
+  font-size: 9px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.askill-ex-result-box {
+  fill: var(--card);
+  stroke: var(--sk-c, var(--line));
+  stroke-width: 1;
+  stroke-dasharray: 3 2;
+}
+.askill-ex-result {
+  font-size: 9px;
+  fill: var(--ink);
+  text-anchor: middle;
+  font-weight: 500;
+}
+
+/* ── Phase bar ── */
+.askill-phase-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: var(--bg-deep);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+.askill-phase-bar__tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--phase-c, var(--accent-2));
+  white-space: nowrap;
+}
+.askill-phase-bar__steps {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.askill-phase-bar__step {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  transition: all 0.3s ease;
+}
+.askill-phase-bar__step.is-active {
+  background: var(--phase-c, var(--accent-2));
+  color: #fff;
+  border-color: var(--phase-c, var(--accent-2));
+}
+.askill-phase-bar__step.is-past {
+  opacity: 0.5;
+}
+
+/* ── Keyframes ── */
+@keyframes askillFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes askillPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+@keyframes askillDash {
+  to { stroke-dashoffset: -20; }
+}
+@keyframes askillAnswerGlow {
+  0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+  50% { filter: drop-shadow(0 0 4px rgba(42, 111, 107, 0.3)); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .askill-heading { font-size: 11px; }
+  .askill-hint { display: none; }
+  .askill-field-val { font-size: 8px; }
+  .askill-invoke-sub { display: none; }
+  .askill-feat-sub { display: none; }
+  .askill-ex-desc { font-size: 8px; }
+  .askill-ex-result { font-size: 8px; }
+  .askill-phase-bar { padding: 4px 8px; }
+  .askill-phase-bar__step { font-size: 0.6rem; padding: 1px 6px; }
 }
