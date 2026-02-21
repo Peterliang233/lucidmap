@@ -427,6 +427,14 @@
               "tags": [
                 "高频"
               ]
+            },
+            {
+              "title": "Multi-Agent 架构",
+              "desc": "多 Agent 协作模式与通信机制",
+              "link": "/topics/ai/multi-agent",
+              "tags": [
+                "高频"
+              ]
             }
           ]
         },
