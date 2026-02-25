@@ -1,0 +1,152 @@
+/* ── MySQL 字段类型 ── */
+
+.dbt-diagram {
+  width: min(100%, 780px);
+  margin: 0 auto;
+}
+
+.dbt-svg-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 顶部分类标签栏 */
+.dbt-category-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.dbt-cat-chip {
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1.5px solid var(--cat-color, var(--line));
+  color: var(--cat-color, var(--ink-soft));
+  background: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.dbt-cat-chip.is-active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+/* SVG */
+.dbt-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* 表头 */
+.dbt-svg__th {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--ink-soft);
+  letter-spacing: 0.03em;
+}
+
+/* 数据行入场 */
+.dbt-svg__row {
+  opacity: 0;
+  animation: dbtRowIn 0.4s ease forwards;
+  animation-delay: var(--row-delay, 0s);
+}
+
+@keyframes dbtRowIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 类型名 */
+.dbt-svg__name {
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+/* 普通单元格 */
+.dbt-svg__cell {
+  font-size: 11px;
+  fill: var(--ink);
+}
+
+.dbt-svg__range {
+  font-size: 10px;
+  fill: var(--ink-soft);
+}
+
+/* 示例文字 */
+.dbt-svg__example {
+  font-size: 9.5px;
+  fill: var(--ink-soft);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+/* 行底线 */
+.dbt-svg__row-line {
+  opacity: 0;
+  animation: dbtLineFade 0.6s ease forwards;
+  animation-delay: var(--row-delay, 0s);
+}
+
+@keyframes dbtLineFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 底部提示框 */
+.dbt-svg__tip {
+  opacity: 0;
+  animation: dbtTipIn 0.5s ease 0.5s forwards;
+}
+
+@keyframes dbtTipIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dbt-svg__tip-text {
+  font-size: 10.5px;
+  fill: var(--ink);
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+/* ── 响应式 ── */
+@media (max-width: 640px) {
+  .dbt-svg__example {
+    display: none;
+  }
+
+  .dbt-svg__range {
+    font-size: 9px;
+  }
+
+  .dbt-svg__tip-text {
+    font-size: 9px;
+  }
+
+  .dbt-cat-chip {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+  }
+}

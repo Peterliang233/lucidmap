@@ -20,6 +20,7 @@
 @import "./pages/db-acid.css";
 @import "./pages/db-isolation.css";
 @import "./pages/db-sql-tuning.css";
+@import "./pages/db-data-types.css";
 @import "./pages/network-tcp-handshake.css";
 @import "./pages/network-tls-handshake.css";
 @import "./pages/network-http-evolution.css";

@@ -155,6 +155,15 @@
               "tags": [
                 "系统设计"
               ]
+            },
+            {
+              "title": "MySQL 字段类型",
+              "desc": "整数、小数、字符串、日期、JSON 选型与实例",
+              "link": "/topics/database/data-types",
+              "tags": [
+                "基础",
+                "高频"
+              ]
             }
           ]
         },

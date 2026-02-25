@@ -15,6 +15,7 @@ import NetworkTlsHandshake from "./pages/NetworkTlsHandshake.jsx";
 import DbAcid from "./pages/DbAcid.jsx";
 import DbIsolation from "./pages/DbIsolation.jsx";
 import DbSqlTuning from "./pages/DbSqlTuning.jsx";
+import DbDataTypes from "./pages/DbDataTypes.jsx";
 import BackendJvmMemory from "./pages/BackendJvmMemory.jsx";
 import BackendCollections from "./pages/BackendCollections.jsx";
 import BackendRateLimit from "./pages/BackendRateLimit.jsx";
@@ -73,6 +74,7 @@ export default function App() {
         <Route path="/topics/database/acid" element={<DbAcid />} />
         <Route path="/topics/database/isolation" element={<DbIsolation />} />
         <Route path="/topics/database/sql-tuning" element={<DbSqlTuning />} />
+        <Route path="/topics/database/data-types" element={<DbDataTypes />} />
         <Route path="/topics/backend/jvm-memory" element={<BackendJvmMemory />} />
         <Route path="/topics/backend/collections" element={<BackendCollections />} />
         <Route path="/topics/backend/rate-limit" element={<BackendRateLimit />} />
