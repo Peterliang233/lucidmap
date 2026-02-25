@@ -220,6 +220,10 @@
 }
 
 @media (max-width: 980px) {
+  .top-nav {
+    overflow-x: visible;
+  }
+
   .top-nav__menu {
     position: fixed;
     inset: 70px 16px auto 16px;
