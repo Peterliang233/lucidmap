@@ -17,6 +17,8 @@
 @import "./pages/backend-cache-consistency.css";
 @import "./pages/backend-classloader.css";
 @import "./pages/backend-spring.css";
+@import "./pages/backend-go-gmp.css";
+@import "./pages/backend-go-gc.css";
 @import "./pages/db-acid.css";
 @import "./pages/db-isolation.css";
 @import "./pages/db-sql-tuning.css";

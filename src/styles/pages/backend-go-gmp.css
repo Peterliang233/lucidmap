@@ -1,0 +1,95 @@
+/* ── Go GMP 调度模型 ── */
+
+.gmp-diagram { width: min(100%, 780px); margin: 0 auto; }
+.gmp-scene { display: flex; flex-direction: column; gap: 10px; }
+.gmp-svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+/* Progress bar */
+.gmp-progress { height: 3px; border-radius: 3px; background: rgba(0,0,0,0.06); overflow: hidden; }
+.gmp-progress__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(42,111,107,0.8), rgba(76,120,168,0.8), rgba(210,100,42,0.8));
+  transition: width 0.5s ease;
+}
+
+/* Text */
+.gmp-heading { text-anchor: middle; font-size: 13px; font-weight: 600; fill: var(--ink-soft); }
+.gmp-hint { text-anchor: middle; font-size: 9px; fill: rgba(0,0,0,0.25); }
+.gmp-label { font-size: 10px; font-weight: 600; }
+.gmp-empty-text { text-anchor: middle; font-size: 10px; fill: rgba(0,0,0,0.2); font-style: italic; }
+
+/* Boxes */
+.gmp-box {
+  fill: rgba(255,255,255,0.85);
+  stroke-width: 1.5;
+  stroke-opacity: 0.3;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.04));
+}
+.gmp-box--g { stroke: #2a6f6b; }
+.gmp-box--m { stroke: #4c78a8; }
+.gmp-box--p { stroke: #d2642a; }
+.gmp-box--gq { stroke: #8c50b4; }
+
+.gmp-box__title { font-size: 12px; font-weight: 700; font-family: "SF Mono", "Fira Code", monospace; }
+.gmp-box__sub { font-size: 9px; fill: rgba(0,0,0,0.35); }
+
+/* Queue text */
+.gmp-q-text { text-anchor: middle; font-size: 10px; font-weight: 500; fill: rgba(0,0,0,0.5); font-family: "SF Mono", "Fira Code", monospace; }
+
+/* New G enter animation */
+.gmp-g-enter {
+  opacity: 0;
+  animation: gmpSlideIn 0.4s ease forwards;
+  animation-delay: var(--gmp-d, 0s);
+}
+@keyframes gmpSlideIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* New G pulse */
+.gmp-new-g { animation: gmpPulse 2s ease-in-out infinite; }
+@keyframes gmpPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px rgba(42,111,107,0.3)); }
+}
+
+/* Running G */
+.gmp-running { animation: gmpRunning 2.4s ease-in-out infinite; }
+@keyframes gmpRunning {
+  0%, 100% { stroke-opacity: 0.6; }
+  50% { stroke-opacity: 1; filter: drop-shadow(0 0 8px rgba(42,111,107,0.2)); }
+}
+
+/* Bind line */
+.gmp-bind-line { animation: gmpBindPulse 2s ease-in-out infinite; }
+@keyframes gmpBindPulse {
+  0%, 100% { stroke-opacity: 0.5; }
+  50% { stroke-opacity: 1; }
+}
+
+/* Steal arrow */
+.gmp-steal-arrow { animation: gmpStealDash 2s linear infinite; }
+@keyframes gmpStealDash {
+  to { stroke-dashoffset: -24; }
+}
+.gmp-steal-label { animation: gmpPulse 2s ease-in-out infinite; }
+
+/* Handoff line */
+.gmp-handoff-line { animation: gmpStealDash 1.8s linear infinite; }
+
+/* Signal flash */
+.gmp-signal { animation: gmpSignal 1.6s ease-in-out infinite; }
+@keyframes gmpSignal {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(210,100,42,0.3)); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .gmp-heading { font-size: 11px; }
+  .gmp-box__sub { display: none; }
+  .gmp-hint { font-size: 8px; }
+  .gmp-label { font-size: 9px; }
+}

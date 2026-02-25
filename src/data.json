@@ -255,6 +255,29 @@
           ]
         },
         {
+          "title": "Go 高频点",
+          "items": [
+            {
+              "title": "GMP 调度模型",
+              "desc": "Goroutine、Machine、Processor 协程调度",
+              "link": "/topics/backend/go-gmp",
+              "tags": [
+                "高频",
+                "系统设计"
+              ]
+            },
+            {
+              "title": "Go 垃圾回收机制",
+              "desc": "并发三色标记清除与写屏障",
+              "link": "/topics/backend/go-gc",
+              "tags": [
+                "高频",
+                "性能优化"
+              ]
+            }
+          ]
+        },
+        {
           "title": "系统设计",
           "items": [
             {

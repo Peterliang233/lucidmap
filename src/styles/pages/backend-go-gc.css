@@ -1,0 +1,116 @@
+/* ── Go GC 垃圾回收 ── */
+
+.gogc-diagram { width: min(100%, 780px); margin: 0 auto; }
+.gogc-scene { display: flex; flex-direction: column; gap: 10px; }
+.gogc-svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+/* Progress bar */
+.gogc-progress { height: 3px; border-radius: 3px; background: rgba(0,0,0,0.06); overflow: hidden; }
+.gogc-progress__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(42,111,107,0.8), rgba(230,126,34,0.8), rgba(44,62,80,0.8));
+  transition: width 0.5s ease;
+}
+
+/* Text */
+.gogc-heading { text-anchor: middle; font-size: 13px; font-weight: 600; fill: var(--ink-soft); }
+.gogc-hint { text-anchor: middle; font-size: 9px; fill: rgba(0,0,0,0.25); }
+.gogc-hint-small { text-anchor: middle; font-size: 9px; fill: rgba(0,0,0,0.3); }
+.gogc-label { font-size: 10px; font-weight: 600; }
+.gogc-section-label { text-anchor: middle; font-size: 11px; font-weight: 600; fill: var(--ink-soft); }
+.gogc-heap-label { text-anchor: middle; font-size: 10px; font-weight: 500; fill: rgba(0,0,0,0.15); font-family: "SF Mono", "Fira Code", monospace; }
+
+/* Phase blocks */
+.gogc-phase-block {
+  opacity: 0;
+  animation: gogcFadeIn 0.4s ease forwards;
+  animation-delay: var(--gogc-d, 0s);
+}
+.gogc-phase-label { font-size: 11px; font-weight: 700; font-family: "SF Mono", "Fira Code", monospace; }
+.gogc-phase-sub { font-size: 9px; fill: rgba(0,0,0,0.35); }
+
+/* Legend */
+.gogc-legend-text { font-size: 13px; font-weight: 700; fill: var(--ink-soft); }
+.gogc-legend-label { font-size: 10px; font-weight: 600; fill: var(--ink-soft); }
+.gogc-legend-desc { font-size: 8px; fill: rgba(0,0,0,0.3); }
+
+/* Nodes */
+.gogc-node-label { font-size: 11px; font-weight: 600; fill: rgba(0,0,0,0.5); font-family: "SF Mono", "Fira Code", monospace; }
+.gogc-node-label--dead { fill: rgba(0,0,0,0.2); text-decoration: line-through; }
+
+/* Grey node pulse */
+.gogc-node--grey { animation: gogcGreyPulse 1.8s ease-in-out infinite; }
+@keyframes gogcGreyPulse {
+  0%, 100% { stroke-opacity: 0.6; filter: none; }
+  50% { stroke-opacity: 1; filter: drop-shadow(0 0 6px rgba(230,126,34,0.35)); }
+}
+
+/* Swept node fade */
+.gogc-node--swept { animation: gogcSweptFade 2s ease-in-out infinite; }
+@keyframes gogcSweptFade {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.3; }
+}
+
+/* Marking steps */
+.gogc-mark-step {
+  opacity: 0;
+  animation: gogcFadeIn 0.5s ease forwards;
+  animation-delay: var(--gogc-d, 0s);
+}
+.gogc-mark-desc { font-size: 10px; fill: rgba(0,0,0,0.4); }
+
+/* Worker bar */
+.gogc-worker-bar {
+  animation: gogcWorkerPulse 2s ease-in-out infinite;
+  animation-delay: var(--gogc-d, 0s);
+}
+@keyframes gogcWorkerPulse {
+  0%, 100% { opacity: 0.3; width: 60px; }
+  50% { opacity: 0.8; width: 80px; }
+}
+
+/* Sweep bar */
+.gogc-sweep-bar {
+  fill: rgba(231,76,60,0.4);
+  animation: gogcSweep 2.5s ease-in-out infinite;
+  transform-origin: left center;
+}
+@keyframes gogcSweep {
+  0% { transform: scaleX(0); }
+  50% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+/* Tuning rows */
+.gogc-tuning-row {
+  opacity: 0;
+  animation: gogcFadeIn 0.4s ease forwards;
+  animation-delay: var(--gogc-d, 0s);
+}
+.gogc-tuning-label { font-size: 12px; font-weight: 700; font-family: "SF Mono", "Fira Code", monospace; }
+.gogc-tuning-desc { font-size: 9px; fill: rgba(0,0,0,0.4); }
+.gogc-tuning-bar { animation: gogcBarGrow 0.6s ease forwards; animation-delay: var(--gogc-d, 0s); transform-origin: left center; }
+.gogc-tuning-pct { font-size: 10px; font-weight: 600; font-family: "SF Mono", "Fira Code", monospace; }
+
+@keyframes gogcBarGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Shared */
+@keyframes gogcFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .gogc-heading { font-size: 11px; }
+  .gogc-hint { font-size: 8px; }
+  .gogc-hint-small { display: none; }
+  .gogc-legend-desc { display: none; }
+  .gogc-mark-desc { font-size: 9px; }
+  .gogc-tuning-desc { display: none; }
+}
