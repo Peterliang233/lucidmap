@@ -35,27 +35,24 @@ export default function TopNav() {
 
   const handleToggle = () => setMenuOpen((prev) => !prev);
 
-  const handleSectionToggle = (id) => {
+  const handleSectionToggle = (id, e) => {
+    e.stopPropagation();
     setActiveSection((prev) => (prev === id ? null : id));
   };
 
-  /* Close dropdown on outside click — delay listener to avoid
-     the opening click itself being caught on mobile (touch → click) */
+  /* Close dropdown on outside pointer-down.
+     Using pointerdown instead of click avoids mobile touch→click
+     timing issues where the opening tap is caught as an outside click. */
   useEffect(() => {
     if (!activeSection) return;
-    const handleClick = (e) => {
+    const handlePointerDown = (e) => {
       const moduleEl = moduleRefs.current[activeSection];
       if (moduleEl && !moduleEl.contains(e.target)) {
         setActiveSection(null);
       }
     };
-    const raf = requestAnimationFrame(() => {
-      document.addEventListener("click", handleClick);
-    });
-    return () => {
-      cancelAnimationFrame(raf);
-      document.removeEventListener("click", handleClick);
-    };
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [activeSection]);
 
   useLayoutEffect(() => {
@@ -126,7 +123,7 @@ export default function TopNav() {
                 <button
                   type="button"
                   className="top-nav__trigger"
-                  onClick={() => handleSectionToggle(section.id)}
+                  onClick={(e) => handleSectionToggle(section.id, e)}
                 >
                   {section.title}
                 </button>
