@@ -39,7 +39,8 @@ export default function TopNav() {
     setActiveSection((prev) => (prev === id ? null : id));
   };
 
-  /* Close dropdown on outside click */
+  /* Close dropdown on outside click — delay listener to avoid
+     the opening click itself being caught on mobile (touch → click) */
   useEffect(() => {
     if (!activeSection) return;
     const handleClick = (e) => {
@@ -48,8 +49,13 @@ export default function TopNav() {
         setActiveSection(null);
       }
     };
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
+    const raf = requestAnimationFrame(() => {
+      document.addEventListener("click", handleClick);
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener("click", handleClick);
+    };
   }, [activeSection]);
 
   useLayoutEffect(() => {
