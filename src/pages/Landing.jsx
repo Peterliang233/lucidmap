@@ -42,11 +42,11 @@ export default function LandingPage() {
       <section className="landing">
         <div className="landing__hero">
           <div>
-            <p className="landing__eyebrow">LucidMap Project</p>
-            <h1>用简单的动画解析计算机相关知识点</h1>
-            <p className="landing__subtitle">
+            <p className="landing__eyebrow">LucidMap</p>
+            <h1>用简单的动画解析技术原理</h1>
+            {/* <p className="landing__subtitle">
               这个项目希望将晦涩难懂的技术用可视化方式呈现，降低学习门槛，帮助大家更好掌握相关知识。
-            </p>
+            </p> */}
             <div className="landing__actions">
               <Link className="landing__primary" to="/map">
                 进入知识地图
@@ -145,7 +145,7 @@ export default function LandingPage() {
           <div className="mission__text">
             <h2>宗旨</h2>
             <p>
-              用更高的信息密度，把面试复盘、基础知识和系统设计串在一起，形成可复用的知识导航。
+              这个项目希望将晦涩难懂的技术用可视化方式呈现，降低学习门槛，帮助大家更好掌握相关知识。
             </p>
           </div>
           <div className="mission__grid">
