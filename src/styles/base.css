@@ -27,6 +27,20 @@
   --shadow: 0 18px 50px rgba(120, 20, 20, 0.1);
 }
 
+/* ── 春天主题（绿色 + 万物复苏） ── */
+.spring-theme {
+  color-scheme: light;
+  --bg: #eff7ef;
+  --bg-deep: #e2f1e4;
+  --ink: #162015;
+  --ink-soft: #3c553a;
+  --accent: #2f8a3b;   /* 主绿 */
+  --accent-2: #1f6d68; /* 青绿 */
+  --card: #fbfff9;
+  --line: rgba(18, 32, 21, 0.12);
+  --shadow: 0 18px 50px rgba(18, 32, 21, 0.10);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -42,6 +56,14 @@ body {
 
 html.cny-theme body {
   background: radial-gradient(circle at top left, #fef2ea 0%, #fce8da 35%, #f8ddd0 60%, #fdf0e8 100%);
+}
+
+html.spring-theme body {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(47, 138, 59, 0.14), transparent 55%),
+    radial-gradient(circle at 78% 72%, rgba(31, 109, 104, 0.16), transparent 58%),
+    radial-gradient(circle at 50% 110%, rgba(255, 255, 255, 0.9), transparent 55%),
+    linear-gradient(160deg, #f3fbf2 0%, #e6f3e8 40%, #eaf4f0 100%);
 }
 
 a {

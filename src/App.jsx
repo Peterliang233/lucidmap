@@ -57,6 +57,12 @@ export default function App() {
     } else {
       document.documentElement.classList.remove("cny-theme");
     }
+
+    if (THEME === "spring") {
+      document.documentElement.classList.add("spring-theme");
+    } else {
+      document.documentElement.classList.remove("spring-theme");
+    }
   }, []);
 
   return (
