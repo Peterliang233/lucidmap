@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "计算机八股文导航",
-    "tagline": "系统化整理面试八股文",
+    "title": "计算机知识地图",
+    "tagline": "系统化整理技术知识点",
     "subtitle": "通过配置化目录，把散落的知识点组织成可扩展的地图。",
     "footer": "持续维护中 · 使用 JSON 配置动态扩展"
   },
@@ -450,6 +450,14 @@
               "link": "/topics/ai/react",
               "tags": [
                 "高频"
+              ]
+            },
+            {
+              "title": "OpenClaw 原理解析",
+              "desc": "Gateway、Context Engine、Agent Loop、Tools/Nodes 与 Memory 的闭环",
+              "link": "/topics/ai/openclaw",
+              "tags": [
+                "系统设计"
               ]
             },
             {

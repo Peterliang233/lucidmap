@@ -1,15 +1,43 @@
 <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="8" y="8" width="144" height="144" rx="36" fill="url(#paint0_linear)"/>
-  <path d="M46 62C46 54.268 52.268 48 60 48H100C107.732 48 114 54.268 114 62V98C114 105.732 107.732 112 100 112H60C52.268 112 46 105.732 46 98V62Z" fill="white" fill-opacity="0.9"/>
-  <path d="M58 94L80 68L102 94" stroke="#2A6F6B" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="58" cy="94" r="6" fill="#D2642A"/>
-  <circle cx="80" cy="68" r="6" fill="#2A6F6B"/>
-  <circle cx="102" cy="94" r="6" fill="#D2642A"/>
-  <path d="M58 68H102" stroke="#D2642A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  <rect x="8" y="8" width="144" height="144" rx="36" fill="url(#bg)"/>
+
+  <g>
+    <path d="M48 114Q 52 132 70 136Q 84 140 98 132Q 86 140 68 142Q 52 142 48 126Q 46 120 48 114Z" fill="url(#neckShadow)" opacity="0.55"/>
+    <path d="M70 76Q 60 56 70 42Q 82 32 94 44Q 98 64 86 82Q 78 92 70 76Z" fill="#D79A35" stroke="#1F1C18" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M74 74Q 68 60 74 50Q 82 44 88 52Q 90 64 84 74Q 80 80 74 74Z" fill="#F7D48E" opacity="0.85"/>
+    <path d="M52 112Q 40 98 44 80Q 50 58 70 54Q 88 48 102 60Q 114 62 128 74Q 144 88 132 104Q 124 114 110 116Q 102 132 86 138Q 64 146 50 130Q 40 120 52 112Z" fill="url(#coat)" stroke="#1F1C18" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M54 82Q 62 62 78 60Q 98 58 108 74Q 98 68 84 70Q 66 72 54 82Z" fill="#FFE1A8" opacity="0.55"/>
+    <path d="M86 82Q 104 66 122 78Q 132 88 122 98Q 104 110 84 98Q 78 90 86 82Z" fill="url(#muzzle)" stroke="#1F1C18" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.98"/>
+    <path d="M88 80Q 94 74 102 78Q 94 86 88 80Z" fill="#1F1C18" opacity="0.95"/>
+    <circle cx="96.5" cy="78.5" r="1.2" fill="#FFFFFF" opacity="0.75"/>
+    <path d="M122 80Q 132 80 134 88Q 132 96 122 96Q 114 92 116 88Q 116 82 122 80Z" fill="#1F1C18"/>
+    <path d="M128 90Q 126 92 123 92" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.14"/>
+    <path d="M104 102Q 112 110 124 106" stroke="#1F1C18" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+    <path d="M96 110Q 104 118 112 116" stroke="#1F1C18" stroke-width="2.6" stroke-linecap="round" opacity="0.65"/>
+    <path d="M70 112L62 116" stroke="#1F1C18" stroke-width="2.2" stroke-linecap="round" opacity="0.22"/>
+    <path d="M74 118L66 122" stroke="#1F1C18" stroke-width="2.2" stroke-linecap="round" opacity="0.18"/>
+    <path d="M48 118C60 136 76 142 100 130" stroke="#2A6F6B" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="80" cy="134" r="9" fill="#FFFFFF" opacity="0.95"/>
+    <path d="M80 128C76 132 74 134 74 138C74 143 77.5 146 80 148C82.5 146 86 143 86 138C86 134 84 132 80 128Z" fill="#D2642A"/>
+    <circle cx="80" cy="138" r="2.1" fill="white" opacity="0.85"/>
+  </g>
+
   <defs>
-    <linearGradient id="paint0_linear" x1="8" y1="8" x2="152" y2="152" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg" x1="8" y1="8" x2="152" y2="152" gradientUnits="userSpaceOnUse">
       <stop stop-color="#F7EADB"/>
       <stop offset="1" stop-color="#EAD8C2"/>
     </linearGradient>
+    <linearGradient id="coat" x1="44" y1="52" x2="134" y2="136" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7C255"/>
+      <stop offset="1" stop-color="#E7A22E"/>
+    </linearGradient>
+    <radialGradient id="muzzle" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(106 90) rotate(90) scale(22 30)">
+      <stop stop-color="#FFF2DA"/>
+      <stop offset="1" stop-color="#F3E2C9"/>
+    </radialGradient>
+    <radialGradient id="neckShadow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(74 128) rotate(90) scale(18 34)">
+      <stop stop-color="#1F1C18"/>
+      <stop offset="1" stop-color="#1F1C18" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 </svg>

@@ -1,0 +1,113 @@
+.ai-openclaw__grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.58fr);
+  align-items: start;
+}
+
+.oc-seq-wrap {
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.oc-seq-wrap::-webkit-scrollbar {
+  height: 10px;
+}
+
+.oc-seq-wrap::-webkit-scrollbar-thumb {
+  background: rgba(31, 28, 24, 0.12);
+  border-radius: 999px;
+}
+
+.ai-openclaw__grid .mcp-seq {
+  /* Wider lanes so labels don't truncate; scroll is enabled via oc-seq-wrap. */
+  min-width: 980px;
+}
+
+.ai-openclaw__grid .mcp-lifeline--channel {
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--ink-soft);
+}
+
+.ai-openclaw__grid .mcp-lifeline--gateway {
+  background: rgba(42, 111, 107, 0.1);
+}
+
+.ai-openclaw__grid .mcp-lifeline--context {
+  background: rgba(76, 120, 168, 0.1);
+}
+
+.ai-openclaw__grid .mcp-lifeline--loop {
+  background: rgba(210, 100, 42, 0.12);
+  color: var(--ink);
+}
+
+.ai-openclaw__grid .mcp-lifeline--model {
+  background: rgba(210, 100, 42, 0.08);
+  color: var(--ink);
+}
+
+.ai-openclaw__grid .mcp-lifeline--exec {
+  background: rgba(56, 142, 60, 0.1);
+}
+
+.ai-openclaw__grid .mcp-lifeline--store {
+  background: rgba(76, 120, 168, 0.08);
+}
+
+.ai-openclaw__grid .mcp-row.is-active .mcp-line {
+  background: rgba(210, 100, 42, 0.55);
+}
+
+.ai-openclaw__grid .mcp-row.is-active .mcp-line::after {
+  border-left-color: rgba(210, 100, 42, 0.65);
+}
+
+.ai-openclaw__grid .mcp-row.is-active .mcp-line.is-reverse::after {
+  border-right-color: rgba(210, 100, 42, 0.65);
+}
+
+.ai-openclaw__grid .mcp-note pre {
+  background: rgba(239, 229, 215, 0.55);
+}
+
+.ai-openclaw__grid .mcp-seq__body {
+  /* Leave more clearance between header and first message labels. */
+  padding-top: 18px;
+  gap: 14px;
+}
+
+.ai-openclaw__grid .mcp-row {
+  /* Make room so label and arrow line never visually overlap. */
+  min-height: 76px;
+}
+
+.ai-openclaw__grid .mcp-line {
+  top: 58px;
+}
+
+.ai-openclaw__grid .mcp-label {
+  top: 8px;
+  /* Allow wrapping instead of ellipsis; clamp to 2 lines to keep the diagram clean. */
+  white-space: normal;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /*
+    Constrain label width to the distance between two entities, so it won't cover endpoints.
+    start/end are % vars set inline on each row.
+  */
+  max-width: calc((var(--end) - var(--start)) - 24px);
+}
+
+@media (max-width: 960px) {
+  .ai-openclaw__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-openclaw__grid .mcp-seq {
+    min-width: 860px;
+  }
+}

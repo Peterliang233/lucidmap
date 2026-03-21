@@ -115,7 +115,7 @@ export default function HomePage() {
 
       <header className="hero">
         <div className="hero__content">
-          <p className="hero__eyebrow">{site?.tagline || "系统化整理面试八股文"}</p>
+          <p className="hero__eyebrow">{site?.tagline || "系统化整理技术知识点"}</p>
           <h1 className="hero__title">知识地图</h1>
           <p className="hero__subtitle">
             {site?.subtitle || "通过配置化目录，把散落的知识点组织成可扩展的地图。"}
